@@ -1,0 +1,8 @@
+{
+  "name": "AvenTourAgs",
+  "app_id": "7bdb72f1",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

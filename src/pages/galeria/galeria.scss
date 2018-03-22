@@ -1,0 +1,18 @@
+page-galeria {
+    ion-slide.swiper-slide {
+        left: 25%;
+    }
+    
+    .slide-zoom {
+        background: #e6e6e6;
+    }
+ 
+    .thumb-img {
+        padding: 10px;
+    }
+    .contenedor{
+        background: rgba(115,196,217,0.5);
+        width: 100%;
+        height: 50%;
+    }
+}

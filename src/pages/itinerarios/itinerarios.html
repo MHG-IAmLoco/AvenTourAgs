@@ -1,0 +1,65 @@
+<!--
+  Generated template for the ItinerariosPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="navColorOne">
+    <ion-title>Itinerarios</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <img src="../../assets/imgs/paquete1.jpg"/>
+    <ion-card-content>
+      <ion-card-title>
+        Paquete Conocedor
+        </ion-card-title>
+      <h4>
+        Este itinerario esta pensando para aquellas personas que disfruten conocer lugares simbolicos del estado de Aguascalientes
+      </h4>
+        <h3 text-center style="font-weight: bold; color: #FCA31F;">
+          $30.00Mxn
+        </h3>
+        <button ion-button color="secondary" full (click)="fnBindConocerPaquete(1)">Leer Más</button>
+      
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <img src="../../assets/imgs/paquete2.jpg"/>
+    <ion-card-content>
+      <ion-card-title>
+        Paquete Aventurero
+        </ion-card-title>
+        <h4>
+          Este paquete esta pensado para las personas que les gusta adentrarse en la naturaleza
+        </h4>
+          <h3 text-center style="font-weight: bold; color: #FCA31F;">
+            $120.00Mxn
+          </h3>
+          <button ion-button color="secondary" full (click)="fnBindConocerPaquete(2)">Leer Más</button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <img src="../../assets/imgs/paquete3.jpg"/>
+    <ion-card-content>
+      <ion-card-title>
+        Paquete Artístico
+        </ion-card-title>
+      <h4>
+        Si lo tuyo es el arte, este paquete esta pensando para ti.
+      </h4>
+      <h3 text-center style="font-weight: bold; color: #FCA31F;">
+        $60.00Mxn
+      </h3>
+      <button ion-button color="secondary" full (click)="fnBindConocerPaquete(3)">Leer Más</button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

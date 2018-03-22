@@ -1,3 +1,46 @@
 page-home {
+    .bg-image{
+        /*background-image: url("../../assets/img/ppal.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;*/
 
+        // background: url("") no-repeat fixed center;
+        // background-size: cover;
+            background: url("../../assets/img/fondo2.jpg") no-repeat fixed center;
+             /* Rellenamos el fondo */
+            min-height: 100%;
+            min-width: 100%;
+
+            /* Escalamiento proporcional */
+            width: 100%;
+            height: 100%;
+
+            /* Posicionamiento */
+            
+            top: 0;
+            left: 0;
+            z-index: -1;
+            
+        }
+
+    .logo{
+        width: 100%;
+        padding-top: 10%;
+        -moz-box-shadow: 0px 1px 10px #000000; 
+        -webkit-box-shadow: 0px 1px 10px #000000; 
+        box-shadow: 0px 1px 10px #000000;
+    }
+    .boton{
+        background-color: #78d8c1
+    }
+
+    .botonn{
+        background-color: #73c4d9
+    }
+
+    .img{
+        width: 90%;
+        padding: 20%;
+    }
 }

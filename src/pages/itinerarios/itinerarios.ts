@@ -1,0 +1,32 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { InfoPaquetePage } from '../info-paquete/info-paquete'
+
+/**
+ * Generated class for the ItinerariosPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-itinerarios',
+  templateUrl: 'itinerarios.html',
+})
+export class ItinerariosPage {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ItinerariosPage');
+  }
+
+  fnBindConocerPaquete(intTipoPaquete){
+    
+      this.navCtrl.push(InfoPaquetePage,{TipoPaquete:intTipoPaquete});
+    
+  }
+
+}

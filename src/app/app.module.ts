@@ -3,6 +3,16 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
+
+
+import { AboutPage } from '../pages/about/about';
+import { ContactPage } from '../pages/contact/contact';
+import { ItinerariosPage } from '../pages/itinerarios/itinerarios';
+import { InfoPaquetePage } from '../pages/info-paquete/info-paquete';
+
+import { GaleriaPageModule } from '../pages/galeria/galeria.module';
+import { MenuGalPageModule } from'../pages/menu-gal/menu-gal.module';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -10,16 +20,22 @@ import { HomePage } from '../pages/home/home';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    ItinerariosPage,
+    InfoPaquetePage
   ],
   imports: [
+    MenuGalPageModule,
+    GaleriaPageModule,
     BrowserModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    ItinerariosPage,
+    InfoPaquetePage
   ],
   providers: [
     StatusBar,

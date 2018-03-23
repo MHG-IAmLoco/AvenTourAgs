@@ -1,14 +1,19 @@
 page-home {
-    .bg-image{
+    .fondo{
         /*background-image: url("../../assets/img/ppal.jpg");
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;*/
 
         // background: url("") no-repeat fixed center;
-        // background-size: cover;
-            background: url("../../assets/img/fondo2.jpg") no-repeat fixed center;
+            //background-size: cover;
+            
              /* Rellenamos el fondo */
+            background: url("../../assets/img/fondo2.jpg") no-repeat center center fixed;
+            background-size: cover;
+            -moz-background-size: cover;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
             min-height: 100%;
             min-width: 100%;
 
@@ -25,8 +30,11 @@ page-home {
         }
 
     .logo{
+        margin-top: 15%;
+        text-align: center;
+        height: 20%;
         width: 100%;
-        padding-top: 10%;
+        background-color: white;
         -moz-box-shadow: 0px 1px 10px #000000; 
         -webkit-box-shadow: 0px 1px 10px #000000; 
         box-shadow: 0px 1px 10px #000000;

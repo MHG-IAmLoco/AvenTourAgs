@@ -1,3 +1,4 @@
+import { MapaPage } from './../mapa/mapa';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { GaleriaPage } from '../galeria/galeria';
@@ -20,6 +21,10 @@ export class HomePage {
 
   fnBindItinerariosPage(){
     this.navCtrl.push(ItinerariosPage);
+  }
+
+  fnBindMapaPage(){
+    this.navCtrl.push(MapaPage);
   }
 
 }

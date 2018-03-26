@@ -13,6 +13,7 @@ import { InfoPaquetePage } from '../pages/info-paquete/info-paquete';
 
 import { GaleriaPageModule } from '../pages/galeria/galeria.module';
 import { MenuGalPageModule } from'../pages/menu-gal/menu-gal.module';
+import { MapaPageModule } from '../pages/mapa/mapa.module';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -28,6 +29,7 @@ import { HomePage } from '../pages/home/home';
     MenuGalPageModule,
     GaleriaPageModule,
     BrowserModule,
+    MapaPageModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

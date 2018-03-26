@@ -5,9 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 
-
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
 import { ItinerariosPage } from '../pages/itinerarios/itinerarios';
 import { InfoPaquetePage } from '../pages/info-paquete/info-paquete';
 

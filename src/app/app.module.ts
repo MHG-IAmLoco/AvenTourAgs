@@ -4,6 +4,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import {TextToSpeech} from '@ionic-native/text-to-speech'
+
 
 import { ItinerariosPage } from '../pages/itinerarios/itinerarios';
 import { InfoPaquetePage } from '../pages/info-paquete/info-paquete';
@@ -37,6 +39,7 @@ import { HomePage } from '../pages/home/home';
     InfoPaquetePage
   ],
   providers: [
+    TextToSpeech,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

@@ -1,14 +1,14 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>mapa</ion-title>
+  <ion-navbar color="navColorMap">
+    <ion-title>Mapa</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content>
   <!-- npm install @agm/core --save -->
-  <agm-map [latitude]="lat" [longitude]="lng">
+  <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
     <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
   </agm-map>
 

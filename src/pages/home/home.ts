@@ -1,55 +1,54 @@
-<<<<<<< HEAD
 import { Component, OnInit } from '@angular/core';
-=======
 import { MapaPage } from './../mapa/mapa';
-import { Component } from '@angular/core';
->>>>>>> 1c204a2d7c71aac4ba6d88446ccaff509221dc0d
+
 import { NavController } from 'ionic-angular';
 import { GaleriaPage } from '../galeria/galeria';
 import { MenuGalPage } from '../menu-gal/menu-gal';
 import { ItinerariosPage } from '../itinerarios/itinerarios';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
+import { MenuTicketsPage } from '../menu-tickets/menu-tickets';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
 
 
-  constructor(private tts: TextToSpeech,public navCtrl: NavController) {
-   
+  constructor(private tts: TextToSpeech, public navCtrl: NavController) {
   }
-  async ngOnInit():Promise<any>{
-    try {
-      await this.tts.speak("Esta es una prueba");
-      console.log("Se reprodujo exitosamente");
-    } catch (error) {
-      console.log(error);
-    }
+
+  ngOnInit() {
+    this.Speack();
   }
 
   IrMenGaleria() {
     this.navCtrl.push(MenuGalPage);
   }
 
-  fnBindItinerariosPage(){
+  fnBindItinerariosPage() {
     console.log("entrando a itinerario");
     this.navCtrl.push(ItinerariosPage);
   }
 
-<<<<<<< HEAD
-  async repAudio():Promise<any>{
+  fnBindMapaPage() {
+    this.navCtrl.push(MapaPage);
+  }
+
+  fnBindTicketsPage(){
+    this.navCtrl.push(MenuTicketsPage);
+  }
+
+  async Speack(): Promise<any> {
     try {
-      await this.tts.speak("Esta es una prueba");
+      await this.tts.speak({text:"Presiona la opción, mapa, para visualizar la ubicación de los lugares más emblematicos en Aguascalientes."+
+      "Presiona la opción, tickets, para conocer los museos, tours,obras de teatro y próximos eventos en Aguascalientes y poder adquirir tus entradas."+
+      "Presiona la opción, galería, para conocer y aventurarte virtualmente en los paisajes que tiene Aguascalientes para ofrecer."+
+      "Presiona la opción, itinerarios, para ver y planificar las actividades de tu próxima visita a Aguascalientes."
+      ,locale:"es-MX"});
       console.log("Se reprodujo exitosamente");
     } catch (error) {
       console.log(error);
     }
-=======
-  fnBindMapaPage(){
-    this.navCtrl.push(MapaPage);
->>>>>>> 1c204a2d7c71aac4ba6d88446ccaff509221dc0d
   }
-
 }

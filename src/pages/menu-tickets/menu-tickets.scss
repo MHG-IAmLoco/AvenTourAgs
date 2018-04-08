@@ -1,0 +1,29 @@
+page-menu-tickets {
+
+    ion-card {
+        position: relative;
+        text-align: center;
+        
+      }
+    .imgFondo{
+      position: relative;
+        text-align: center;
+        filter: brightness(0.4);
+    }
+    
+    .logotipo {
+        position: absolute;
+        top: 10%;
+        left: 30%;
+        height: 60%;
+        width:40%;        
+      }
+    
+    .letrero {
+        position: absolute;
+        top: 75%;
+        width: 100%;
+        color: white;
+        font-size: 40px;
+      }
+}

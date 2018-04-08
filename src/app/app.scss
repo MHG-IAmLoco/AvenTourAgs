@@ -15,7 +15,7 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 ion-slide.swiper-slide {
-    left: 5%;
+    left: 2%;
 }
 
 .slide-zoom {
@@ -23,7 +23,7 @@ ion-slide.swiper-slide {
 }
 
 .thumb-img {
-    padding: 10px;
+    padding: 3px;
 }
 .contenedor{
     background: rgba(115,196,217,0.9);
@@ -33,14 +33,11 @@ ion-slide.swiper-slide {
     font-size: 2.0em;
     width: 100%;
     font-weight: bold;
-    color: white;
-
-    
+    color: white;   
   }
 
   .subtitle1 {
     font-size: 1.0em;
     width: 100%;
     color: white;
-    
   }

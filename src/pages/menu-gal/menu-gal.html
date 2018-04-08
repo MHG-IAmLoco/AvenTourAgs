@@ -13,29 +13,13 @@
 </ion-header>
 
 <ion-content class="card-background-page">
-
-    <ion-card (click)="IrGaleria()">
-      <img src="../../assets/img/Ags.jpg"/>
-      <div class="card-title">Aguascalientes</div>
-      <div class="card-subtitle">Capital</div>
+    
+    <ion-card *ngFor="let galeria of arrayGaleria" (click)="IrGaleria(galeria._id)">
+      <img src={{galeria.strImagenPrincipal}}/>
+      <div class="card-title">{{galeria.strTitulo}}</div>
+      <div class="card-subtitle">{{galeria.strDescripcion}}</div>
     </ion-card>
   
-    <ion-card (click)="IrGaleria()">
-      <img src="../../assets/img/Calv.jpg"/>
-      <div class="card-title">Calvillo</div>
-      <div class="card-subtitle">Pueblo Mágico</div>
-    </ion-card>
-  
-    <ion-card (click)="IrGaleria()">
-      <img src="../../assets/img/SanJose.jpeg"/>
-      <div class="card-title">San Jose de Gracia</div>
-      <div class="card-subtitle">Pueblo Mágico</div>
-    </ion-card>
-  
-    <ion-card (click)="IrGaleria()">
-      <img src="../../assets/img/Real.jpg"/>
-      <div class="card-title">Real de Asientos</div>
-      <div class="card-subtitle">Pueblo Mágico</div>
-    </ion-card>
+    
   
   </ion-content>

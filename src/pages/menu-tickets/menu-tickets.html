@@ -1,0 +1,26 @@
+<!--
+  Generated template for the MenuTicketsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="tickets">
+    <ion-title>TICKETS</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="card-background-page">
+    
+    <ion-card *ngFor="let galeria of arrayGaleria" (click)=IrInfo(galeria.strDescripcion)>
+      <img class="imgFondo" src={{galeria.strImagenPrincipal}}>
+      <img class="logotipo" src={{galeria.strTitulo}}/>
+      <div class="letrero">{{galeria.strDescripcion}}</div>
+    </ion-card>
+  
+    
+  
+  </ion-content>
+

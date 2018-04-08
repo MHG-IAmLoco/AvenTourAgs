@@ -1,0 +1,28 @@
+<!--
+  Generated template for the ListaTicketsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="tickets">
+    <ion-title>{{TipoEvento}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let evt of arrayEvento">
+      <ion-thumbnail item-start>
+        <img src={{evt.strImagenPrincipal}}>
+      </ion-thumbnail>
+      <h2>{{evt.strTitulo}}</h2>
+      <p>{{evt.strFecha}}</p>
+      <p>{{evt.strCosto}}</p>
+      <button ion-button clear item-end>View</button>
+    </ion-item>
+  </ion-list>
+</ion-content>

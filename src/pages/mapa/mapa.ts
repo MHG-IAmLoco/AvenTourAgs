@@ -11,8 +11,8 @@ import { GoogleMap, LatLng } from '@agm/core/services/google-maps-types';clearIm
 })
 export class MapaPage {
 
-  public lat: number = 51.678418;
-  public lng: number = 7.809007;
+  public lat: number = 21.913867;
+  public lng: number = -102.316009;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

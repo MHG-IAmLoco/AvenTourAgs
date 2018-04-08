@@ -10,19 +10,7 @@ export class EventoModelo{
     strUbicacion:string="";
     dteHora:Date;
     strCosto:string="";
-    constructor(auxEventoModelo?:EventoModelo){
-        if(auxEventoModelo){
-            this._id = auxEventoModelo._id;
-            this.strTipo = auxEventoModelo.strTipo;
-            this.strTitulo = auxEventoModelo.strTitulo;
-            this.strDescripcion = auxEventoModelo.strDescripcion;
-            this.strResenia = auxEventoModelo.strResenia;
-            this.strImagenPrincipal = auxEventoModelo.strImagenPrincipal;
-            this.dteFecha = auxEventoModelo.dteFecha;
-            this.strMunicipio = auxEventoModelo.strMunicipio;
-            this.strUbicacion = auxEventoModelo.strUbicacion;
-            this.dteHora = auxEventoModelo.dteHora;
-            this.strCosto=auxEventoModelo.strCosto;
-        }
+    constructor(values: Object = {}) {
+        Object.assign(this, values);
     }
 }

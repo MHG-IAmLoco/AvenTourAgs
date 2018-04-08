@@ -7,8 +7,8 @@
   <ion-content style="background: #000">
       
     <ion-slides  loop="true" slidesPerView="1">
-      <ion-slide *ngFor="let imagen of arrayGaleria">
-        <img src={{imagen.strImagenPrincipal}} class="thumb-img" #imageToView (click)="onClick(imageToView)" />
+      <ion-slide *ngFor="let imagen of Galeria.arrayImagenes">
+        <img src={{configGeneral.strUrlImages}}{{imagen.strImagenPrincipal}} class="thumb-img" #imageToView (click)="onClick(imageToView)" />
         <div class="title1">{{imagen.strTitulo}}</div>
         <div class="subtitle1">{{imagen.strDescripcion}}</div>
       </ion-slide>

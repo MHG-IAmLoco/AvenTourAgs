@@ -6,7 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import {TextToSpeech} from '@ionic-native/text-to-speech';
 import {HttpClientModule} from '@angular/common/http';
-
+import {ApiService} from '../general/conexionesApi';
+import {ConfigGeneral} from '../general/configGeneral';
 
 import { ItinerariosPage } from '../pages/itinerarios/itinerarios';
 import { InfoPaquetePage } from '../pages/info-paquete/info-paquete';
@@ -51,6 +52,8 @@ import { HomePage } from '../pages/home/home';
     TextToSpeech,
     StatusBar,
     SplashScreen,
+    ApiService,
+    ConfigGeneral,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

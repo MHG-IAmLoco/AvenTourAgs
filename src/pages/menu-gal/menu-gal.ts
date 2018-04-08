@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component,OnInit } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { GaleriaPage } from '../galeria/galeria';
 import { GaleriaModelo } from '../../modelos/galeria.model';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
+import {ConfigGeneral} from '../../general/configGeneral'
+import { Observable } from 'rxjs/Observable';
+import { ApiService } from '../../general/conexionesApi';
 
 /**
  * Generated class for the MenuGalPage page.
@@ -16,10 +19,17 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
   selector: 'page-menu-gal',
   templateUrl: 'menu-gal.html',
 })
-export class MenuGalPage {
-  arrayGaleria:Array<GaleriaModelo> = new Array<GaleriaModelo>();
-  constructor(public navCtrl: NavController, public navParams: NavParams, private tts:TextToSpeech) {
-    this.arrayGaleria.push(new GaleriaModelo({
+export class MenuGalPage implements OnInit {
+  arrayGaleria:GaleriaModelo[] = [];
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private tts:TextToSpeech,
+    public configGeneral:ConfigGeneral,
+    private conexionesApi: ApiService
+  ) {
+    this.getCategorias();
+    /*this.arrayGaleria.push(new GaleriaModelo({
       _id:"1",
       strTitulo:"Aguascalientes",
       strDescripcion:"Capital",
@@ -33,12 +43,13 @@ export class MenuGalPage {
       strDescripcion:"Pueblo Mágico",
       strImagenPrincipal:"assets/img/Calv.jpg",
       arrayImagenes:[]
-    }));
+    }));*/
+
   }
 
   IrGaleria(strId) {
-    console.log("Id seleccionado"+strId);
-    this.navCtrl.push(GaleriaPage);
+    console.log(strId);
+    this.navCtrl.push(GaleriaPage,{_id:strId});
   }
 
   ngOnInit(){
@@ -55,5 +66,15 @@ export class MenuGalPage {
       console.log(error);
     }
   }
+
+  getCategorias(){
+    this.conexionesApi.getCategoriasGaleria()
+    .then((data:GaleriaModelo[]) => {
+      this.arrayGaleria = data;
+      console.log(this.arrayGaleria);
+    });
+  }
+
+  
 
 }

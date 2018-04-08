@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
@@ -15,21 +15,22 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
   selector: 'page-login',
   templateUrl: 'login.html',
 })
-export class LoginPage {
+export class LoginPage implements OnInit{
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private tts: TextToSpeech) {
   }
-
-  ionViewDidLoad() {
-    
-  }
-
   ngOnInit(){
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.Speack();
   }
 
+
+  ionViewDidLoad() {
+    
+  }
+
+  
   irHome(){
     this.navCtrl.push(HomePage);
   }

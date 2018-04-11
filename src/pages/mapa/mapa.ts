@@ -1,10 +1,6 @@
 import { Geolocation } from '@ionic-native/geolocation';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MarkerManager, AgmMap } from '@agm/core';
-import { GoogleMapsAPIWrapper } from '@agm/core/services/google-maps-api-wrapper';
-import { GoogleMap, LatLng } from '@agm/core/services/google-maps-types'; clearImmediate
-
 @IonicPage()
 @Component({
   selector: 'page-mapa',
@@ -12,9 +8,11 @@ import { GoogleMap, LatLng } from '@agm/core/services/google-maps-types'; clearI
 })
 export class MapaPage {
 
-  public lat: number = 21.913867;
-  public lng: number = -102.316009;
+  public lat: number;
+  public lng: number;
   public zoom: number = 16;
+  public dir = undefined;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private _geoLoc: Geolocation) {
   }
 
@@ -31,6 +29,18 @@ export class MapaPage {
   getLocation() {
     return this._geoLoc.getCurrentPosition();
   }
+
+  getDirection(dest) {
+    // this.getLocation().then(res => {
+    this.dir = {
+      origin: { lat: this.lat, lng: this.lng },
+      destination: { lat: 21.8804194, lng: -102.3067378 }
+    }
+    // }).catch(err => {
+    //   console.log(err);
+    // });
+  }
+
 
 }
 

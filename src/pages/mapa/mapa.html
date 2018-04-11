@@ -1,15 +1,18 @@
 <ion-header>
-
   <ion-navbar color="navColorMap">
     <ion-title>Mapa</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content>
   <!-- npm install @agm/core --save -->
   <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
     <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
   </agm-map>
-
+  <ion-fab bottom center>
+    <button ion-fab menuToggle (click)="getDirection()" color="secondary">
+      <ion-icon name="car"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

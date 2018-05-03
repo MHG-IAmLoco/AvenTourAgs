@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
 import { GaleriaModelo } from '../../modelos/galeria.model';
 import { ListaTicketsPage } from '../lista-tickets/lista-tickets';
+import { TextToSpeech } from '@ionic-native/text-to-speech';
+import { ViewChild } from '@angular/core';
 
 /**
  * Generated class for the MenuTicketsPage page.
@@ -16,8 +18,9 @@ import { ListaTicketsPage } from '../lista-tickets/lista-tickets';
   templateUrl: 'menu-tickets.html',
 })
 export class MenuTicketsPage {
+  @ViewChild(Navbar) navBar: Navbar;
   arrayGaleria:Array<GaleriaModelo> = new Array<GaleriaModelo>();
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private tts:TextToSpeech) {
     this.arrayGaleria.push(new GaleriaModelo({
       _id:"1",
       strTitulo:"assets/img/conciertoIcono.png",
@@ -59,12 +62,33 @@ export class MenuTicketsPage {
     }));
   }
 
+  ngOnInit() {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.Speack();
+  }
+
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MenuTicketsPage');
+    this.navBar.backButtonClick = () => {
+      this.tts.stop();
+      this.navCtrl.pop();
+      }
   }
 
   IrInfo(tipoEvt) {
     this.navCtrl.push(ListaTicketsPage,{TipoEvento:tipoEvt});
+    this.tts.stop();
+  }
+
+  async Speack(): Promise<any> {
+    try {
+      await this.tts.speak({text:"En el estado de Aguascalientes podrás disfrutar de eventos, exposiciones y recorridos turísticos,"+
+      "Para conocer más de ellos, porfavor elige una categoría, desliza hacia arriba para verlas todas."
+      ,locale:"es-MX"});
+      console.log("Se reprodujo exitosamente");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }

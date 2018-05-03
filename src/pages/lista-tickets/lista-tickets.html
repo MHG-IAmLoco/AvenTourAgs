@@ -20,9 +20,11 @@
         <img src={{evt.strImagenPrincipal}}>
       </ion-thumbnail>
       <h2>{{evt.strTitulo}}</h2>
-      <p>{{evt.strFecha}}</p>
-      <p>{{evt.strCosto}}</p>
-      <button ion-button clear item-end>View</button>
+      <p>{{evt.dteFecha}}</p>
+      <p>{{evt.nmbCostoAdulto}}</p>
+      <button ion-button outline color="login" item-end (click)=verDetalles(evt._id)>VER&nbsp;&nbsp;
+        <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+      </button>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
 import { GaleriaPage } from '../galeria/galeria';
 import { GaleriaModelo } from '../../modelos/galeria.model';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
+import { ViewChild } from '@angular/core';
 
 /**
  * Generated class for the MenuGalPage page.
@@ -12,13 +13,16 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
  */
 
 @IonicPage()
+
 @Component({
   selector: 'page-menu-gal',
   templateUrl: 'menu-gal.html',
 })
 export class MenuGalPage {
+  @ViewChild(Navbar) navBar: Navbar;
   arrayGaleria:Array<GaleriaModelo> = new Array<GaleriaModelo>();
   constructor(public navCtrl: NavController, public navParams: NavParams, private tts:TextToSpeech) {
+    
     this.arrayGaleria.push(new GaleriaModelo({
       _id:"1",
       strTitulo:"Aguascalientes",
@@ -38,12 +42,11 @@ export class MenuGalPage {
 
   IrGaleria(strId) {
     console.log("Id seleccionado"+strId);
+    this.tts.stop();
     this.navCtrl.push(GaleriaPage);
   }
 
   ngOnInit(){
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.Speack();
   }
   async Speack(): Promise<any> {
@@ -54,6 +57,12 @@ export class MenuGalPage {
     } catch (error) {
       console.log(error);
     }
+  }
+  ionViewDidLoad(){
+    this.navBar.backButtonClick = () => {
+      this.tts.stop();
+      this.navCtrl.pop();
+      }
   }
 
 }

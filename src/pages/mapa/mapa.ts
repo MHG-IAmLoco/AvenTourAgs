@@ -45,7 +45,6 @@ export class MapaPage {
   openMenu() {
     let actionSheet = this.actionsheetCtrl.create({
       title: 'Destino',
-      cssClass: 'action-sheets-basic-page',
       buttons: [
         {
           text: 'Aguascalientes',

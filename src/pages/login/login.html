@@ -5,29 +5,29 @@
 
 <ion-content class="fondo">
   <div class="logo">
-    <img src="../../assets/img/logo1.png" style="height:100%" (click)="irHome()">
+    <img src="../../assets/img/logo1.png" style="height:100%" >
   </div>
   
   <ion-col>
     <label >
-      <input class = "inpt" type = "text" placeholder = "USUARIO" />
+      <input class = "inpt" type = "text" placeholder = "USUARIO" name="usuario" [(ngModel)]="strUsuario" />
    </label>
   </ion-col>
   <ion-col>
       <label>
-        <input class = "inpt" type="password" placeholder="CONTRASEÑA">
+        <input class = "inpt" type="password" placeholder="CONTRASEÑA" name="pwd" [(ngModel)]="strPwd">
       </label>
   </ion-col>
   <ion-col>
-      <button ion-button class="btn" color="botonReg">INGRESAR</button>
+      <button ion-button class="btn" color="botonReg" (click)=ingresar()>INGRESAR</button>
   </ion-col>
   <ion-grid style="width:81%">
       <ion-row>
         <ion-col>
-          <button ion-button class="btnCmp" color="botonIng">REGISTRATE</button>
+          <button ion-button class="btnCmp" color="botonIng" (click)="IrRegistro()">REGISTRATE</button>
         </ion-col>
         <ion-col>
-          <button ion-button class="btnCmp" color="botonOmi">OMITIR</button>
+          <button ion-button class="btnCmp" color="botonOmi"(click)="irHome()">OMITIR</button>
         </ion-col>
       </ion-row>
     </ion-grid>

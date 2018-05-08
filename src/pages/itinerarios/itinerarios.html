@@ -14,52 +14,32 @@
 
 
 <ion-content padding>
-  <ion-card>
-    <img src="../../assets/imgs/paquete1.jpg"/>
-    <ion-card-content>
-      <ion-card-title>
-        Paquete Conocedor
-        </ion-card-title>
-      <h4>
-        Este itinerario esta pensando para aquellas personas que disfruten conocer lugares simbolicos del estado de Aguascalientes
-      </h4>
-        <h3 text-center style="font-weight: bold; color: #FCA31F;">
-          $30.00Mxn
-        </h3>
-        <button ion-button color="secondary" full (click)="fnBindConocerPaquete(1)">Leer Más</button>
-      
-    </ion-card-content>
-  </ion-card>
 
-  <ion-card>
-    <img src="../../assets/imgs/paquete2.jpg"/>
-    <ion-card-content>
-      <ion-card-title>
-        Paquete Aventurero
-        </ion-card-title>
-        <h4>
-          Este paquete esta pensado para las personas que les gusta adentrarse en la naturaleza
-        </h4>
-          <h3 text-center style="font-weight: bold; color: #FCA31F;">
-            $120.00Mxn
-          </h3>
-          <button ion-button color="secondary" full (click)="fnBindConocerPaquete(2)">Leer Más</button>
-    </ion-card-content>
-  </ion-card>
+    <ion-item>
+        <ion-label>Presupuesto</ion-label>
+        <ion-select [(ngModel)]="presupuesto" [selectOptions]="selectOptions" okText="Hecho" cancelText="Cancelar" (ionChange)=showVal(presupuesto)>
+            <ion-option value="500">500 MXN.</ion-option>
+            <ion-option value="400">400 MXN.</ion-option>
+        </ion-select>
+    </ion-item>
 
-  <ion-card>
-    <img src="../../assets/imgs/paquete3.jpg"/>
+  <ion-card *ngFor="let itinerario of arrayItinerario">
+    <img src={{itinerario.strImagenPrincipal}}/>
     <ion-card-content>
-      <ion-card-title>
-        Paquete Artístico
+      <ion-card-title text-center style="font-weight: bold; color: #126786;">
+        {{itinerario.strTitulo}}
         </ion-card-title>
-      <h4>
-        Si lo tuyo es el arte, este paquete esta pensando para ti.
-      </h4>
-      <h3 text-center style="font-weight: bold; color: #FCA31F;">
-        $60.00Mxn
+      <h3 text-center>
+        {{itinerario.strDescripcion}}
       </h3>
-      <button ion-button color="secondary" full (click)="fnBindConocerPaquete(3)">Leer Más</button>
+        <h2 text-center style="font-weight: bold; color: #FCA31F;">
+          Costo Apróximado: ${{itinerario.nmbCostoAproximado}}
+        </h2>
+        <h2 text-center style="font-weight: bold; color: #009256;">
+          Tiempo Apróximado Necesario: {{itinerario.nmbTiempoAproximado}} días
+        </h2>
+        <button ion-button color="secondary" full (click)="fnBindConocerPaquete(itinerario._id)">Leer Más</button>
+      
     </ion-card-content>
   </ion-card>
 </ion-content>

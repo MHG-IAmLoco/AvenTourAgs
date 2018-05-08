@@ -8,8 +8,10 @@ export class EventoModelo{
     dteFecha:Date;
     strMunicipio:string="";
     strUbicacion:string="";
-    dteHora:Date;
-    strCosto:string="";
+    dteHoraInicio:Date;
+    dteHoraFin:Date;
+    nmbCostoAdulto:number;
+    nmbCostoMenor:number;
     constructor(auxEventoModelo?:EventoModelo){
         if(auxEventoModelo){
             this._id = auxEventoModelo._id;
@@ -21,8 +23,10 @@ export class EventoModelo{
             this.dteFecha = auxEventoModelo.dteFecha;
             this.strMunicipio = auxEventoModelo.strMunicipio;
             this.strUbicacion = auxEventoModelo.strUbicacion;
-            this.dteHora = auxEventoModelo.dteHora;
-            this.strCosto=auxEventoModelo.strCosto;
+            this.dteHoraInicio = auxEventoModelo.dteHoraInicio;
+            this.dteHoraFin = auxEventoModelo.dteHoraFin;
+            this.nmbCostoAdulto=auxEventoModelo.nmbCostoAdulto;
+            this.nmbCostoMenor=auxEventoModelo.nmbCostoMenor;
         }
     }
 }

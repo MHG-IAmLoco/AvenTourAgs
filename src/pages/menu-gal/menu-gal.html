@@ -15,7 +15,7 @@
 <ion-content class="card-background-page">
     
     <ion-card *ngFor="let galeria of arrayGaleria" (click)="IrGaleria(galeria._id)">
-      <img src={{galeria.strImagenPrincipal}}/>
+      <img class="fondo"src={{galeria.strImagenPrincipal}}/>
       <div class="card-title">{{galeria.strTitulo}}</div>
       <div class="card-subtitle">{{galeria.strDescripcion}}</div>
     </ion-card>

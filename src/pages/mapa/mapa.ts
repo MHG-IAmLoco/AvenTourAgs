@@ -121,6 +121,80 @@ export class MapaPage {
           }
         },
         {
+          text: 'Real de Asientos',
+          handler: () => {
+            let actionSheet = this.actionsheetCtrl.create({
+              title: 'Real de Asientos',
+              buttons: [
+                {
+                  text: 'Plaza Juaréz',
+                  handler: () => {
+                    this.dir = {
+                      origin: { lat: this.lat, lng: this.lng },
+                      destination: { lat: 22.2381246, lng: -102.0899569 }
+                    }
+                  }
+                },
+                {
+                  text: 'Museo del Minero',
+                  handler: () => {
+                    this.dir = {
+                      origin: { lat: this.lat, lng: this.lng },
+                      destination: { lat: 22.2390333, lng: -102.0902924 }
+                    }
+                  }
+                },
+                {
+                  text: 'Cancelar',
+                  role: 'cancel', // will always sort to be on the bottom
+                  icon: !this.platform.is('ios') ? 'close' : null,
+                  handler: () => {
+                    console.log('Cancel clicked');
+                  }
+                }
+              ]
+            });
+            actionSheet.present();
+          }
+        },
+        {
+          text: 'San José de Gracia',
+          handler: () => {
+            let actionSheet = this.actionsheetCtrl.create({
+              title: 'San José de Gracia',
+              buttons: [
+                {
+                  text: 'Plaza',
+                  handler: () => {
+                    this.dir = {
+                      origin: { lat: this.lat, lng: this.lng },
+                      destination: { lat: 22.1495868, lng: -102.4157716 }
+                    }
+                  }
+                },
+                {
+                  text: 'Cristo Roto',
+                  handler: () => {
+                    this.dir = {
+                      origin: { lat: this.lat, lng: this.lng },
+                      destination: { lat: 22.1503663, lng: -102.4226168 }
+                    }
+                  }
+                },
+                {
+                  text: 'Cancelar',
+                  role: 'cancel', // will always sort to be on the bottom
+                  icon: !this.platform.is('ios') ? 'close' : null,
+                  handler: () => {
+                    console.log('Cancel clicked');
+                  }
+                }
+              ]
+            });
+            actionSheet.present();
+          }
+        },
+        {
           text: 'Cancelar',
           role: 'cancel', // will always sort to be on the bottom
           icon: !this.platform.is('ios') ? 'close' : null,

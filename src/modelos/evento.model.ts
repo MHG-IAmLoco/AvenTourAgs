@@ -10,7 +10,12 @@ export class EventoModelo{
     strUbicacion:string="";
     dteHora:Date;
     strCosto:string="";
+    dteHoraInicio:Date;
+    dteHoraFin:Date;
+    nmbCostoAdulto:number;
+    nmbCostoMenor:number;
     constructor(values: Object = {}) {
         Object.assign(this, values);
     }
+    
 }

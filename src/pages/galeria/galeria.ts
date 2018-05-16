@@ -1,5 +1,5 @@
-import { Component,OnInit } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component,OnInit, ViewChild } from '@angular/core';
+import { NavController, NavParams, Navbar } from 'ionic-angular';
 import { ImageViewerController } from "ionic-img-viewer";
 import { GaleriaModelo } from '../../modelos/galeria.model';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
@@ -8,10 +8,14 @@ import { ConfigGeneral } from '../../general/configGeneral';
  
 @Component({
   selector: 'galeria',
-  templateUrl: 'galeria.html',
+  templateUrl: 'galeria.html'
 })
 export class GaleriaPage implements OnInit{
+  @ViewChild(Navbar) navBar: Navbar;
   Galeria:GaleriaModelo = new GaleriaModelo();
+
+  
+  arrayGaleria:Array<GaleriaModelo> = new Array<GaleriaModelo>();
   images = ['1.jpg', '2.jpg', '3.jpg', '4.jpg','5.jpg','6.jpg','7.jpg','8.jpg','9.jpg','10.jpg','11.jpg','12.jpg',
   '13.jpg','14.jpg','15.jpg','16.jpg','17.jpg','18.jpg','19.jpg','20.jpg','21.jpg','22.jpg','23.jpg','24.jpg','25.jpg'];
  
@@ -106,6 +110,8 @@ export class GaleriaPage implements OnInit{
   }
   onClick(imageToView) {
     const viewer = this.imageViewerCtrl.create(imageToView)
+    this.tts.stop();
+    this.Speack2();
     viewer.present();
   }
   ngOnInit() {
@@ -115,7 +121,9 @@ export class GaleriaPage implements OnInit{
   }
   async Speack(): Promise<any> {
     try {
-      await this.tts.speak({text:"Aguascalientes cuenta con una capital y tres pueblos mágicos, presiona la imágen que prefieras para conocer más de ellos."
+      await this.tts.speak({text:"Para ver más de cerca alguna de las imágenes presentadas, haz "+
+      "click sobre ella y después usa dos dedos desplazando del centro de la pantalla hacia afuera, "+
+      "asegurate que tus dedos se desplacen en dirección contraría"
       ,locale:"es-MX"});
       console.log("Se reprodujo exitosamente");
     } catch (error) {
@@ -132,4 +140,23 @@ export class GaleriaPage implements OnInit{
       });
     }
   }
+  async Speack2(): Promise<any> {
+    try {
+      await this.tts.speak({text:"Para acercar la imágen, usa dos dedos desplazando del centro de la pantalla hacia afuera, "+
+      "asegurate que tus dedos se desplacen en dirección contraría"
+      ,locale:"es-MX"});
+      console.log("Se reprodujo exitosamente");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  ionViewDidLoad(){
+    this.navBar.backButtonClick = () => {
+          this.tts.stop();
+          this.navCtrl.pop();
+          }
+    }
+
+  
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MapaPage } from './../mapa/mapa';
 
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { GaleriaPage } from '../galeria/galeria';
 import { MenuGalPage } from '../menu-gal/menu-gal';
 import { ItinerariosPage } from '../itinerarios/itinerarios';
@@ -15,38 +15,46 @@ import { MenuTicketsPage } from '../menu-tickets/menu-tickets';
 export class HomePage implements OnInit {
 
 
-  constructor(private tts: TextToSpeech, public navCtrl: NavController) {
+  constructor(private tts: TextToSpeech, public navCtrl: NavController, public loadingCtrl:LoadingController) {
   }
 
   ngOnInit() {
+    let loader = this.loadingCtrl.create({
+      content: "Cargando...",
+      duration: 1000
+    });
+    loader.present();
     this.Speack();
   }
 
   IrMenGaleria() {
+    this.tts.stop();
     this.navCtrl.push(MenuGalPage);
   }
 
   fnBindItinerariosPage() {
-    console.log("entrando a itinerario");
+    this.tts.stop();
     this.navCtrl.push(ItinerariosPage);
   }
 
   fnBindMapaPage() {
+    this.tts.stop();
     this.navCtrl.push(MapaPage);
   }
 
   fnBindTicketsPage(){
+    this.tts.stop();
     this.navCtrl.push(MenuTicketsPage);
   }
 
   async Speack(): Promise<any> {
     try {
-      await this.tts.speak({text:"Presiona la opción, mapa, para visualizar la ubicación de los lugares más emblematicos en Aguascalientes."+
+      await this.tts.speak({text:
+      "Presiona la opción, mapa, para visualizar la ubicación de los lugares más emblemáticos en Aguascalientes."+
       "Presiona la opción, tickets, para conocer los museos, tours,obras de teatro y próximos eventos en Aguascalientes y poder adquirir tus entradas."+
       "Presiona la opción, galería, para conocer y aventurarte virtualmente en los paisajes que tiene Aguascalientes para ofrecer."+
       "Presiona la opción, itinerarios, para ver y planificar las actividades de tu próxima visita a Aguascalientes."
       ,locale:"es-MX"});
-      console.log("Se reprodujo exitosamente");
     } catch (error) {
       console.log(error);
     }

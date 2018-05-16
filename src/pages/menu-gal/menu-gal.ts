@@ -1,11 +1,12 @@
 import { Component,OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Navbar } from 'ionic-angular';
 import { GaleriaPage } from '../galeria/galeria';
 import { GaleriaModelo } from '../../modelos/galeria.model';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import {ConfigGeneral} from '../../general/configGeneral'
 import { Observable } from 'rxjs/Observable';
 import { ApiService } from '../../general/conexionesApi';
+import { ViewChild } from '@angular/core';
 
 /**
  * Generated class for the MenuGalPage page.
@@ -15,11 +16,13 @@ import { ApiService } from '../../general/conexionesApi';
  */
 
 @IonicPage()
+
 @Component({
   selector: 'page-menu-gal',
   templateUrl: 'menu-gal.html',
 })
 export class MenuGalPage implements OnInit {
+  @ViewChild(Navbar) navBar: Navbar;
   arrayGaleria:GaleriaModelo[] = [];
   constructor(
     public navCtrl: NavController, 
@@ -29,7 +32,9 @@ export class MenuGalPage implements OnInit {
     private conexionesApi: ApiService
   ) {
     this.getCategorias();
-    /*this.arrayGaleria.push(new GaleriaModelo({
+    
+    /*
+    this.arrayGaleria.push(new GaleriaModelo({
       _id:"1",
       strTitulo:"Aguascalientes",
       strDescripcion:"Capital",
@@ -48,13 +53,12 @@ export class MenuGalPage implements OnInit {
   }
 
   IrGaleria(strId) {
-    console.log(strId);
+    console.log("Id seleccionado"+strId);
+    this.tts.stop();
     this.navCtrl.push(GaleriaPage,{_id:strId});
   }
 
   ngOnInit(){
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.Speack();
   }
   async Speack(): Promise<any> {
@@ -65,6 +69,12 @@ export class MenuGalPage implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+  ionViewDidLoad(){
+    this.navBar.backButtonClick = () => {
+      this.tts.stop();
+      this.navCtrl.pop();
+      }
   }
 
   getCategorias(){

@@ -35,5 +35,27 @@ export class ApiService{
           });
     }
 
+    getLogIn(strCorreo,strContraseña){
+      return new Promise(resolve => {
+          this.httpClient.get(this.configGeneral.strUrlApis+"login"+"/"+strCorreo+"/"+strContraseña)
+          .subscribe(data => {
+            resolve(data);
+          }, err => {
+            console.log(err);
+          });
+        });
+    }
+
+    getItinerarios(intPresupuesto){
+      return new Promise(resolve => {
+          this.httpClient.get(this.configGeneral.strUrlApis+'itinerarios'+"/"+intPresupuesto)
+          .subscribe(data => {
+            resolve(data['jsnAnswer']);
+          }, err => {
+            console.log(err);
+          });
+        });
+  }
+
 
 }

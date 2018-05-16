@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
 import {EventoModelo} from '../../modelos/evento.model';
+import { InfoEventoPage } from '../info-evento/info-evento';
+import { TextToSpeech } from '@ionic-native/text-to-speech';
+import { ViewChild } from '@angular/core';
 
 /**
  * Generated class for the ListaTicketsPage page.
@@ -15,9 +18,10 @@ import {EventoModelo} from '../../modelos/evento.model';
   templateUrl: 'lista-tickets.html',
 })
 export class ListaTicketsPage {
+  @ViewChild(Navbar) navBar: Navbar;
   arrayEvento:Array<EventoModelo> = new Array<EventoModelo>();
   TipoEvento:string;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private tts:TextToSpeech) {
     if(this.navParams.get('TipoEvento')){
       this.TipoEvento = this.navParams.get('TipoEvento');
     }
@@ -33,8 +37,10 @@ export class ListaTicketsPage {
           dteFecha: new Date(),
           strMunicipio:"Aguascalientes",
           strUbicacion:"Plaza de Toros Monumental",
-          dteHora: new Date(),
-          strCosto:"Varios precios."
+          dteHoraInicio: new Date(),
+          dteHoraFin: new Date(),
+          nmbCostoAdulto:0.0,
+          nmbCostoMenor:0.0
         }));
 
         this.arrayEvento.push(new EventoModelo({
@@ -47,13 +53,15 @@ export class ListaTicketsPage {
           dteFecha: new Date(),
           strMunicipio:"Aguascalientes",
           strUbicacion:"Palenque de la feria",
-          dteHora: new Date(),
-          strCosto:"Varios precios."
+          dteHoraInicio: new Date(),
+          dteHoraFin: new Date(),
+          nmbCostoAdulto:0.0,
+          nmbCostoMenor:0.0
         }));
         break;
       case "DEPORTES":
         this.arrayEvento.push(new EventoModelo({
-          _id:"1",
+          _id:"3",
           strTipo:"DEPORTES",
           strTitulo:"ESTE ES UN DEPORTE",
           strResenia:"Alguna reseña",
@@ -62,12 +70,14 @@ export class ListaTicketsPage {
           dteFecha: new Date(),
           strMunicipio:"Aguascalientes",
           strUbicacion:"Plaza de Toros Monumental",
-          dteHora: new Date(),
-          strCosto:"Varios precios."
+          dteHoraInicio: new Date(),
+          dteHoraFin: new Date(),
+          nmbCostoAdulto:0.0,
+          nmbCostoMenor:0.0
         }));
 
         this.arrayEvento.push(new EventoModelo({
-          _id:"2",
+          _id:"4",
           strTipo:"DEPORTES",
           strTitulo:"ESTE ES UN DEPORTE",
           strDescripcion:"Una vez más se presenta en Aguascalientes el potrillo.",
@@ -76,15 +86,42 @@ export class ListaTicketsPage {
           dteFecha: new Date(),
           strMunicipio:"Aguascalientes",
           strUbicacion:"Palenque de la feria",
-          dteHora: new Date(),
-          strCosto:"Varios precios."
+          dteHoraInicio: new Date(),
+          dteHoraFin: new Date(),
+          nmbCostoAdulto:0.0,
+          nmbCostoMenor:0.0
         }));
         break;
   }
   }
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.Speack();
+  }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ListaTicketsPage');
+  ionViewDidLoad(){
+    this.navBar.backButtonClick = () => {
+          this.tts.stop();
+          this.navCtrl.pop();
+          }
+    }
+
+  verDetalles(id){
+    console.log("Evento "+id);
+    this.navCtrl.push(InfoEventoPage,{_id:id});
+  }
+
+  async Speack(): Promise<any> {
+    try {
+      await this.tts.speak({text:"Aquí puedes observar una previsualización de los próximos eventos en Aguascalientes, puedes navegar "+
+      "deslizando la pantalla hacia arriba y conocer más detalles sobre un evento de tu interés, presionando el "+
+      "botón ver que se encuentra enseguida de la descripción."
+      ,locale:"es-MX"});
+      console.log("Se reprodujo exitosamente");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }

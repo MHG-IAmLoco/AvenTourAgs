@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="navColorOne">
-    <ion-title>{{strNombrePaquete}}</ion-title>
+    <ion-title>{{itinerario.strTitulo}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,24 +15,31 @@
 
 <ion-content padding>
     <ion-card>
-        <img src="{{strSource}}"/>
+        <img src="{{itinerario.strImagenPrincipal}}"/>
         <ion-card-content>
           <ion-card-title>
-            {{strNombrePaquete}}
+            {{itinerario.strTitulo}}
             </ion-card-title>
           <p>
-            {{strDescripcionPaquete}}
+            {{itinerario.strDescripcion}}
           </p>
-          <p text-center *ngFor="let actividad of arrayActividades">
-              {{actividad}}
-          </p>
-          <p text-center>
-            Precio del paquete
-          </p>
-          <p text-center style="font-weight: bold; color: #FCA31F;">
-              {{strPrecio}}
-            </p>
-            <button ion-button color="danger" full>Comprar</button>
+          <ion-list>
+            <ion-item *ngFor="let evt of itinerario.arrayEventos">
+              
+              <h2>{{evt.strTitulo}}</h2>
+              <p>{{evt.dteFecha |date:'dd/MMM/yyyy'}}</p>
+              <p>{{evt.nmbCostoAdulto}}</p>
+              <button ion-button outline color="login" item-end (click)=verDetalles(evt._id)>VER&nbsp;&nbsp;
+                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+              </button>
+            </ion-item>
+          </ion-list>
+          <h2 text-center style="font-weight: bold; color: #FCA31F;">
+            Costo Apróximado: ${{itinerario.nmbCostoAproximado}}
+          </h2>
+          <h2 text-center style="font-weight: bold; color: #009256;">
+            Tiempo Apróximado Necesario: {{itinerario.nmbTiempoAproximado}} días
+          </h2>
         </ion-card-content>
       </ion-card>
 

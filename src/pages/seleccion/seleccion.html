@@ -6,19 +6,30 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>seleccion</ion-title>
+  <ion-navbar color="seleccion">
+    <ion-title>SELECCION</ion-title>
+
+    <ion-buttons end>
+      <button ion-button color="light" outline (click)="pagar()">
+        HECHO
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content>
+<ion-content style="background: url('../../assets/img/fondoSel.jpg') no-repeat center center fixed">
+  <img  class="telon "src="../../assets/img/telon2.jpg">
     <ion-scroll scrollX="true" scrollY="true">
-    <ul *ngFor="let fila of filas" class="fila">
-      <li class="asiento" *ngFor="let asiento of asientos">
+    <!--<div class="telon">
+    <img  src="../../assets/img/telon.jpg">
+    </div>-->
+    <ul *ngFor="let fila of matAsientos; let i = index;" class="fila">
+      <li [style.backgroundColor]=asiento.strColor class="asiento" *ngFor="let asiento of matAsientos[i];let j=index" (click)="cambioColor(asiento.numAsiento)">
         <div class="num-asiento">
-          {{fila}} - {{asiento}}
+          {{i+1}} - {{j+1}}
         </div>
       </li>
     </ul>

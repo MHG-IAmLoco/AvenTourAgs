@@ -22,6 +22,7 @@
     "@angular/http": "5.2.9",
     "@angular/platform-browser": "5.2.9",
     "@angular/platform-browser-dynamic": "5.2.9",
+    "@ionic-native/barcode-scanner": "^4.7.0",
     "@ionic-native/core": "4.5.3",
     "@ionic-native/geolocation": "^4.6.0",
     "@ionic-native/google-maps": "^4.6.3",
@@ -48,6 +49,8 @@
     "ionic-img-viewer": "^2.9.0",
     "ionicons": "3.0.0",
     "list": "2.0.7",
+    "ngx-qrcode2": "^0.1.0",
+    "phonegap-plugin-barcodescanner": "^7.1.2",
     "rxjs": "5.5.7",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.20"
@@ -69,7 +72,8 @@
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
       },
-      "com.paypal.cordova.mobilesdk": {}
+      "com.paypal.cordova.mobilesdk": {},
+      "phonegap-plugin-barcodescanner": {}
     },
     "platforms": [
       "android"

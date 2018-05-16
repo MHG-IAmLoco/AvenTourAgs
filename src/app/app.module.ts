@@ -17,9 +17,12 @@ import { RegistroPageModule } from '../pages/registro/registro.module';
 import { GaleriaPageModule } from '../pages/galeria/galeria.module';
 import { MenuGalPageModule } from '../pages/menu-gal/menu-gal.module';
 import { MapaPageModule } from '../pages/mapa/mapa.module';
+import { QrPageModule } from '../pages/qr/qr.module'
 import { ListaTicketsPageModule } from '../pages/lista-tickets/lista-tickets.module';
 import { InfoEventoPageModule } from '../pages/info-evento/info-evento.module';
 import { SeleccionPageModule } from '../pages/seleccion/seleccion.module';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -40,10 +43,12 @@ import { PayPal } from '@ionic-native/paypal';
     GaleriaPageModule,
     BrowserModule,
     MapaPageModule,
+    QrPageModule,
     HttpClientModule,
     MenuTicketsPageModule,
     ListaTicketsPageModule,
     RegistroPageModule,
+    NgxQRCodeModule,
     IonicModule.forRoot(MyApp),
     InfoEventoPageModule,
     SeleccionPageModule,
@@ -62,6 +67,7 @@ import { PayPal } from '@ionic-native/paypal';
     SplashScreen,
     Geolocation,
     PayPal,
+    BarcodeScanner,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

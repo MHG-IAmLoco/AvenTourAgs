@@ -23,6 +23,9 @@ import { SeleccionPageModule } from '../pages/seleccion/seleccion.module';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { PagarPage } from '../pages/pagar/pagar';
+import { PagarPageModule } from '../pages/pagar/pagar.module';
+import { PayPal } from '@ionic-native/paypal';
 @NgModule({
   declarations: [
     MyApp,
@@ -43,7 +46,8 @@ import { HomePage } from '../pages/home/home';
     RegistroPageModule,
     IonicModule.forRoot(MyApp),
     InfoEventoPageModule,
-    SeleccionPageModule
+    SeleccionPageModule,
+    PagarPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -57,6 +61,7 @@ import { HomePage } from '../pages/home/home';
     StatusBar,
     SplashScreen,
     Geolocation,
+    PayPal,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

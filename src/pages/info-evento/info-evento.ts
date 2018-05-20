@@ -5,6 +5,8 @@ import { ImageViewerController } from 'ionic-img-viewer';
 import { ViewChild } from '@angular/core';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { SeleccionPage } from '../seleccion/seleccion';
+import { ApiService } from '../../general/conexionesApi';
+import { ConfigGeneral } from '../../general/configGeneral';
 
 /**
  * Generated class for the InfoEventoPage page.
@@ -24,19 +26,22 @@ export class InfoEventoPage {
   public mostrarC: boolean = false;
   cntAdultos:number;
   cntMenores:number;
-  evento:EventoModelo;
+  evento:EventoModelo=new EventoModelo();
   _id:string;
   myIcon: string = "ios-microphone-outline";
-  constructor(public navCtrl: NavController, public navParams: NavParams, public imageViewerCtrl: ImageViewerController,private tts:TextToSpeech,public alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public imageViewerCtrl: ImageViewerController,private tts:TextToSpeech,public alertCtrl:AlertController,
+    private conexionesApi: ApiService,
+    public configGeneral:ConfigGeneral) {
     if(this.navParams.get('_id')){
       this._id = this.navParams.get('_id');
       console.log("Recibe "+this._id);
       
     }
+    this.getDetalle(this._id);
     this.cntAdultos=0;
     this.cntMenores=0;
     //this._id='1';
-    switch (this._id){
+    /*switch (this._id){
       case "1":
         this.evento=new EventoModelo({
           _id:"1",
@@ -108,18 +113,8 @@ export class InfoEventoPage {
           nmbCostoMenor:0.0
         });
         break;
-      }
-      if(this.evento.strTipo=="CONCIERTOS"){
-        this.myIcon = "ios-microphone-outline";
-      }else if(this.evento.strTipo=="DEPORTES"){
-        this.myIcon = "ios-american-football-outline";
-      }else if(this.evento.strTipo=="MUSEO"){
-        this.myIcon = "ios-color-palette-outline";
-      }else if(this.evento.strTipo=="TEATRO"){
-        this.myIcon = "ios-people-outline";
-      }else if(this.evento.strTipo=="TOURS"){
-        this.myIcon = "ios-camera-outline";
-      }
+      }*/
+      
   }
 
   onClick(imageToView) {
@@ -173,7 +168,10 @@ export class InfoEventoPage {
         break;
       case 2:
         console.log("Agregar adulto");
+        //console.log(this.evento);
+        if((this.cntAdultos+this.cntMenores<5)&&(this.cntAdultos+this.cntMenores<this.evento.modeloForo.dispAsientos)){
         this.cntAdultos++;
+        }
         break;
       case 3:
         console.log("Restar menor");
@@ -183,7 +181,9 @@ export class InfoEventoPage {
         break;
       case 4:
         console.log("Agregar menor");
+        if((this.cntAdultos+this.cntMenores<5)&&(this.cntAdultos+this.cntMenores<this.evento.modeloForo.dispAsientos)){
         this.cntMenores++;
+        }
         break;
     }
 
@@ -198,7 +198,28 @@ export class InfoEventoPage {
       });
       alert.present();
     }else{
-      this.navCtrl.push(SeleccionPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores});
+      this.navCtrl.push(SeleccionPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,Evento:this.evento});
+    }
+  }
+
+  getDetalle(id){
+    if(id!=undefined){
+      this.conexionesApi.getDetalleEvento(id)
+      .then((data:EventoModelo) => {
+        this.evento = data;
+        console.log(this.evento);
+        if(this.evento.strTipo=="CONCIERTOS"){
+          this.myIcon = "ios-microphone-outline";
+        }else if(this.evento.strTipo=="DEPORTES"){
+          this.myIcon = "ios-american-football-outline";
+        }else if(this.evento.strTipo=="MUSEO"){
+          this.myIcon = "ios-color-palette-outline";
+        }else if(this.evento.strTipo=="TEATRO"){
+          this.myIcon = "ios-people-outline";
+        }else if(this.evento.strTipo=="TOURS"){
+          this.myIcon = "ios-camera-outline";
+        }
+      });
     }
   }
 

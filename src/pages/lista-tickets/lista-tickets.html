@@ -17,7 +17,7 @@
   <ion-list>
     <ion-item *ngFor="let evt of arrayEvento">
       <ion-thumbnail item-start>
-        <img src={{evt.strImagenPrincipal}}>
+        <img src={{configGeneral.strUrlImages}}{{evt.strImagenPrincipal}}>
       </ion-thumbnail>
       <h2>{{evt.strTitulo}}</h2>
       <p>{{evt.dteFecha}}</p>

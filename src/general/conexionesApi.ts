@@ -35,6 +35,28 @@ export class ApiService{
           });
     }
 
+    getListaEvento(strTipo){
+      return new Promise(resolve => {
+          this.httpClient.get(this.configGeneral.strUrlApis+"listaEvento"+"/"+strTipo)
+          .subscribe(data => {
+            resolve(data['jsnAnswer']);
+          }, err => {
+            console.log(err);
+          });
+        });
+  }
+
+  getDetalleEvento(strIdEvento){
+    return new Promise(resolve => {
+        this.httpClient.get(this.configGeneral.strUrlApis+"detalleEvento"+"/"+strIdEvento)
+        .subscribe(data => {
+          resolve(data['jsnAnswer']);
+        }, err => {
+          console.log(err);
+        });
+      });
+}
+
     getLogIn(strCorreo,strContraseña){
       return new Promise(resolve => {
           this.httpClient.get(this.configGeneral.strUrlApis+"login"+"/"+strCorreo+"/"+strContraseña)
@@ -56,6 +78,35 @@ export class ApiService{
           });
         });
   }
+
+  getDetalleForo(idEvento){
+    return new Promise(resolve => {
+        this.httpClient.get(this.configGeneral.strUrlApis+'detalleForo'+"/"+idEvento)
+        .subscribe(data => {
+          resolve(data['jsnAnswer']['modeloForo']);
+        }, err => {
+          console.log(err);
+        });
+      });
+}
+
+putAsientoForo(idEvento,numAsiento,strColor){
+  var ObjectData = {
+    _id:idEvento,
+    numAsiento:numAsiento,
+    strColor:strColor
+  }
+  return new Promise((resolve, reject) => {
+    this.httpClient.put(this.configGeneral.strUrlApis+'detalleForo', JSON.stringify(ObjectData))
+      .subscribe(data => {
+        console.log("respuesta put" + data);
+        resolve(data);
+      }, (err) => {
+        reject(err);
+      });
+  });
+}
+
 
 
 }

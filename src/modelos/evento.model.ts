@@ -1,3 +1,5 @@
+import { ForoModelo } from "./foro.model";
+
 export class EventoModelo{
     _id:string="";
     strTipo:string="";
@@ -14,6 +16,7 @@ export class EventoModelo{
     dteHoraFin:Date;
     nmbCostoAdulto:number;
     nmbCostoMenor:number;
+    modeloForo:ForoModelo;
     constructor(values: Object = {}) {
         Object.assign(this, values);
     }

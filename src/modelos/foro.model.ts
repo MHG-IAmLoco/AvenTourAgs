@@ -1,14 +1,11 @@
 import { AsientoModelo } from "./asiento.model";
 
 export class ForoModelo{
-    _id:string="";
+    //_id:string="";
     cantAsientos:number;
+    dispAsientos:number;
     arrayAsientos:AsientoModelo[];
-    constructor(auxForoModelo?:ForoModelo){
-        if(auxForoModelo){
-            this._id = auxForoModelo._id;
-            this.cantAsientos = auxForoModelo.cantAsientos;
-            this.arrayAsientos = auxForoModelo.arrayAsientos;
-        }
+    constructor(values: Object = {}) {
+        Object.assign(this, values);
     }
 }

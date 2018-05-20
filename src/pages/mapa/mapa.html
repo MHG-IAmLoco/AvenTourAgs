@@ -11,7 +11,7 @@
     <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
   </agm-map>
   <ion-fab bottom center>
-    <button ion-fab menuToggle (click)="getDirection()" color="secondary">
+    <button ion-fab (click)="openMenu()" color="secondary">
       <ion-icon name="car"></ion-icon>
     </button>
   </ion-fab>

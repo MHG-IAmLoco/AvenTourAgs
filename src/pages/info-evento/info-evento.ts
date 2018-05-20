@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Navbar, AlertController } from 'ionic-angular';
 import { EventoModelo } from '../../modelos/evento.model';
 import { ImageViewerController } from 'ionic-img-viewer';
 import { ViewChild } from '@angular/core';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
+import { SeleccionPage } from '../seleccion/seleccion';
 
 /**
  * Generated class for the InfoEventoPage page.
@@ -19,14 +20,22 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
 })
 export class InfoEventoPage {
   @ViewChild(Navbar) navBar: Navbar;
+  public mostrarB: boolean = true;
+  public mostrarC: boolean = false;
+  cntAdultos:number;
+  cntMenores:number;
   evento:EventoModelo;
   _id:string;
   myIcon: string = "ios-microphone-outline";
-  constructor(public navCtrl: NavController, public navParams: NavParams, public imageViewerCtrl: ImageViewerController,private tts:TextToSpeech) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public imageViewerCtrl: ImageViewerController,private tts:TextToSpeech,public alertCtrl:AlertController) {
     if(this.navParams.get('_id')){
       this._id = this.navParams.get('_id');
       console.log("Recibe "+this._id);
+      
     }
+    this.cntAdultos=0;
+    this.cntMenores=0;
+    //this._id='1';
     switch (this._id){
       case "1":
         this.evento=new EventoModelo({
@@ -146,6 +155,50 @@ export class InfoEventoPage {
       console.log("Se reprodujo exitosamente");
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  comprar(){
+    this.mostrarB = !this.mostrarB;
+    this.mostrarC = !this.mostrarC;
+  }
+
+  contar(caso){
+    switch (caso){
+      case 1:
+        console.log("Restar adulto");
+        if(this.cntAdultos>0){
+          this.cntAdultos--;
+        }
+        break;
+      case 2:
+        console.log("Agregar adulto");
+        this.cntAdultos++;
+        break;
+      case 3:
+        console.log("Restar menor");
+        if(this.cntMenores>0){
+          this.cntMenores--;
+        }
+        break;
+      case 4:
+        console.log("Agregar menor");
+        this.cntMenores++;
+        break;
+    }
+
+  }
+
+  irSeleccion(){
+    if((this.cntAdultos+this.cntMenores)==0){
+      let alert = this.alertCtrl.create({
+        title: 'Queremos que asistas!',
+        subTitle: 'Debes comprar al menos un ticket para poder seleccionar asientos.',
+        buttons: ['Entendido']
+      });
+      alert.present();
+    }else{
+      this.navCtrl.push(SeleccionPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores});
     }
   }
 

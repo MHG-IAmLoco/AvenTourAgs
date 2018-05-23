@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
+import { Component,OnInit } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, Navbar } from 'ionic-angular';
 import { GaleriaPage } from '../galeria/galeria';
 import { GaleriaModelo } from '../../modelos/galeria.model';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
+import {ConfigGeneral} from '../../general/configGeneral'
+import { Observable } from 'rxjs/Observable';
+import { ApiService } from '../../general/conexionesApi';
 import { ViewChild } from '@angular/core';
 
 /**
@@ -18,11 +21,19 @@ import { ViewChild } from '@angular/core';
   selector: 'page-menu-gal',
   templateUrl: 'menu-gal.html',
 })
-export class MenuGalPage {
+export class MenuGalPage implements OnInit {
   @ViewChild(Navbar) navBar: Navbar;
-  arrayGaleria:Array<GaleriaModelo> = new Array<GaleriaModelo>();
-  constructor(public navCtrl: NavController, public navParams: NavParams, private tts:TextToSpeech) {
+  arrayGaleria:GaleriaModelo[] = [];
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private tts:TextToSpeech,
+    public configGeneral:ConfigGeneral,
+    private conexionesApi: ApiService
+  ) {
+    this.getCategorias();
     
+    /*
     this.arrayGaleria.push(new GaleriaModelo({
       _id:"1",
       strTitulo:"Aguascalientes",
@@ -37,13 +48,14 @@ export class MenuGalPage {
       strDescripcion:"Pueblo Mágico",
       strImagenPrincipal:"assets/img/Calv.jpg",
       arrayImagenes:[]
-    }));
+    }));*/
+
   }
 
   IrGaleria(strId) {
     console.log("Id seleccionado"+strId);
     this.tts.stop();
-    this.navCtrl.push(GaleriaPage);
+    this.navCtrl.push(GaleriaPage,{_id:strId});
   }
 
   ngOnInit(){
@@ -64,5 +76,15 @@ export class MenuGalPage {
       this.navCtrl.pop();
       }
   }
+
+  getCategorias(){
+    this.conexionesApi.getCategoriasGaleria()
+    .then((data:GaleriaModelo[]) => {
+      this.arrayGaleria = data;
+      console.log(this.arrayGaleria);
+    });
+  }
+
+  
 
 }

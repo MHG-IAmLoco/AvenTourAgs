@@ -15,7 +15,7 @@
 
 <ion-content padding>
     <ion-card>
-        <img src="{{evento.strImagenPrincipal}}" #imageToView (click)="onClick(imageToView)"/>
+        <img src="{{configGeneral.strUrlImages}}{{evento.strImagenPrincipal}}" #imageToView (click)="onClick(imageToView)"/>
         <ion-card-content>
           <ion-card-title text-center style="color:#04755e">
             <ion-icon [name]="myIcon"></ion-icon>
@@ -44,7 +44,37 @@
             <ion-icon name="ios-cash-outline"></ion-icon>
             Menores:&nbsp;${{evento.nmbCostoMenor}}<br>Adultos:&nbsp;${{evento.nmbCostoAdulto}}
           </p><br>
-          <button ion-button full color="danger">COMPRAR</button>
+          <button ion-button full color="danger" *ngIf="mostrarB" (click)="comprar()">COMPRAR</button>
+          <div *ngIf="mostrarC" align-items-center>
+            <ion-item style="font-size:150%">
+              Adultos:<br>
+              <button ion-button icon-only clear (click)="contar(1)">
+                <ion-icon name="ios-remove-circle-outline"></ion-icon>
+              </button> &nbsp;&nbsp; {{cntAdultos}} &nbsp;&nbsp;
+              <button ion-button icon-only clear (click)="contar(2)">
+                <ion-icon name="ios-add-circle-outline"></ion-icon>
+              </button>
+            </ion-item>
+            <ion-item style="font-size:150%">
+              Menores: <br>
+              <button ion-button icon-only clear (click)="contar(3)">
+                <ion-icon name="ios-remove-circle-outline"></ion-icon>
+              </button> &nbsp;&nbsp; {{cntMenores}} &nbsp;&nbsp;
+              <button ion-button icon-only clear (click)="contar(4)">
+                <ion-icon name="ios-add-circle-outline"></ion-icon>
+              </button>
+            </ion-item>
+<<<<<<< HEAD
+            <ion-item>
+              <button ion-button full color="danger" (click)="irSeleccion()">SELECCION DE ASIENTOS</button>
+            </ion-item>
+          </ion-card>
+=======
+            
+              <button ion-button full color="danger" (click)="irSeleccion()">SELECCION DE ASIENTOS</button>
+            
+          </div>
+>>>>>>> ce0acce1d8e222bb272db25f045555869ea9fb7c
         </ion-card-content>
       </ion-card>
 

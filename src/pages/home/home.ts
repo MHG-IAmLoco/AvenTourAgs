@@ -49,11 +49,6 @@ export class HomePage implements OnInit {
     this.nav.setRoot(page.component);
   }
 
-  rightMenuClick(text) {
-    this.text = text;
-  }
-
-
   openRightMenu() {
     this.menuCtrl.open('right');
   }
@@ -62,24 +57,7 @@ export class HomePage implements OnInit {
     this.menuCtrl.open('left');
   }
 
-  onDrag(ev: any) {
-    console.log('Menu is being dragged', ev);
-  }
-
-  onOpen(ev: any) {
-    console.log('Menu is open', ev);
-  }
-
-  onClose(ev: any) {
-    console.log('Menu is closed', ev);
-  }
-
   ngOnInit() {
-    let loader = this.loadingCtrl.create({
-      content: "Cargando...",
-      duration: 1000
-    });
-    loader.present();
     this.Speack();
   }
 
@@ -90,7 +68,6 @@ export class HomePage implements OnInit {
 
   fnBindItinerariosPage() {
     this.tts.stop();
-    console.log("entrando a itinerario");
     this.navCtrl.push(ItinerariosPage);
   }
 
@@ -106,14 +83,12 @@ export class HomePage implements OnInit {
 
   async Speack(): Promise<any> {
     try {
-      await this.tts.speak({
-        text: "Presiona la opción, mapa, para visualizar la ubicación de los lugares más emblemáticos en Aguascalientes." +
-          "Presiona la opción, tickets, para conocer los museos, tours,obras de teatro y próximos eventos en Aguascalientes y poder adquirir tus entradas." +
-          "Presiona la opción, galería, para conocer y aventurarte virtualmente en los paisajes que tiene Aguascalientes para ofrecer." +
-          "Presiona la opción, itinerarios, para ver y planificar las actividades de tu próxima visita a Aguascalientes."
-        , locale: "es-MX"
-      });
-      console.log("Se reprodujo exitosamente");
+      await this.tts.speak({text:
+      "Presiona la opción, mapa, para visualizar la ubicación de los lugares más emblemáticos en Aguascalientes."+
+      "Presiona la opción, tickets, para conocer los museos, tours,obras de teatro y próximos eventos en Aguascalientes y poder adquirir tus entradas."+
+      "Presiona la opción, galería, para conocer y aventurarte virtualmente en los paisajes que tiene Aguascalientes para ofrecer."+
+      "Presiona la opción, itinerarios, para ver y planificar las actividades de tu próxima visita a Aguascalientes."
+      ,locale:"es-MX"});
     } catch (error) {
       console.log(error);
     }

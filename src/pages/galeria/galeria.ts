@@ -1,23 +1,34 @@
-import { Component } from '@angular/core';
-import { NavController, Navbar } from 'ionic-angular';
+import { Component,OnInit, ViewChild } from '@angular/core';
+import { NavController, NavParams, Navbar } from 'ionic-angular';
 import { ImageViewerController } from "ionic-img-viewer";
 import { GaleriaModelo } from '../../modelos/galeria.model';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
-import { ViewChild } from '@angular/core';
+import { ApiService } from '../../general/conexionesApi';
+import { ConfigGeneral } from '../../general/configGeneral';
  
 @Component({
   selector: 'galeria',
   templateUrl: 'galeria.html'
 })
-export class GaleriaPage {
+export class GaleriaPage implements OnInit{
   @ViewChild(Navbar) navBar: Navbar;
+  Galeria:GaleriaModelo = new GaleriaModelo();
+
+  
   arrayGaleria:Array<GaleriaModelo> = new Array<GaleriaModelo>();
   images = ['1.jpg', '2.jpg', '3.jpg', '4.jpg','5.jpg','6.jpg','7.jpg','8.jpg','9.jpg','10.jpg','11.jpg','12.jpg',
   '13.jpg','14.jpg','15.jpg','16.jpg','17.jpg','18.jpg','19.jpg','20.jpg','21.jpg','22.jpg','23.jpg','24.jpg','25.jpg'];
  
-  constructor(public navCtrl: NavController, public imageViewerCtrl: ImageViewerController, private tts:TextToSpeech) {
-    
-    this.arrayGaleria.push(new GaleriaModelo({
+  constructor(
+    public navCtrl: NavController, 
+    public imageViewerCtrl: ImageViewerController, 
+    private tts:TextToSpeech,
+    public navParams: NavParams,
+    private conexionesApi: ApiService,
+    public configGeneral:ConfigGeneral
+  ) {
+    this.getGaleria(navParams.get('_id'));
+    /*this.arrayGaleria.push(new GaleriaModelo({
       _id:"1",
       strTitulo:"CALLE ZARAGOZA",
       strDescripcion:"Ubicada en el centro de Aguascalientes",
@@ -95,7 +106,7 @@ export class GaleriaPage {
       strDescripcion:"Ubicada en el centro de Aguascalientes",
       strImagenPrincipal:"assets/img/10.jpg",
       arrayImagenes:[]
-    }));
+    }));*/
   }
   onClick(imageToView) {
     const viewer = this.imageViewerCtrl.create(imageToView)
@@ -120,6 +131,15 @@ export class GaleriaPage {
     }
   }
 
+  getGaleria(strId){
+    if(strId!=undefined){
+      this.conexionesApi.getDetalleGaleria(strId)
+      .then((data:GaleriaModelo) => {
+        this.Galeria = data;
+        console.log(this.Galeria);
+      });
+    }
+  }
   async Speack2(): Promise<any> {
     try {
       await this.tts.speak({text:"Para acercar la imágen, usa dos dedos desplazando del centro de la pantalla hacia afuera, "+

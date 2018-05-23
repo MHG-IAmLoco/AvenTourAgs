@@ -18,13 +18,14 @@
     <ion-item>
         <ion-label>Presupuesto</ion-label>
         <ion-select [(ngModel)]="presupuesto" [selectOptions]="selectOptions" okText="Hecho" cancelText="Cancelar" (ionChange)=showVal(presupuesto)>
-            <ion-option value="500">500 MXN.</ion-option>
-            <ion-option value="400">400 MXN.</ion-option>
+            <ion-option value="501">Mayor a 500 MXN.</ion-option>
+            <ion-option value="500">Menor a 500 MXN.</ion-option>
+            <ion-option value="250">Menor a 250 MXN.</ion-option>
         </ion-select>
     </ion-item>
 
   <ion-card *ngFor="let itinerario of arrayItinerario">
-    <img src={{itinerario.strImagenPrincipal}}/>
+    <img src={{configGeneral.strUrlImages}}{{itinerario.strImagenPrincipal}}/>
     <ion-card-content>
       <ion-card-title text-center style="font-weight: bold; color: #126786;">
         {{itinerario.strTitulo}}

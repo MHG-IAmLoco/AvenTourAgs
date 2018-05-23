@@ -4,6 +4,8 @@ import { InfoPaquetePage } from '../info-paquete/info-paquete'
 import { ItinerarioModelo } from '../../modelos/itinerario.model';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { ViewChild } from '@angular/core';
+import { ConfigGeneral } from '../../general/configGeneral';
+import { ApiService } from '../../general/conexionesApi';
 
 /**
  * Generated class for the ItinerariosPage page.
@@ -21,14 +23,21 @@ export class ItinerariosPage {
   @ViewChild(Navbar) navBar: Navbar;
   arrayItinerario:Array<ItinerarioModelo>= new Array<ItinerarioModelo>();
   selectOptions;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private tts:TextToSpeech) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private tts:TextToSpeech, 
+    public configGeneral:ConfigGeneral,
+    public conexionesApis:ApiService
+  ) {
     this.selectOptions = {
       title: 'Margen de presupuesto',
       subTitle: 'Selecciona tu presupuesto disponible',
       mode: 'md'
     };
 
-    this.arrayItinerario.push(new ItinerarioModelo({
+    this.getItineratios(0);
+    /*this.arrayItinerario.push(new ItinerarioModelo({
       _id:"1",
       strTitulo:"AVENTURA EN CALVILLO",
       strDescripcion:"El increible pueblo mágico de Calvillo, en 1 solo día",
@@ -46,7 +55,7 @@ export class ItinerariosPage {
       nmbCostoAproximado: 500,
       nmbTiempoAproximado:4,
       arrayEventos:null
-    }));
+    }));*/
   }
 
   ngOnInit() {
@@ -70,8 +79,7 @@ export class ItinerariosPage {
   async Speack(): Promise<any> {
     try {
       await this.tts.speak({text:"Aquí te presentamos diversas actividades que puedes realizar en el estado de Aguascalientes "+
-      "de acuerdo a tu presupuesto y el tiempo con el que dispongas, introduce los datos requeridos y después elige "+
-      "un plan de actividades para conocer más de estas."
+      "de acuerdo a tu presupuesto y el tiempo con el que dispongas"
       ,locale:"es-MX"});
       console.log("Se reprodujo exitosamente");
     } catch (error) {
@@ -81,7 +89,11 @@ export class ItinerariosPage {
 
   showVal(presupuesto){
     this.arrayItinerario=new Array<ItinerarioModelo>();
-    if(presupuesto==400){
+    if(presupuesto == 501){
+      presupuesto = 10000;
+    }
+    this.getItineratios(presupuesto);
+    /*if(presupuesto==400){
       this.arrayItinerario.push(new ItinerarioModelo({
         _id:"1",
         strTitulo:"AVENTURA EN CALVILLO",
@@ -103,7 +115,14 @@ export class ItinerariosPage {
         arrayEventos:null
       }));
 
-    }
+    }*/
+  }
+
+  getItineratios(intPresupuesto){
+    this.conexionesApis.getItinerarios(intPresupuesto)
+    .then((data:ItinerarioModelo[]) => {
+      this.arrayItinerario = data;
+    });
   }
 
 }

@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { RegistroPage } from '../registro/registro';
+import { ApiService } from '../../general/conexionesApi';
+import { UsuarioModelo } from '../../modelos/usuario.model';
 
 
 @IonicPage()
@@ -10,7 +12,8 @@ import { RegistroPage } from '../registro/registro';
   selector: 'page-login',
   templateUrl: 'login.html',
 })
-export class LoginPage {
+export class LoginPage implements OnInit{
+  modeloUsuario:UsuarioModelo;
   usr1:string="alfrecastillo212@gmail.com";
   pwd1:string="Acastillo_29";
   strUsuario:string;
@@ -20,12 +23,10 @@ export class LoginPage {
     public navParams: NavParams,
     private tts: TextToSpeech,
     private alertCtrl: AlertController,
+    private conexionesApi: ApiService,
     public loadingCtrl: LoadingController) {
   }
 
-  ionViewDidLoad() {
-
-  }
 
   ngOnInit(){
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -33,23 +34,20 @@ export class LoginPage {
     this.Speack();
   }
 
+
+  ionViewDidLoad() {
+    
+  }
+
+  
   irHome(){
     this.tts.stop();
     this.navCtrl.push(HomePage);
   }
 
   ingresar(){
-    
-    if(this.usr1==this.strUsuario && this.pwd1==this.strPwd){
-      let alert = this.alertCtrl.create({
-        title: 'BIENVENIDO ALFREDO',
-        subTitle: 'Que disfrutes de la experiencia AvenTourAgs!',
-        buttons: ['OK']
-      });
-      alert.present();
-      this.tts.stop();
-      this.navCtrl.push(HomePage);
-    }
+    //if(this.usr1==this.strUsuario && this.pwd1==this.strPwd)
+    this.comprobarCredenciales();
   }
 
   async Speack(): Promise<any> {
@@ -67,5 +65,33 @@ export class LoginPage {
     this.tts.stop();
     this.navCtrl.push(RegistroPage)
   }
+
+  comprobarCredenciales(){
+      this.conexionesApi.getLogIn(this.strUsuario,this.strPwd)
+      .then((data) => {
+        console.log(JSON.stringify(data,null,2));
+        if(data["intStatus"]==1){
+          this.modeloUsuario = new UsuarioModelo(data["jsnAnswer"]);
+          let alert = this.alertCtrl.create({
+            title: 'BIENVENIDO '+ this.modeloUsuario.strNombre.toUpperCase(),
+            subTitle: 'Que disfrutes de la experiencia AvenTourAgs!',
+            buttons: ['OK']
+          });
+          alert.present();
+          this.tts.stop();
+          this.navCtrl.setRoot(HomePage)
+        }else{
+          let alert = this.alertCtrl.create({
+            title: 'ERROR AL INGRESAR',
+            subTitle: 'Credenciales incorrectas!',
+            buttons: ['OK']
+          });
+          alert.present();
+          this.tts.stop();
+        }
+      });
+      
+    }
+  
 
 }

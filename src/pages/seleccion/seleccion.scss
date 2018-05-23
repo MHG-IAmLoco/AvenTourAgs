@@ -1,4 +1,35 @@
 page-seleccion {
+    .fondo{
+            background: url("../../assets/img/fondoSel.jpg") no-repeat center center fixed;
+            background-size: cover;
+            -moz-background-size: cover;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            min-height: 100%;
+            min-width: 100%;
+            text-align: center;
+
+            /* Escalamiento proporcional */
+            width: 100%;
+            height: 100%;
+
+            /* Posicionamiento */
+
+            top: 0;
+            left: 0;
+            z-index: -1;
+    }
+    .telon{
+        width: 200%;
+        height: 130px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        padding: 0;
+        margin-bottom: 40px;
+        //margin-left: 25%;
+    }
     .fila{
         width: 200%;
         display: flex;
@@ -6,7 +37,7 @@ page-seleccion {
         justify-content: space-between;
         flex-wrap: nowrap;
         padding: 0;
-        background-color: #b3b8b6;
+        background-color: #6ea18b;
         margin: 0;
     }
     .asiento{
@@ -25,10 +56,16 @@ page-seleccion {
             transform: translate(-50%,-50%);
             font-size: 12px;
             font-weight: bold;
+            color:white;
         }
     }
 
     .scroll-content{
         height: 100vh;
+    }
+    
+    .swipe{
+        position: absolute;
+        margin-top: 70%;
     }
 }

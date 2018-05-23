@@ -4,8 +4,10 @@ import { IonicApp, IonicErrorHandler, IonicModule, NavController } from 'ionic-a
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
-import { TextToSpeech } from '@ionic-native/text-to-speech';
-import { HttpClientModule } from '@angular/common/http';
+import {TextToSpeech} from '@ionic-native/text-to-speech';
+import {HttpClientModule} from '@angular/common/http';
+import {ApiService} from '../general/conexionesApi';
+import {ConfigGeneral} from '../general/configGeneral';
 import { Geolocation } from '@ionic-native/geolocation';
 
 import { ItinerariosPage } from '../pages/itinerarios/itinerarios';
@@ -26,7 +28,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login/login';
+import { PagarPage } from '../pages/pagar/pagar';
+import { PagarPageModule } from '../pages/pagar/pagar.module';
+import { PayPal } from '@ionic-native/paypal';
 @NgModule({
   declarations: [
     MyApp,
@@ -49,7 +53,8 @@ import { LoginPage } from '../pages/login/login';
     NgxQRCodeModule,
     IonicModule.forRoot(MyApp),
     InfoEventoPageModule,
-    SeleccionPageModule
+    SeleccionPageModule,
+    PagarPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -63,6 +68,9 @@ import { LoginPage } from '../pages/login/login';
     StatusBar,
     SplashScreen,
     Geolocation,
+    ApiService,
+    ConfigGeneral,
+    PayPal,
     BarcodeScanner,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

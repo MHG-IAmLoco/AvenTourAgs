@@ -89,4 +89,6 @@
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>
+    <plugin name="com.paypal.cordova.mobilesdk" spec="^3.5.0" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="^7.1.2" />
 </widget>

@@ -4,6 +4,8 @@ import {EventoModelo} from '../../modelos/evento.model';
 import { InfoEventoPage } from '../info-evento/info-evento';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { ViewChild } from '@angular/core';
+import { ApiService } from '../../general/conexionesApi';
+import { ConfigGeneral } from '../../general/configGeneral';
 
 /**
  * Generated class for the ListaTicketsPage page.
@@ -21,11 +23,14 @@ export class ListaTicketsPage {
   @ViewChild(Navbar) navBar: Navbar;
   arrayEvento:Array<EventoModelo> = new Array<EventoModelo>();
   TipoEvento:string;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private tts:TextToSpeech) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private tts:TextToSpeech,
+    private conexionesApi: ApiService,
+    public configGeneral:ConfigGeneral) {
     if(this.navParams.get('TipoEvento')){
       this.TipoEvento = this.navParams.get('TipoEvento');
     }
-    switch (this.TipoEvento){
+    this.getEventos(this.TipoEvento);
+    /*switch (this.TipoEvento){
       case "CONCIERTOS":
         this.arrayEvento.push(new EventoModelo({
           _id:"1",
@@ -33,7 +38,7 @@ export class ListaTicketsPage {
           strTitulo:"PEPE AGUILAR • JARIPEO SIN FRONTERAS",
           strDescripcion:"Pepe Aguilar cantando junto a sus hijos.",
           strResenia:"Alguna reseña",
-          strImagenPrincipal:"../../assets/img/pepe.jpg",
+          strImagenPrincipal:"assets/img/pepe.jpg",
           dteFecha: new Date(),
           strMunicipio:"Aguascalientes",
           strUbicacion:"Plaza de Toros Monumental",
@@ -49,7 +54,7 @@ export class ListaTicketsPage {
           strTitulo:"ALEJANDRO FERNANDEZ • PALENQUE DE LA FERIA",
           strDescripcion:"Una vez más se presenta en Aguascalientes el potrillo.",
           strResenia:"Alguna reseña",
-          strImagenPrincipal:"../../assets/img/alejandro.jpg",
+          strImagenPrincipal:"assets/img/alejandro.jpg",
           dteFecha: new Date(),
           strMunicipio:"Aguascalientes",
           strUbicacion:"Palenque de la feria",
@@ -66,7 +71,7 @@ export class ListaTicketsPage {
           strTitulo:"ESTE ES UN DEPORTE",
           strResenia:"Alguna reseña",
           strDescripcion:"Pepe Aguilar cantando junto a sus hijos.",
-          strImagenPrincipal:"../../assets/img/pepe.jpg",
+          strImagenPrincipal:"assets/img/pepe.jpg",
           dteFecha: new Date(),
           strMunicipio:"Aguascalientes",
           strUbicacion:"Plaza de Toros Monumental",
@@ -82,7 +87,7 @@ export class ListaTicketsPage {
           strTitulo:"ESTE ES UN DEPORTE",
           strDescripcion:"Una vez más se presenta en Aguascalientes el potrillo.",
           strResenia:"Alguna reseña",
-          strImagenPrincipal:"../../assets/img/alejandro.jpg",
+          strImagenPrincipal:"assets/img/alejandro.jpg",
           dteFecha: new Date(),
           strMunicipio:"Aguascalientes",
           strUbicacion:"Palenque de la feria",
@@ -92,7 +97,7 @@ export class ListaTicketsPage {
           nmbCostoMenor:0.0
         }));
         break;
-  }
+  }*/
   }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -121,6 +126,16 @@ export class ListaTicketsPage {
       console.log("Se reprodujo exitosamente");
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  getEventos(strTipo){
+    if(strTipo!=undefined){
+      this.conexionesApi.getListaEvento(strTipo)
+      .then((data:EventoModelo[]) => {
+        this.arrayEvento = data;
+        console.log(this.arrayEvento);
+      });
     }
   }
 

@@ -1,4 +1,5 @@
 import { ForoModelo } from "./foro.model";
+import { InstanciaModelo } from "./instancia.model";
 
 export class EventoModelo{
     _id:string="";
@@ -8,15 +9,15 @@ export class EventoModelo{
     strResenia:string="";
     strImagenPrincipal:string="";
     dteFecha:Date;
-    strMunicipio:string="";
     strUbicacion:string="";
-    dteHora:Date;
-    strCosto:string="";
     dteHoraInicio:Date;
     dteHoraFin:Date;
     nmbCostoAdulto:number;
     nmbCostoMenor:number;
     modeloForo:ForoModelo;
+    nmbCupo:number;
+    arrayHorarios:string[];
+    arrayInstancias:InstanciaModelo[];
     constructor(values: Object = {}) {
         Object.assign(this, values);
     }

@@ -150,7 +150,7 @@ export class GaleriaPage implements OnInit{
       console.log(error);
     }
   }
-
+  
   ionViewDidLoad(){
     this.navBar.backButtonClick = () => {
           this.tts.stop();

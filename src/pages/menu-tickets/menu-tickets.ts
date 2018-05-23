@@ -4,6 +4,7 @@ import { GaleriaModelo } from '../../modelos/galeria.model';
 import { ListaTicketsPage } from '../lista-tickets/lista-tickets';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { ViewChild } from '@angular/core';
+import { ListaActividadPage } from '../lista-actividad/lista-actividad';
 
 /**
  * Generated class for the MenuTicketsPage page.
@@ -76,7 +77,11 @@ export class MenuTicketsPage {
   }
 
   IrInfo(tipoEvt) {
-    this.navCtrl.push(ListaTicketsPage,{TipoEvento:tipoEvt});
+    if(tipoEvt=="MUSEO"||tipoEvt=="TOURS"){
+      this.navCtrl.push(ListaActividadPage,{TipoEvento:tipoEvt});
+    }else{
+      this.navCtrl.push(ListaTicketsPage,{TipoEvento:tipoEvt});
+    }
     this.tts.stop();
   }
 

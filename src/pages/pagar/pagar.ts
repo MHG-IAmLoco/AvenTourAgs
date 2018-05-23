@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal';
 import { EventoModelo } from '../../modelos/evento.model';
+import { ApiService } from '../../general/conexionesApi';
+import { ConfigGeneral } from '../../general/configGeneral';
 
 /**
  * Generated class for the PagarPage page.
@@ -17,8 +19,8 @@ import { EventoModelo } from '../../modelos/evento.model';
 })
 export class PagarPage {
 	payPalEnvironment: string = 'payPalEnvironmentSandbox';
-  payment: PayPalPayment = new PayPalPayment('10.10', 'USD', 'TV', 'sale');
-  evento:EventoModelo;
+  payment: PayPalPayment;
+  evento:EventoModelo= new EventoModelo();
 	cntAdultos=0;
 	cntMenores=0;
 	idEvento:string;
@@ -28,7 +30,9 @@ export class PagarPage {
 	comision=0;
 	total=0;
 	arraySeleccion:Array<number>;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private payPal: PayPal,private alertCtrl:AlertController) {
+	constructor(public navCtrl: NavController, public navParams: NavParams,private payPal: PayPal,private alertCtrl:AlertController,
+		private conexionesApi: ApiService,
+    public configGeneral:ConfigGeneral) {
 		
 		if(this.navParams.get('CantAdultos')){
       this.cntAdultos = this.navParams.get('CantAdultos');
@@ -42,7 +46,8 @@ export class PagarPage {
 		if(this.navParams.get('ArraySeleccion')){
 			this.arraySeleccion = this.navParams.get('ArraySeleccion');
 		}
-    this.evento=new EventoModelo({
+		this.getDetalle(this.idEvento);
+    /*this.evento=new EventoModelo({
 			_id:"1",
 			strTipo:"CONCIERTOS",
 			strTitulo:"PEPE AGUILAR • JARIPEO SIN FRONTERAS",
@@ -59,13 +64,9 @@ export class PagarPage {
 			dteHoraFin: new Date(),
 			nmbCostoAdulto:700.0,
 			nmbCostoMenor:700.0
-		});
+		});*/
 		//this.cntAdultos= this.cntMenores =1;
-		this.totalAdultos=this.cntAdultos*this.evento.nmbCostoAdulto;
-		this.totalMenores=this.cntMenores*this.evento.nmbCostoMenor;
-		this.subTotal=(this.totalAdultos+this.totalMenores);
-		this.comision=this.subTotal*0.10;
-		this.total=this.subTotal+this.comision;
+		
 	
   }
 
@@ -74,6 +75,7 @@ export class PagarPage {
   }
 
   pagar(){
+		this.payment = new PayPalPayment(''+this.total, 'MXN', 'AVENTOURAGS', 'sale');
     this.payPal.init({
 			PayPalEnvironmentProduction: '',
 			PayPalEnvironmentSandbox: 'AXY8tnUjzkko_FSqywfO1EM6acDa_98dRON1NNKk2NSxyxBgWXwOnNPAT3SeByCcUmeQ3m8DyXwAb8qF'
@@ -82,6 +84,7 @@ export class PagarPage {
 				this.payPal.renderSinglePaymentUI(this.payment).then((response) => {
 					alert(`Successfully paid. Status = ${response.response.state}`);
 					console.log(response);
+					
 				}, () => {
 					console.log('Error or render dialog closed without being successful');
 				});
@@ -97,6 +100,32 @@ export class PagarPage {
       });
       alert.present();
 		});
+	}
+	
+	getDetalle(id){
+    if(id!=undefined){
+      this.conexionesApi.getDetalleEvento(id)
+      .then((data:EventoModelo) => {
+        this.evento = data;
+				console.log(this.evento);
+				this.totalAdultos=this.cntAdultos*this.evento.nmbCostoAdulto;
+				this.totalMenores=this.cntMenores*this.evento.nmbCostoMenor;
+				this.subTotal=(this.totalAdultos+this.totalMenores);
+				this.comision=this.subTotal*0.10;
+				this.total=this.subTotal+this.comision;
+        if(this.evento.strTipo=="CONCIERTOS"){
+          
+        }else if(this.evento.strTipo=="DEPORTES"){
+          
+        }else if(this.evento.strTipo=="MUSEO"){
+          
+        }else if(this.evento.strTipo=="TEATRO"){
+          
+        }else if(this.evento.strTipo=="TOURS"){
+          
+        }
+      });
+    }
   }
 
 }

@@ -1,5 +1,5 @@
 <!--
-  Generated template for the InfoEventoPage page.
+  Generated template for the InfoActividadPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -44,6 +44,8 @@
             <ion-icon name="ios-cash-outline"></ion-icon>
             Menores:&nbsp;${{evento.nmbCostoMenor}}<br>Adultos:&nbsp;${{evento.nmbCostoAdulto}}
           </p><br>
+          <button ion-button full color="botonOmi" (click)="verFechas()">SELECCIONAR FECHA</button>
+          <br>
           <button ion-button full color="danger" *ngIf="mostrarB" (click)="comprar()">COMPRAR</button>
           <div *ngIf="mostrarC">
             <ion-item style="font-size:150%; text-align:center">
@@ -65,11 +67,10 @@
               </button>
             </ion-item>
             
-              <button ion-button full color="danger" (click)="irSeleccion()">{{letrero}}</button>
+              <button ion-button full color="danger" (click)="irSeleccion()">PAGAR</button>
             
           </div>
         </ion-card-content>
       </ion-card>
-      
 
 </ion-content>

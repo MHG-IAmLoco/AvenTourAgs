@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Navbar, AlertController } from 'ionic-angular';
 import { EventoModelo } from '../../modelos/evento.model';
 import { ImageViewerController } from 'ionic-img-viewer';
-import { ViewChild } from '@angular/core';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
-import { SeleccionPage } from '../seleccion/seleccion';
 import { ApiService } from '../../general/conexionesApi';
 import { ConfigGeneral } from '../../general/configGeneral';
+import { SeleccionPage } from '../seleccion/seleccion';
 import { PagarPage } from '../pagar/pagar';
+import { ForoModelo } from '../../modelos/foro.model';
+import { DatePicker } from '@ionic-native/date-picker';
 
 /**
- * Generated class for the InfoEventoPage page.
+ * Generated class for the InfoActividadPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -18,105 +19,81 @@ import { PagarPage } from '../pagar/pagar';
 
 @IonicPage()
 @Component({
-  selector: 'page-info-evento',
-  templateUrl: 'info-evento.html',
+  selector: 'page-info-actividad',
+  templateUrl: 'info-actividad.html',
 })
-export class InfoEventoPage {
+export class InfoActividadPage {
   @ViewChild(Navbar) navBar: Navbar;
   public mostrarB: boolean = true;
   public mostrarC: boolean = false;
-  cntAdultos:number;
-  cntMenores:number;
+  cntAdultos:number=0;
+  cntMenores:number=0;
   evento:EventoModelo=new EventoModelo();
   _id:string;
   myIcon: string = "ios-microphone-outline";
-  letrero:string="SELECCION DE ASIENTOS";
   constructor(public navCtrl: NavController, public navParams: NavParams, public imageViewerCtrl: ImageViewerController,private tts:TextToSpeech,public alertCtrl:AlertController,
     private conexionesApi: ApiService,
-    public configGeneral:ConfigGeneral) {
-    if(this.navParams.get('_id')){
-      this._id = this.navParams.get('_id');
-      console.log("Recibe "+this._id);
-      
-    }
-    this.getDetalle(this._id);
-    this.cntAdultos=0;
-    this.cntMenores=0;
-    //this._id='1';
-    /*switch (this._id){
-      case "1":
+    public configGeneral:ConfigGeneral,
+    private datePicker: DatePicker) {
+      if(this.navParams.get('_id')){
+        this._id = this.navParams.get('_id');
+        console.log("Recibe "+this._id);
+      }
+      //this.cntAdultos=0;
+      //this.cntMenores=0;
+      switch (this._id){
+        case "1":
         this.evento=new EventoModelo({
           _id:"1",
-          strTipo:"CONCIERTOS",
-          strTitulo:"PEPE AGUILAR • JARIPEO SIN FRONTERAS",
-          strDescripcion:"Pepe Aguilar cantando junto a sus hijos.",
-          strResenia:"Pepe Aguilar y Familia junto con Christian Nodal recuperan la tradición del Jaripeo "+
-          "La historia continúa y se reinventa. Tras una exitosa carrera, acreedor de nueve premios Grammy, "+
-          "los reconocimientos más importantes en la industria musical y sin duda una de las mejores voces de "+
-          "habla hispana Pepe Aguilar toma la iniciativa acompañado de la 3ra generación de los Aguilar y regresa a los ruedos.",
-          strImagenPrincipal:"../../assets/img/pepe.jpg",
-          dteFecha: new Date(2018,4,28),
-          strMunicipio:"Aguascalientes",
+          strTipo:"MUSEO",
+          strTitulo:"MUSEO AGUASCALIENTES",
+          strDescripcion:"Uno de los museos más importantes de Aguascalientes.",
+          strResenia:"Alguna reseña",
+          strImagenPrincipal:"14.jpg",
+          dteFecha: new Date(),
           strUbicacion:"Plaza de Toros Monumental",
           dteHoraInicio: new Date(),
           dteHoraFin: new Date(),
-          nmbCostoAdulto:0.0,
-          nmbCostoMenor:0.0
+          nmbCostoAdulto:40,
+          nmbCostoMenor:20,
+          modeloForo:new ForoModelo(),
+          nmbCupo:50,
+          arrayHorarios:[],
+          arrayInstancias:[]
         });
         break;
-      case "2":
+        case "2":
         this.evento=new EventoModelo({
           _id:"2",
-          strTipo:"CONCIERTOS",
-          strTitulo:"ALEJANDRO FERNANDEZ • PALENQUE DE LA FERIA",
-          strDescripcion:"Una vez más se presenta en Aguascalientes el potrillo.",
+          strTipo:"TOURS",
+          strTitulo:"CALVILLO MÁGICO",
+          strDescripcion:"Un lugar encantador.",
           strResenia:"Alguna reseña",
-          strImagenPrincipal:"../../assets/img/alejandro.jpg",
+          strImagenPrincipal:"Calv.jpg",
           dteFecha: new Date(),
-          strMunicipio:"Aguascalientes",
-          strUbicacion:"Palenque de la feria",
+          strUbicacion:"Calvillo",
           dteHoraInicio: new Date(),
           dteHoraFin: new Date(),
-          nmbCostoAdulto:0.0,
-          nmbCostoMenor:0.0
+          nmbCostoAdulto:100,
+          nmbCostoMenor:60,
+          modeloForo:new ForoModelo(),
+          nmbCupo:50,
+          arrayHorarios:[],
+          arrayInstancias:[]
         });
-        break;
-      case "3":
-        this.evento=new EventoModelo({
-          _id:"1",
-          strTipo:"DEPORTES",
-          strTitulo:"ESTE ES UN DEPORTE",
-          strResenia:"Alguna reseña",
-          strDescripcion:"Pepe Aguilar cantando junto a sus hijos.",
-          strImagenPrincipal:"../../assets/img/pepe.jpg",
-          dteFecha: new Date(),
-          strMunicipio:"Aguascalientes",
-          strUbicacion:"Plaza de Toros Monumental",
-          dteHoraInicio: new Date(),
-          dteHoraFin: new Date(),
-          nmbCostoAdulto:0.0,
-          nmbCostoMenor:0.0
-        });
-        break;
-      case "4":
-        this.evento=new EventoModelo({
-          _id:"2",
-          strTipo:"DEPORTES",
-          strTitulo:"ESTE ES UN DEPORTE",
-          strDescripcion:"Una vez más se presenta en Aguascalientes el potrillo.",
-          strResenia:"Alguna reseña",
-          strImagenPrincipal:"../../assets/img/alejandro.jpg",
-          dteFecha: new Date(),
-          strMunicipio:"Aguascalientes",
-          strUbicacion:"Palenque de la feria",
-          dteHoraInicio: new Date(),
-          dteHoraFin: new Date(),
-          nmbCostoAdulto:0.0,
-          nmbCostoMenor:0.0
-        });
-        break;
-      }*/
-      
+          break;
+        }
+        if(this.evento.strTipo=="CONCIERTOS"){
+          this.myIcon = "ios-microphone-outline";
+        }else if(this.evento.strTipo=="DEPORTES"){
+          this.myIcon = "ios-american-football-outline";
+        }else if(this.evento.strTipo=="MUSEO"){
+          this.myIcon = "ios-color-palette-outline";
+        }else if(this.evento.strTipo=="TEATRO"){
+          this.myIcon = "ios-people-outline";
+        }else if(this.evento.strTipo=="TOURS"){
+          this.myIcon = "ios-camera-outline";
+        }
   }
 
   onClick(imageToView) {
@@ -160,6 +137,19 @@ export class InfoEventoPage {
     this.mostrarC = !this.mostrarC;
   }
 
+  verFechas(){
+    this.datePicker.show({
+      date: new Date(),
+      mode: 'date',
+      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_LIGHT,
+      allowOldDates: false,
+      minDate: Date.now()
+    }).then(
+      date => console.log('Got date: ', date),
+      err => console.log('Error occurred while getting date: ', err)
+    );
+  }
+
   contar(caso){
     switch (caso){
       case 1:
@@ -171,7 +161,7 @@ export class InfoEventoPage {
       case 2:
         console.log("Agregar adulto");
         //console.log(this.evento);
-        if((this.cntAdultos+this.cntMenores<5)&&(this.cntAdultos+this.cntMenores<this.evento.modeloForo.dispAsientos)){
+        if((this.cntAdultos+this.cntMenores<5)){
         this.cntAdultos++;
         }
         break;
@@ -183,7 +173,7 @@ export class InfoEventoPage {
         break;
       case 4:
         console.log("Agregar menor");
-        if((this.cntAdultos+this.cntMenores<5)&&(this.cntAdultos+this.cntMenores<this.evento.modeloForo.dispAsientos)){
+        if((this.cntAdultos+this.cntMenores<5)){
         this.cntMenores++;
         }
         break;
@@ -213,7 +203,7 @@ export class InfoEventoPage {
       }
     }
   }
-  
+
   getDetalle(id){
     if(id!=undefined){
       this.conexionesApi.getDetalleEvento(id)
@@ -224,7 +214,6 @@ export class InfoEventoPage {
           this.myIcon = "ios-microphone-outline";
         }else if(this.evento.strTipo=="DEPORTES"){
           this.myIcon = "ios-american-football-outline";
-          this.letrero="PAGAR";
         }else if(this.evento.strTipo=="MUSEO"){
           this.myIcon = "ios-color-palette-outline";
         }else if(this.evento.strTipo=="TEATRO"){

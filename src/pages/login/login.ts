@@ -18,6 +18,7 @@ export class LoginPage implements OnInit{
   pwd1:string="Acastillo_29";
   strUsuario:string;
   strPwd:string;
+  state: number;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -33,16 +34,12 @@ export class LoginPage implements OnInit{
     //Add 'implements OnInit' to the class.
     this.Speack();
   }
-
-
-  ionViewDidLoad() {
-    
-  }
-
   
   irHome(){
     this.tts.stop();
-    this.navCtrl.push(HomePage);
+    this.navCtrl.push(HomePage, {
+      type: this.state = 0,
+    });
   }
 
   ingresar(){
@@ -79,7 +76,9 @@ export class LoginPage implements OnInit{
           });
           alert.present();
           this.tts.stop();
-          this.navCtrl.setRoot(HomePage)
+          this.navCtrl.setRoot(HomePage,{
+            type: this.state = 1,
+          })
         }else{
           let alert = this.alertCtrl.create({
             title: 'ERROR AL INGRESAR',

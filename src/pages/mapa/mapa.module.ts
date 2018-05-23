@@ -10,7 +10,7 @@ import { MapaPage } from './mapa';
   ],
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDaiUpYfg_SBzRrLyrlK8XUHYezMF4569I'
+      apiKey: 'AIzaSyDKa7xerCxBbtnusdJqvjI-PlyVCpN8rDw '
     }),
     IonicPageModule.forChild(MapaPage),
     AgmDirectionModule,

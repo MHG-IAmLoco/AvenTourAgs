@@ -25,12 +25,15 @@ import { InfoEventoPageModule } from '../pages/info-evento/info-evento.module';
 import { SeleccionPageModule } from '../pages/seleccion/seleccion.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { DatePicker } from '@ionic-native/date-picker'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { PagarPage } from '../pages/pagar/pagar';
 import { PagarPageModule } from '../pages/pagar/pagar.module';
 import { PayPal } from '@ionic-native/paypal';
+import { ListaActividadPageModule } from '../pages/lista-actividad/lista-actividad.module';
+import { InfoActividadPageModule } from '../pages/info-actividad/info-actividad.module';
 @NgModule({
   declarations: [
     MyApp,
@@ -54,9 +57,12 @@ import { PayPal } from '@ionic-native/paypal';
     IonicModule.forRoot(MyApp),
     InfoEventoPageModule,
     SeleccionPageModule,
-    PagarPageModule
+    PagarPageModule,
+    ListaActividadPageModule,
+    InfoActividadPageModule
   ],
   bootstrap: [IonicApp],
+
   entryComponents: [
     MyApp,
     HomePage,
@@ -72,6 +78,7 @@ import { PayPal } from '@ionic-native/paypal';
     ConfigGeneral,
     PayPal,
     BarcodeScanner,
+    DatePicker,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

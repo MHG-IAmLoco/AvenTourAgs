@@ -37,8 +37,9 @@ page-seleccion {
         justify-content: space-between;
         flex-wrap: nowrap;
         padding: 0;
-        background-color: #6ea18b;
+        background-color: #070707;
         margin: 0;
+        //position: relative;
     }
     .asiento{
         display: inline-block;
@@ -63,9 +64,15 @@ page-seleccion {
     .scroll-content{
         height: 100vh;
     }
-    
     .swipe{
         position: absolute;
-        margin-top: 70%;
+        margin-top: 20%;
+        z-index: 1;
     }
+
+    .contenedor{
+        background-color: #070707;
+    }
+    
+    
 }

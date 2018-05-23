@@ -1,7 +1,13 @@
 <ion-header>
-
+    <ion-menu [content]="menu1" [persistent]="true">
+        <ion-content>
+          <ion-list>
+            <p>some menu content, could be list items</p>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+    <ion-nav #menu1 [root]="rootPage"></ion-nav>
 </ion-header>
-
 
 <ion-content class="fondo">
   <div class="logo">

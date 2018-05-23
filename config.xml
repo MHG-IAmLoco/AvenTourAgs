@@ -84,8 +84,9 @@
     <plugin name="cordova-plugin-nativeaudio" spec="^3.0.9" />
     <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-tts" spec="^0.2.3" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="^7.1.2" />
+    <plugin name="org.apache.cordova.geolocation" spec="^0.3.6" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>
-    <plugin name="phonegap-plugin-barcodescanner" spec="^7.1.2" />
 </widget>

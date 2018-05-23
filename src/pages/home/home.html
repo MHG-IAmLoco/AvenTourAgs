@@ -1,28 +1,33 @@
+<ion-fab top left>
+  <button ion-fab mini menuToggle="MenuNoSesion" color="login">
+    <ion-icon name="menu"></ion-icon>
+  </button>
+</ion-fab>
 
-<ion-content  class="fondo">
+<ion-content class="fondo">
   <!-- Logo -->
   <div class="logo">
-    <img src="../../assets/img/logo1.png" style="height:100%" >
+    <img src="../../assets/img/logo1.png" style="height:100%">
   </div>
 
   <div margin style="padding-top:1%">
     <!-- Aqui van los botones-->
-      <ion-row>
-        <ion-col style="text-align:center;" class="col" (click)="fnBindMapaPage()">
-          <img src="../../assets/img/map1.png" class="img boton">
-        </ion-col>
-        <ion-col style="text-align:center; " class="col" (click)="fnBindTicketsPage()">
-          <img src="../../assets/img/price-tag1.png" class="img botonn">
-        </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col style="text-align:center;" class="col" (click)="fnBindMapaPage()">
+        <img src="../../assets/img/map1.png" class="img boton">
+      </ion-col>
+      <ion-col style="text-align:center; " class="col" (click)="fnBindTicketsPage()">
+        <img src="../../assets/img/price-tag1.png" class="img botonn">
+      </ion-col>
+    </ion-row>
 
-      <ion-row>
-        <ion-col style="text-align:center;" class="col" (click)="IrMenGaleria()">
-          <img src="../../assets/img/gallery1.png" class="img botonn">
-        </ion-col>
-        <ion-col style="text-align:center" class="col" (click)="fnBindItinerariosPage()">
-          <img src="../../assets/img/shopping-list1.png" class="img boton">
-        </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col style="text-align:center;" class="col" (click)="IrMenGaleria()">
+        <img src="../../assets/img/gallery1.png" class="img botonn">
+      </ion-col>
+      <ion-col style="text-align:center" class="col" (click)="fnBindItinerariosPage()">
+        <img src="../../assets/img/shopping-list1.png" class="img boton">
+      </ion-col>
+    </ion-row>
   </div>
 </ion-content>

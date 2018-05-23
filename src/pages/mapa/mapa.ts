@@ -1,6 +1,6 @@
-import { Geolocation } from '@ionic-native/geolocation';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ActionSheetController } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
 @IonicPage()
 @Component({
   selector: 'page-mapa',
@@ -8,38 +8,25 @@ import { IonicPage, NavController, NavParams, Platform, ActionSheetController } 
 })
 export class MapaPage {
 
-  public lat: number;
-  public lng: number;
+  public lat: number = 21.911185;
+  public lng: number = -102.31538999999998;
   public zoom: number = 16;
   public dir = undefined;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private _geoLoc: Geolocation,
-    public platform: Platform, public actionsheetCtrl: ActionSheetController) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MapaPage');
-    this.getLocation().then(res => {
-      this.lat = res.coords.latitude
-      this.lng = res.coords.longitude
-    }).catch(err => {
-      console.log(err);
-    });
-  }
-
-  getLocation() {
-    return this._geoLoc.getCurrentPosition();
-  }
-
-  getDirection(dest) {
-    // this.getLocation().then(res => {
-    this.dir = {
-      origin: { lat: this.lat, lng: this.lng },
-      destination: { lat: 21.8804194, lng: -102.3067378 }
+    public platform: Platform, public actionsheetCtrl: ActionSheetController) { 
+      this.getLoc();
     }
-    // }).catch(err => {
-    //   console.log(err);
-    // });
+
+  async getLoc(): Promise<any> {
+    this._geoLoc.getCurrentPosition().then(position => {
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
+      console.log(this.lat);
+      console.log(this.lng);
+    }, error => {
+      console.log('Error: ', error);
+    });
   }
 
   openMenu() {
@@ -208,6 +195,3 @@ export class MapaPage {
   }
 
 }
-
-
-

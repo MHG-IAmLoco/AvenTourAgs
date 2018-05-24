@@ -11,14 +11,14 @@ npm install --save @ionic-native/barcode-scanner
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Qr</ion-title>
+  <ion-navbar color="qr">
+    <ion-title>ESCANEAR QR</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <ion-item>
     <ion-input type="text" placeholder="MY QR Code data" [(ngModel)]="qrData">
     </ion-input>
@@ -30,9 +30,9 @@ npm install --save @ionic-native/barcode-scanner
 
   <ion-card *ngIf="createdCode">
     <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
-    <ion-card-content>
+    <!--<ion-card-content>
       <p>Value: {{ createdCode }}</p>
-    </ion-card-content>
+    </ion-card-content> -->
   </ion-card>
 
   <ion-card *ngIf="scannedCode">

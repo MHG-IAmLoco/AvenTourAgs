@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ActionSheetController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+
 @IonicPage()
 @Component({
   selector: 'page-mapa',
@@ -13,13 +15,16 @@ export class MapaPage {
   public zoom: number = 16;
   public dir = undefined;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private _geoLoc: Geolocation,
-    public platform: Platform, public actionsheetCtrl: ActionSheetController) { 
+  constructor(private androidPermissions: AndroidPermissions, public navCtrl: NavController, public navParams: NavParams, private _geoLoc: Geolocation,
+    public platform: Platform, public actionsheetCtrl: ActionSheetController) {
+    this.platform.ready().then(() => {
+      this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GEOLOCATION]);
       this.getLoc();
-    }
+    });
+  }
 
   async getLoc(): Promise<any> {
-    this._geoLoc.getCurrentPosition().then(position => {
+      this._geoLoc.getCurrentPosition().then(position => {
       this.lat = position.coords.latitude;
       this.lng = position.coords.longitude;
       console.log(this.lat);

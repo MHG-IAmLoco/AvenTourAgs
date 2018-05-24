@@ -29,6 +29,7 @@ export class QrPage {
   scanCode() {
     this.barcodeScanner.scan().then(barcodeData => {
       this.scannedCode = barcodeData.text;
+      this.createdCode = this.scannedCode;
     }, (err) => {
         console.log('Error: ', err);
     });

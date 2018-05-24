@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapaPage } from './../mapa/mapa';
 
-import { NavController, LoadingController, Platform, ActionSheetController, MenuController, Nav } from 'ionic-angular';
+import { NavController, LoadingController, Platform, ActionSheetController, MenuController, Nav, NavParams } from 'ionic-angular';
 import { GaleriaPage } from '../galeria/galeria';
 import { MenuGalPage } from '../menu-gal/menu-gal';
 import { ItinerariosPage } from '../itinerarios/itinerarios';
@@ -16,16 +16,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 })
 export class HomePage implements OnInit {
 
-  text: string = '';
-
   rootPage: any = HomePage;
-
-  pages: Array<{title: string, component: any}>;
-
+  pages: Array<{ title: string, component: any }>;
+  state = this.navParams.get("type");
+  activeMenu: string;
 
   @ViewChild(Nav) nav: Nav;
 
-  constructor(public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController, private tts: TextToSpeech, public navCtrl: NavController, public platform: Platform, public actionsheetCtrl: ActionSheetController, public loadingCtrl: LoadingController) {
+  constructor(public navParams: NavParams, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController, private tts: TextToSpeech, public navCtrl: NavController, public platform: Platform, public actionsheetCtrl: ActionSheetController, public loadingCtrl: LoadingController) {
     this.initializeApp();
 
     this.pages = [
@@ -36,25 +34,28 @@ export class HomePage implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      console.log(this.state);
+      this.menuActive();
     });
+  }
+  
+  menuActive() {
+    if (this.state == 0) {
+      this.activeMenu = 'MenuNoSesion';
+      this.menuCtrl.enable(true, 'MenuNoSesion');
+      this.menuCtrl.enable(false, 'MenuSesion');
+    }
+    else {
+      this.activeMenu = 'MenuSesion';
+      this.menuCtrl.enable(true, 'MenuSesion');
+      this.menuCtrl.enable(false, 'MenuNoSesion');
+    }
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
-  }
-
-  openRightMenu() {
-    this.menuCtrl.open('right');
-  }
-
-  openLeftMenu() {
-    this.menuCtrl.open('left');
   }
 
   ngOnInit() {
@@ -83,12 +84,14 @@ export class HomePage implements OnInit {
 
   async Speack(): Promise<any> {
     try {
-      await this.tts.speak({text:
-      "Presiona la opción, mapa, para visualizar la ubicación de los lugares más emblemáticos en Aguascalientes."+
-      "Presiona la opción, tickets, para conocer los museos, tours,obras de teatro y próximos eventos en Aguascalientes y poder adquirir tus entradas."+
-      "Presiona la opción, galería, para conocer y aventurarte virtualmente en los paisajes que tiene Aguascalientes para ofrecer."+
-      "Presiona la opción, itinerarios, para ver y planificar las actividades de tu próxima visita a Aguascalientes."
-      ,locale:"es-MX"});
+      await this.tts.speak({
+        text:
+          "Presiona la opción, mapa, para visualizar la ubicación de los lugares más emblemáticos en Aguascalientes." +
+          "Presiona la opción, tickets, para conocer los museos, tours,obras de teatro y próximos eventos en Aguascalientes y poder adquirir tus entradas." +
+          "Presiona la opción, galería, para conocer y aventurarte virtualmente en los paisajes que tiene Aguascalientes para ofrecer." +
+          "Presiona la opción, itinerarios, para ver y planificar las actividades de tu próxima visita a Aguascalientes."
+        , locale: "es-MX"
+      });
     } catch (error) {
       console.log(error);
     }

@@ -17,30 +17,44 @@
     <ion-card>
         <img src="{{itinerario.strImagenPrincipal}}"/>
         <ion-card-content>
-          <ion-card-title>
+          <ion-card-title text-center style="font-weight: bold; color: rgb(218, 169, 11);">
             {{itinerario.strTitulo}}
             </ion-card-title>
           <p>
             {{itinerario.strDescripcion}}
           </p>
-          <ion-list>
-            <ion-item *ngFor="let evt of itinerario.arrayEventos">
-              
-              <h2>{{evt.strTitulo}}</h2>
-              <p>{{evt.dteFecha |date:'dd/MMM/yyyy'}}</p>
-              <p>{{evt.nmbCostoAdulto}}</p>
-              <button ion-button outline color="login" item-end (click)=verDetalles(evt._id)>VER&nbsp;&nbsp;
-                <ion-icon name="ios-arrow-forward-outline"></ion-icon>
-              </button>
-            </ion-item>
-          </ion-list>
+          
           <h2 text-center style="font-weight: bold; color: #FCA31F;">
             Costo Apróximado: ${{itinerario.nmbCostoAproximado}}
           </h2>
           <h2 text-center style="font-weight: bold; color: #009256;">
             Tiempo Apróximado Necesario: {{itinerario.nmbTiempoAproximado}} días
-          </h2>
+          </h2><br>
+          <h1 text-center style="font-weight: bold; color: #1a7c83;">
+            ACTIVIDADES A REALIZAR:
+          </h1><br>
+          <ion-list>
+              <ion-item *ngFor="let actividad of itinerario.arrayActividades; let i = index">
+                  <h2>ACTIVIDAD {{i+1}}</h2>
+                  <h3>{{actividad.strDescripcion}}</h3>
+                  <p>{{actividad.nmbDuracion}} hr.</p>
+              </ion-item>
+          </ion-list>
         </ion-card-content>
       </ion-card>
+      <ion-list>
+        <ion-item *ngFor="let evt of arrayEvento" (click)=verDetalles(evt._id)>
+          <ion-thumbnail item-start>
+            <img src={{configGeneral.strUrlImages}}{{evt.strImagenPrincipal}}>
+          </ion-thumbnail>
+          <h2>{{evt.strTitulo}}</h2>
+          <p>{{evt.strUbicacion}}</p>
+          <p>Adultos: ${{evt.nmbCostoAdulto}}</p>
+          <p>Menores: ${{evt.nmbCostoMenor}}</p>
+          <button ion-button outline color="login" item-end>VER&nbsp;&nbsp;
+            <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-list>
 
 </ion-content>

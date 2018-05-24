@@ -18,6 +18,7 @@ export class EventoModelo{
     nmbCupo:number;
     arrayHorarios:string[];
     arrayInstancias:InstanciaModelo[];
+    strClave:string;
     constructor(values: Object = {}) {
         Object.assign(this, values);
     }

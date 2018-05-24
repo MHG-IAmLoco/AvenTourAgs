@@ -9,11 +9,12 @@ import {  SeleccionPage} from '../pages/seleccion/seleccion';
 import { InfoEventoPage } from '../pages/info-evento/info-evento';
 import { PagarPage } from '../pages/pagar/pagar';
 import {QrPage} from '../pages/qr/qr';
+import { InfoPaquetePage } from '../pages/info-paquete/info-paquete';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPage;
+  rootPage:any = InfoPaquetePage;
   @ViewChild(Nav) navCtrl;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController) {

@@ -33,7 +33,14 @@ export class RegistroPage {
     console.log("Imprime correo "+this.strCorreo);
     console.log("Imprime pwd "+this.strPwd);
     console.log("Imprime pwd2 "+this.strPwd2);
-    if(this.strPwd != this.strPwd2){
+    if(this.strNombre==undefined||this.strApellido==undefined||this.strCorreo==undefined||this.strPwd==undefined||this.strPwd2==undefined){
+      let alert = this.alertCtrl.create({
+        title: 'Aún no terminas',
+        subTitle: 'Asegurate de introducir todos los campos',
+        buttons: ['Entendido']
+      });
+      alert.present();
+    }else if(this.strPwd != this.strPwd2){
       let alert = this.alertCtrl.create({
         title: 'Contraseña Incorrecta',
         subTitle: 'Asegurate de que las contraseñas introducidas sean iguales',
@@ -42,7 +49,7 @@ export class RegistroPage {
       alert.present();
       this.strPwd='';
       this.strPwd2='';
-    }else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/.test(this.strCorreo)){
+    }else if (!(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.strCorreo))){
       let alert = this.alertCtrl.create({
         title: 'Correo Invalido',
         subTitle: 'Asegurate de ingresar una dirección de correo valida',

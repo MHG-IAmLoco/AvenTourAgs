@@ -9,6 +9,7 @@ import { SeleccionPage } from '../seleccion/seleccion';
 import { PagarPage } from '../pagar/pagar';
 import { ForoModelo } from '../../modelos/foro.model';
 import { DatePicker } from '@ionic-native/date-picker';
+import { InstanciaModelo } from '../../modelos/instancia.model';
 
 /**
  * Generated class for the InfoActividadPage page.
@@ -26,11 +27,13 @@ export class InfoActividadPage {
   @ViewChild(Navbar) navBar: Navbar;
   public mostrarB: boolean = true;
   public mostrarC: boolean = false;
+  public mostrarHoras: boolean=false;
   cntAdultos:number=0;
   cntMenores:number=0;
   evento:EventoModelo=new EventoModelo();
   _id:string;
   myIcon: string = "ios-microphone-outline";
+  arrayHorarios:InstanciaModelo[]=[];
   constructor(public navCtrl: NavController, public navParams: NavParams, public imageViewerCtrl: ImageViewerController,private tts:TextToSpeech,public alertCtrl:AlertController,
     private conexionesApi: ApiService,
     public configGeneral:ConfigGeneral,
@@ -145,9 +148,47 @@ export class InfoActividadPage {
       allowOldDates: false,
       minDate: Date.now()
     }).then(
-      date => console.log('Got date: ', date),
+      date => this.obtenerArrayHoras(date),
       err => console.log('Error occurred while getting date: ', err)
     );
+  }
+
+  obtenerArrayHoras(date){
+    this.arrayHorarios.push(new InstanciaModelo({
+      strFecha:'',
+      strHora:'10:00 am',
+      nmbLugares:30
+    }));
+    this.arrayHorarios.push(new InstanciaModelo({
+      strFecha:'',
+      strHora:'11:00 am',
+      nmbLugares:30
+    }));
+    this.arrayHorarios.push(new InstanciaModelo({
+      strFecha:'',
+      strHora:'12:00 pm',
+      nmbLugares:30
+    }));
+    this.arrayHorarios.push(new InstanciaModelo({
+      strFecha:'',
+      strHora:'1:00 pm',
+      nmbLugares:30
+    }));
+    this.arrayHorarios.push(new InstanciaModelo({
+      strFecha:'',
+      strHora:'2:00 pm',
+      nmbLugares:30
+    }));
+    this.mostrarHoras=true;
+  }
+
+  showVal(i){
+    let alert = this.alertCtrl.create({
+      title: 'Bien!',
+      subTitle: 'Elegiste el indice '+i,
+      buttons: ['Entendido']
+    });
+    alert.present();
   }
 
   contar(caso){

@@ -29,6 +29,7 @@ export class InfoEventoPage {
   cntMenores:number;
   evento:EventoModelo=new EventoModelo();
   _id:string;
+  strTipo:string;
   myIcon: string = "ios-microphone-outline";
   letrero:string="SELECCION DE ASIENTOS";
   constructor(public navCtrl: NavController, public navParams: NavParams, public imageViewerCtrl: ImageViewerController,private tts:TextToSpeech,public alertCtrl:AlertController,
@@ -39,7 +40,12 @@ export class InfoEventoPage {
       console.log("Recibe "+this._id);
       
     }
-    this.getDetalle(this._id);
+    if(this.navParams.get('strTipo')){
+      this.strTipo = this.navParams.get('strTipo');
+      console.log("Recibe "+this.strTipo);
+      
+    }
+    this.getDetalle(this._id,this.strTipo);
     this.cntAdultos=0;
     this.cntMenores=0;
     //this._id='1';
@@ -214,9 +220,9 @@ export class InfoEventoPage {
     }
   }
   
-  getDetalle(id){
+  getDetalle(id,strTipo){
     if(id!=undefined){
-      this.conexionesApi.getDetalleEvento(id)
+      this.conexionesApi.getDetalleEvento(id,strTipo)
       .then((data:EventoModelo) => {
         this.evento = data;
         console.log(this.evento);

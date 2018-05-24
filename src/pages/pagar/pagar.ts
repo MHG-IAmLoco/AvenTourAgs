@@ -78,12 +78,12 @@ export class PagarPage {
 		this.payment = new PayPalPayment(''+this.total, 'MXN', 'AVENTOURAGS', 'sale');
     this.payPal.init({
 			PayPalEnvironmentProduction: '',
-			PayPalEnvironmentSandbox: 'AXY8tnUjzkko_FSqywfO1EM6acDa_98dRON1NNKk2NSxyxBgWXwOnNPAT3SeByCcUmeQ3m8DyXwAb8qF'
+			PayPalEnvironmentSandbox: 'AZHPN1VzUkP0ppauC2UFMuTqGa8WFEL2_TWZhTW1CWGqDafwjmttox1uZH4LYvt34hpO4zq-zuGP7dds'
 		}).then(() => {
 			this.payPal.prepareToRender(this.payPalEnvironment, new PayPalConfiguration({})).then(() => {
 				this.payPal.renderSinglePaymentUI(this.payment).then((response) => {
 					alert(`Successfully paid. Status = ${response.response.state}`);
-					console.log(response);
+					console.log("Respuesta exitosa ->" + JSON.stringify(response,null,2));
 					
 				}, () => {
 					console.log('Error or render dialog closed without being successful');

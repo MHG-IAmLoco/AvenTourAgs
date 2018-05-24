@@ -112,9 +112,9 @@ export class ListaTicketsPage {
           }
     }
 
-  verDetalles(id){
+  verDetalles(id,strTipo){
     console.log("Evento "+id);
-    this.navCtrl.push(InfoEventoPage,{_id:id});
+    this.navCtrl.push(InfoEventoPage,{_id:id,strTipo:strTipo});
   }
 
   async Speack(): Promise<any> {
@@ -130,6 +130,7 @@ export class ListaTicketsPage {
   }
 
   getEventos(strTipo){
+    console.log(strTipo);
     if(strTipo!=undefined){
       this.conexionesApi.getListaEvento(strTipo)
       .then((data:EventoModelo[]) => {

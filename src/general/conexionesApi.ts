@@ -46,9 +46,9 @@ export class ApiService{
         });
   }
 
-  getDetalleEvento(strIdEvento){
+  getDetalleEvento(strIdEvento,strTipo){
     return new Promise(resolve => {
-        this.httpClient.get(this.configGeneral.strUrlApis+"detalleEvento"+"/"+strIdEvento)
+        this.httpClient.get(this.configGeneral.strUrlApis+"detalleEvento"+"/"+strIdEvento+"/"+strTipo)
         .subscribe(data => {
           resolve(data['jsnAnswer']);
         }, err => {

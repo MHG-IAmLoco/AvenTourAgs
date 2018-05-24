@@ -15,7 +15,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let evt of arrayEvento" (click)=verDetalles(evt._id)>
+    <ion-item *ngFor="let evt of arrayEvento" (click)=verDetalles(evt._id,evt.strTipo)>
       <ion-thumbnail item-start>
         <img src={{configGeneral.strUrlImages}}{{evt.strImagenPrincipal}}>
       </ion-thumbnail>

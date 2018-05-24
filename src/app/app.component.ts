@@ -6,6 +6,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import {LoginPage} from '../pages/login/login';
 import { RegistroPage } from '../pages/registro/registro';
 import {QrPage} from '../pages/qr/qr';
+import { PerfilPage } from '../pages/perfil/perfil';
 @Component({
   templateUrl: 'app.html'
 })
@@ -28,6 +29,11 @@ export class MyApp {
 
   fnBindRegistroPage() {
     this.navCtrl.push(RegistroPage);
+    this.menuCtrl.close();
+  }
+
+  fnBindPerfilPage() {
+    this.navCtrl.push(PerfilPage);
     this.menuCtrl.close();
   }
 

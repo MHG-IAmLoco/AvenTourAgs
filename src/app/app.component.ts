@@ -6,13 +6,14 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import {LoginPage} from '../pages/login/login';
 import { RegistroPage } from '../pages/registro/registro';
 import {QrPage} from '../pages/qr/qr';
+import { PerfilPage } from '../pages/perfil/perfil';
 import { InfoPaquetePage } from '../pages/info-paquete/info-paquete';
 import { ComprobarPage } from '../pages/comprobar/comprobar';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = ComprobarPage;
+  rootPage:any = LoginPage;
   @ViewChild(Nav) navCtrl;
 
   constructor(private screenOrientation: ScreenOrientation, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController) {
@@ -30,6 +31,11 @@ export class MyApp {
 
   fnBindRegistroPage() {
     this.navCtrl.push(RegistroPage);
+    this.menuCtrl.close();
+  }
+
+  fnBindPerfilPage() {
+    this.navCtrl.push(PerfilPage);
     this.menuCtrl.close();
   }
 

@@ -32,7 +32,8 @@ export class ListaActividadPage {
     if(this.navParams.get('TipoEvento')){
       this.TipoEvento = this.navParams.get('TipoEvento');
     }
-    switch (this.TipoEvento){
+    this.getEventos(this.TipoEvento);
+    /*switch (this.TipoEvento){
       case "MUSEO":
         this.arrayEvento.push(new EventoModelo({
           _id:"1",
@@ -73,19 +74,8 @@ export class ListaActividadPage {
           arrayInstancias:[]
         }));
         break;
-  }
-    for(var i=0;i<4;i++){
-      this.arrayEvento[0].arrayHorarios.push(""+i);
-    }
-    for(var i=0;i<4;i++){
-      this.arrayEvento[0].arrayInstancias.push(new InstanciaModelo(
-        {
-          strFecha:""+i,
-          strHora:""+i,
-          nmbLugares:50
-        }
-      ))
-    }
+  }*/
+    
   }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -103,6 +93,17 @@ export class ListaActividadPage {
   verDetalles(id){
     console.log("Evento "+id);
     this.navCtrl.push(InfoActividadPage,{_id:id});
+  }
+
+  getEventos(strTipo){
+    console.log(strTipo);
+    if(strTipo!=undefined){
+      this.conexionesApi.getListaEvento(strTipo)
+      .then((data:EventoModelo[]) => {
+        this.arrayEvento = data;
+        console.log(this.arrayEvento);
+      });
+    }
   }
 
   async Speack(): Promise<any> {

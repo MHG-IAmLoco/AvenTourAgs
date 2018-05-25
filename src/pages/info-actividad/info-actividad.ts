@@ -32,7 +32,10 @@ export class InfoActividadPage {
   cntMenores:number=0;
   evento:EventoModelo=new EventoModelo();
   _id:string;
+  strTipo:string;
   myIcon: string = "ios-microphone-outline";
+  strFecha:string;
+  strHora:string;
   arrayHorarios:InstanciaModelo[]=[];
   constructor(public navCtrl: NavController, public navParams: NavParams, public imageViewerCtrl: ImageViewerController,private tts:TextToSpeech,public alertCtrl:AlertController,
     private conexionesApi: ApiService,
@@ -42,9 +45,14 @@ export class InfoActividadPage {
         this._id = this.navParams.get('_id');
         console.log("Recibe "+this._id);
       }
+      if(this.navParams.get('strTipo')){
+        this.strTipo = this.navParams.get('strTipo');
+        console.log("Recibe "+this.strTipo);
+      }
+      this.getDetalle(this._id,this.strTipo);
       //this.cntAdultos=0;
       //this.cntMenores=0;
-      switch (this._id){
+      /*switch (this._id){
         case "1":
         this.evento=new EventoModelo({
           _id:"1",
@@ -96,7 +104,7 @@ export class InfoActividadPage {
           this.myIcon = "ios-people-outline";
         }else if(this.evento.strTipo=="TOURS"){
           this.myIcon = "ios-camera-outline";
-        }
+        }*/
   }
 
   onClick(imageToView) {
@@ -153,33 +161,10 @@ export class InfoActividadPage {
     );
   }
 
-  obtenerArrayHoras(date){
-    this.arrayHorarios.push(new InstanciaModelo({
-      strFecha:'',
-      strHora:'10:00 am',
-      nmbLugares:30
-    }));
-    this.arrayHorarios.push(new InstanciaModelo({
-      strFecha:'',
-      strHora:'11:00 am',
-      nmbLugares:30
-    }));
-    this.arrayHorarios.push(new InstanciaModelo({
-      strFecha:'',
-      strHora:'12:00 pm',
-      nmbLugares:30
-    }));
-    this.arrayHorarios.push(new InstanciaModelo({
-      strFecha:'',
-      strHora:'1:00 pm',
-      nmbLugares:30
-    }));
-    this.arrayHorarios.push(new InstanciaModelo({
-      strFecha:'',
-      strHora:'2:00 pm',
-      nmbLugares:30
-    }));
-    this.mostrarHoras=true;
+  obtenerArrayHoras(date:Date){
+    var strDate = ""+date.getFullYear +"-"+date.getMonth+"-"+date.getDate;
+    this.strFecha = strDate;
+    this.getArrayHorarios(this.evento._id,strDate);
   }
 
   showVal(i){
@@ -188,6 +173,7 @@ export class InfoActividadPage {
       subTitle: 'Elegiste el indice '+i,
       buttons: ['Entendido']
     });
+    this.strHora = i;
     alert.present();
   }
 
@@ -232,22 +218,22 @@ export class InfoActividadPage {
       alert.present();
     }else{
       if(this.evento.strTipo=="CONCIERTOS"){
-        this.navCtrl.push(SeleccionPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,Evento:this.evento});
+        this.navCtrl.push(SeleccionPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,Evento:this.evento,strFecha:this.strFecha,strHora:this.strHora});
       }else if(this.evento.strTipo=="DEPORTES"){
-        this.navCtrl.push(PagarPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores});
+        this.navCtrl.push(PagarPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,strFecha:this.strFecha,strHora:this.strHora});
       }else if(this.evento.strTipo=="MUSEO"){
-        this.navCtrl.push(PagarPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores});
+        this.navCtrl.push(PagarPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,strFecha:this.strFecha,strHora:this.strHora});
       }else if(this.evento.strTipo=="TEATRO"){
-        this.navCtrl.push(SeleccionPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,Evento:this.evento});
+        this.navCtrl.push(SeleccionPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,Evento:this.evento,strFecha:this.strFecha,strHora:this.strHora});
       }else if(this.evento.strTipo=="TOURS"){
-        this.navCtrl.push(PagarPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores});
+        this.navCtrl.push(PagarPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,strFecha:this.strFecha,strHora:this.strHora});
       }
     }
   }
 
-  getDetalle(id){
+  getDetalle(id,strTipo){
     if(id!=undefined){
-      this.conexionesApi.getDetalleEvento(id)
+      this.conexionesApi.getDetalleEvento(id,strTipo)
       .then((data:EventoModelo) => {
         this.evento = data;
         console.log(this.evento);
@@ -262,6 +248,17 @@ export class InfoActividadPage {
         }else if(this.evento.strTipo=="TOURS"){
           this.myIcon = "ios-camera-outline";
         }
+      });
+    }
+  }
+
+  getArrayHorarios(idEvento,strFecha){
+    if(idEvento!=undefined && strFecha!=undefined){
+      this.conexionesApi.getArrayHorarios(idEvento,strFecha)
+      .then((data:InstanciaModelo[]) => {
+        this.evento.arrayInstancias = data;
+        this.mostrarHoras=true;
+        console.log(JSON.stringify(this.evento.arrayInstancias,null,2));
       });
     }
   }

@@ -26,7 +26,7 @@ export class SeleccionPage {
   contador:number;
   colorSel = '#f5a34b';
   colorDisp = '#b9bdc0';
-  colorOcup = 'e78867';
+  colorOcup = '#e78867';
   //colorOcup = '#d92129';
   matAsientos:AsientoModelo[][];
   numFilas:number;
@@ -119,7 +119,7 @@ export class SeleccionPage {
       });
       alert.present();
     }else{
-      this.navCtrl.push(PagarPage,{IdEvento:this.idEvento,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,ArraySeleccion:this.arraySeleccion});
+      this.navCtrl.push(PagarPage,{IdEvento:this.idEvento,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,ArraySeleccion:this.arraySeleccion,strTipo:this.evento.strTipo});
     }
   }
 

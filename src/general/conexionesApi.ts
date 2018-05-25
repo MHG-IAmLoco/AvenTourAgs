@@ -91,10 +91,10 @@ export class ApiService{
       
 }
 
-putAsientoForo(idEvento,numAsiento,strColor){
+putAsientosForo(idEvento,arrayNumAsientos,strColor){
   var ObjectData = {
     _id:idEvento,
-    numAsiento:numAsiento,
+    arrayNumAsientos:arrayNumAsientos,
     strColor:strColor
   }
   return new Promise((resolve, reject) => {
@@ -108,6 +108,34 @@ putAsientoForo(idEvento,numAsiento,strColor){
   });
 }
 
+putDisponibilidadEvento(idEvento,strFecha,strHora,nmbAsientos){
+  var ObjectData = {
+    _id:idEvento,
+    strFecha:strFecha,
+    strHora:strHora,
+    nmbAsientos:nmbAsientos
+  }
+  return new Promise((resolve, reject) => {
+    this.httpClient.put(this.configGeneral.strUrlApis+'dispoEvento', JSON.stringify(ObjectData))
+      .subscribe(data => {
+        console.log("respuesta put" + data);
+        resolve(data);
+      }, (err) => {
+        reject(err);
+      });
+  });
+}
+
+getArrayHorarios(idEvento,strFecha){
+  return new Promise(resolve => {
+      this.httpClient.get(this.configGeneral.strUrlApis+"detalleDisponibilidad"+"/"+idEvento+"/"+strFecha)
+      .subscribe(data => {
+        resolve(data['jsnAnswer']);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
 
 
 }

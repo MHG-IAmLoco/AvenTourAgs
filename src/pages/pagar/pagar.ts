@@ -29,6 +29,9 @@ export class PagarPage {
 	subTotal=0;
 	comision=0;
 	total=0;
+	strTipo:string;
+	strFecha:string;
+	strHora:string;
 	arraySeleccion:Array<number>;
 	constructor(public navCtrl: NavController, public navParams: NavParams,private payPal: PayPal,private alertCtrl:AlertController,
 		private conexionesApi: ApiService,
@@ -46,7 +49,16 @@ export class PagarPage {
 		if(this.navParams.get('ArraySeleccion')){
 			this.arraySeleccion = this.navParams.get('ArraySeleccion');
 		}
-		this.getDetalle(this.idEvento);
+		if(this.navParams.get('strTipo')){
+			this.strTipo = this.navParams.get('strTipo');
+		}
+		if(this.navParams.get('strFecha')){
+			this.strFecha = this.navParams.get('strFecha');
+		}
+		if(this.navParams.get('strHora')){
+			this.strHora = this.navParams.get('strHora');
+		}
+		this.getDetalle(this.idEvento,this.strTipo);
     /*this.evento=new EventoModelo({
 			_id:"1",
 			strTipo:"CONCIERTOS",
@@ -83,6 +95,18 @@ export class PagarPage {
 			this.payPal.prepareToRender(this.payPalEnvironment, new PayPalConfiguration({})).then(() => {
 				this.payPal.renderSinglePaymentUI(this.payment).then((response) => {
 					alert(`Successfully paid. Status = ${response.response.state}`);
+					console.log("Se esta pagando un: "+this.evento.strTipo);
+					if(this.evento.strTipo=="CONCIERTOS"){
+						this.putAsientosForo(this.evento._id,this.arraySeleccion,'#e78867');
+					}else if(this.evento.strTipo=="DEPORTES"){
+						this.putAsientosForo(this.evento._id,this.arraySeleccion,'#e78867');
+					}else if(this.evento.strTipo=="MUSEO"){
+						this.putDisponibilidadEvento(this.evento._id,this.strFecha,this.strHora,(this.cntAdultos+this.cntMenores));
+					}else if(this.evento.strTipo=="TEATRO"){
+						this.putAsientosForo(this.evento._id,this.arraySeleccion,'#e78867');
+					}else if(this.evento.strTipo=="TOURS"){
+						this.putDisponibilidadEvento(this.evento._id,this.strFecha,this.strHora,(this.cntAdultos+this.cntMenores));
+					}
 					console.log("Respuesta exitosa ->" + JSON.stringify(response,null,2));
 					
 				}, () => {
@@ -102,9 +126,9 @@ export class PagarPage {
 		});
 	}
 	
-	getDetalle(id){
+	getDetalle(id,strTipo){
     if(id!=undefined){
-      this.conexionesApi.getDetalleEvento(id)
+      this.conexionesApi.getDetalleEvento(id,strTipo)
       .then((data:EventoModelo) => {
         this.evento = data;
 				console.log(this.evento);
@@ -124,6 +148,24 @@ export class PagarPage {
         }else if(this.evento.strTipo=="TOURS"){
           
         }
+      });
+    }
+	}
+	
+	putAsientosForo(idEvento,arrayNumAsientos,strColor){
+    if(idEvento!=undefined){
+      this.conexionesApi.putAsientosForo(idEvento,arrayNumAsientos,strColor)
+      .then((data) => {
+        console.log(data);
+      });
+    }
+	}
+	
+	putDisponibilidadEvento(idEvento,strFecha,strHora,nmbAsientos){
+    if(idEvento!=undefined){
+      this.conexionesApi.putDisponibilidadEvento(idEvento,strFecha,strHora,nmbAsientos)
+      .then((data) => {
+        console.log(data);
       });
     }
   }

@@ -34,8 +34,11 @@ export class InfoActividadPage {
   _id:string;
   strTipo:string;
   myIcon: string = "ios-microphone-outline";
+<<<<<<< HEAD
   strFecha:string;
   strHora:string;
+=======
+>>>>>>> 22c5dc3a0193963bd7ab2207a72b7f5513aba179
   arrayHorarios:InstanciaModelo[]=[];
   constructor(public navCtrl: NavController, public navParams: NavParams, public imageViewerCtrl: ImageViewerController,private tts:TextToSpeech,public alertCtrl:AlertController,
     private conexionesApi: ApiService,
@@ -161,10 +164,40 @@ export class InfoActividadPage {
     );
   }
 
+<<<<<<< HEAD
   obtenerArrayHoras(date:Date){
     var strDate = ""+date.getFullYear +"-"+date.getMonth+"-"+date.getDate;
     this.strFecha = strDate;
     this.getArrayHorarios(this.evento._id,strDate);
+=======
+  obtenerArrayHoras(date){
+    this.arrayHorarios.push(new InstanciaModelo({
+      strFecha:'',
+      strHora:'10:00 am',
+      nmbLugares:30
+    }));
+    this.arrayHorarios.push(new InstanciaModelo({
+      strFecha:'',
+      strHora:'11:00 am',
+      nmbLugares:30
+    }));
+    this.arrayHorarios.push(new InstanciaModelo({
+      strFecha:'',
+      strHora:'12:00 pm',
+      nmbLugares:30
+    }));
+    this.arrayHorarios.push(new InstanciaModelo({
+      strFecha:'',
+      strHora:'1:00 pm',
+      nmbLugares:30
+    }));
+    this.arrayHorarios.push(new InstanciaModelo({
+      strFecha:'',
+      strHora:'2:00 pm',
+      nmbLugares:30
+    }));
+    this.mostrarHoras=true;
+>>>>>>> 22c5dc3a0193963bd7ab2207a72b7f5513aba179
   }
 
   showVal(i){
@@ -173,7 +206,10 @@ export class InfoActividadPage {
       subTitle: 'Elegiste el indice '+i,
       buttons: ['Entendido']
     });
+<<<<<<< HEAD
     this.strHora = i;
+=======
+>>>>>>> 22c5dc3a0193963bd7ab2207a72b7f5513aba179
     alert.present();
   }
 

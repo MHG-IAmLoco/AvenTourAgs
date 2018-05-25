@@ -1,36 +1,31 @@
 <ion-menu id="MenuNoSesion" [content]="content" side="left" type="overlay">
     <ion-header>
         <ion-toolbar color="login">
-            <ion-title>Menu</ion-title>
+            <ion-title>CUENTA</ion-title>
         </ion-toolbar>
     </ion-header>
     <ion-content>
         <ion-list>
-            <button ion-item></button>
             <button ion-item (click)="fnBindLoginPage()">Iniciar Sesión</button>
             <button ion-item (click)="fnBindRegistroPage()">Registrarse</button>
-            <button ion-item (click)="closeMenu()">Cerrar</button>
-            <button ion-item></button>
+            <button ion-item (click)="closeMenu()">Salir</button>
         </ion-list>
     </ion-content>
 </ion-menu>
-<ion-menu id="rightMenu" [content]="content" side="right" type="reveal">
+
+<ion-menu id="MenuSesion" [content]="content" side="left" type="overlay">
     <ion-header>
-        <ion-toolbar>
-            <ion-title>Items</ion-title>
+        <ion-toolbar color="login">
+            <ion-title>CUENTA</ion-title>
         </ion-toolbar>
     </ion-header>
     <ion-content>
-        <ion-list>        
-            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">{{p.title}}</button>
-            <button ion-item (click)="rightMenuClick('Item One')">Item UNO</button>
-            <button ion-item (click)="rightMenuClick('Item Two')">Item DOS</button>
+        <ion-list>
+            <button ion-item (click)="fnBindPerfilPage()">Ver Perfil</button>
+            <button ion-item (click)="fnBindQrPage()">Registrar Codigo QR</button>
+            <button ion-item (click)="fnBindLoginPage()">Cerrar Sesión</button>
+            <button ion-item (click)="closeMenu()">Salir</button>
         </ion-list>
-        <ion-card *ngIf="text">
-            <ion-card-content>
-                Tu has pulsado {{ text }}
-            </ion-card-content>
-        </ion-card>
     </ion-content>
 </ion-menu>
 

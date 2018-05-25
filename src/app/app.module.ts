@@ -34,6 +34,8 @@ import { PagarPageModule } from '../pages/pagar/pagar.module';
 import { PayPal } from '@ionic-native/paypal';
 import { ListaActividadPageModule } from '../pages/lista-actividad/lista-actividad.module';
 import { InfoActividadPageModule } from '../pages/info-actividad/info-actividad.module';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 @NgModule({
   declarations: [
     MyApp,
@@ -79,6 +81,8 @@ import { InfoActividadPageModule } from '../pages/info-actividad/info-actividad.
     PayPal,
     BarcodeScanner,
     DatePicker,
+    AndroidPermissions,
+    ScreenOrientation,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

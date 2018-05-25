@@ -38,6 +38,14 @@
           </p><br>
           <button ion-button full color="botonOmi" (click)="verFechas()">SELECCIONAR FECHA</button>
           <br>
+          
+          <ion-item *ngIf="mostrarHoras">
+            <ion-label>HORARIOS DISPONIBLES</ion-label>
+            <ion-select [(ngModel)]="horas" okText="Hecho" cancelText="Cancelar" (ionChange)=showVal(horas)>
+                <ion-option *ngFor="let hora of arrayHorarios; let i = index" [value]="hora.strHora">{{hora.strHora}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <br>
           <button ion-button full color="danger" *ngIf="mostrarB" (click)="comprar()">COMPRAR</button>
           <div *ngIf="mostrarC">
             <ion-item style="font-size:150%; text-align:center">

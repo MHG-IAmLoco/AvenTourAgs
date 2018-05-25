@@ -88,6 +88,7 @@ export class ApiService{
           console.log(err);
         });
       });
+      
 }
 
 putAsientoForo(idEvento,numAsiento,strColor){

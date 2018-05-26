@@ -8,6 +8,4 @@ export class ConfigGeneral{
     //public strUrlImages:string="http://192.168.1.73:80/media/";
     //public strUrlApis:string="http://localhost:5000/api/general/";
     //public strUrlImages:string="http://localhost:80/media/";
-    //public strUrlApis:string="http://localhost:5000/api/general/";
-    //public strUrlImages:string="http://localhost:80/media/";
 }

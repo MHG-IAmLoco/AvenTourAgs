@@ -107,7 +107,6 @@ export class PagarPage {
 					}else if(this.evento.strTipo=="TOURS"){
 						this.putDisponibilidadEvento(this.evento._id,this.strFecha,this.strHora,(this.cntAdultos+this.cntMenores));
 					}
-					console.log("Respuesta exitosa ->" + JSON.stringify(response,null,2));
 					
 				}, () => {
 					console.log('Error or render dialog closed without being successful');

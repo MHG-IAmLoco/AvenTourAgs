@@ -12,7 +12,7 @@ import { InfoPaquetePage } from '../pages/info-paquete/info-paquete';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = InfoPaquetePage;
+  rootPage:any = LoginPage;
   @ViewChild(Nav) navCtrl;
 
   constructor(private screenOrientation: ScreenOrientation, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public menuCtrl: MenuController) {

@@ -1,14 +1,3 @@
-<!--
-  Generated template for the QrPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
-
-  npm install ngx-qrcode2 --save
-ionic cordova plugin add phonegap-plugin-barcodescanner
-npm install --save @ionic-native/barcode-scanner
-
--->
 <ion-header>
 
   <ion-navbar color="qr">
@@ -24,10 +13,8 @@ npm install --save @ionic-native/barcode-scanner
     </ion-input>
   </ion-item> 
   <button ion-button full icon-left (click)="createCode()">
-    <ion-icon name="barcode"></ion-icon>Create Code</button> 
-  <button ion-button full icon-left (click)="scanCode()" color="secondary">
-    <ion-icon name="qr-scanner"></ion-icon>Scan Code</button> -->
-
+    <ion-icon name="barcode"></ion-icon>Create Code</button>  -->
+  
   <ion-card *ngIf="createdCode">
     <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
     <!--<ion-card-content>
@@ -37,7 +24,13 @@ npm install --save @ionic-native/barcode-scanner
 
   <ion-card *ngIf="scannedCode">
     <ion-card-content>
-      Result from Scan: {{ scannedCode }}
+      <p align="center">{{ scannedCode }}</p>
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <button ion-button full icon-left (click)="scanCode()" color="secondary">
+      <ion-icon name="qr-scanner"></ion-icon>Escanear Código</button>
+  </ion-card>
+
 </ion-content>

@@ -8,6 +8,7 @@ import { RegistroPage } from '../pages/registro/registro';
 import {QrPage} from '../pages/qr/qr';
 import { PerfilPage } from '../pages/perfil/perfil';
 import { InfoPaquetePage } from '../pages/info-paquete/info-paquete';
+import { ComprobarPage } from '../pages/comprobar/comprobar';
 @Component({
   templateUrl: 'app.html'
 })

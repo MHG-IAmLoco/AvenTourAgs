@@ -36,6 +36,7 @@ import { ListaActividadPageModule } from '../pages/lista-actividad/lista-activid
 import { InfoActividadPageModule } from '../pages/info-actividad/info-actividad.module';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ComprobarPageModule } from '../pages/comprobar/comprobar.module';
 import { PerfilPageModule } from '../pages/perfil/perfil.module';
 @NgModule({
   declarations: [

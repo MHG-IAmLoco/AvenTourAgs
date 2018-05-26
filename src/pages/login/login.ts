@@ -38,7 +38,7 @@ export class LoginPage implements OnInit{
   irHome(){
     this.tts.stop();
     this.navCtrl.push(HomePage, {
-      type: this.state = 0,
+      type: this.state = 1,
     });
   }
 

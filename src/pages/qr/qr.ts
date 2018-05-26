@@ -20,6 +20,7 @@ export class QrPage {
   scannedCode = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner) {
+    this.scanCode();
   }
 
   createCode() {

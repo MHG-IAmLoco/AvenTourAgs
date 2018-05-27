@@ -29,6 +29,82 @@ var modeloQr = Joi.object().keys({
     nmbPuntos: Joi.number().required()
 });
 
+app.post('/api/general/qrCode', Celebrate({
+    body: {
+        _id: Joi.string().required(),
+        qrModelo: modeloQr
+    }
+}), function (req, res) {
+    functions.fnPostQrCode(req.body)
+            .then(function (result) {
+                res.json(result);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+});
+
+app.post('/api/general/changePass', Celebrate({
+    body: {
+        _id: Joi.string().required(),
+        strContraseña: Joi.string().required()
+    }
+}), function (req, res) {
+    functions.fnPostChangePass(req.body)
+            .then(function (result) {
+                res.json(result);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+});
+
+app.get('/api/general/qrExistente/:_id', Celebrate({
+    params: {
+        _id: Joi.string().required()
+    }
+}), function (req, res) {
+    functions.fnGetQrExistente(req.params)
+            .then(function (result) {
+                res.json(result);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+});
+
+app.get('/api/general/gRegistro/:strCorreo', Celebrate({
+    params: {
+        strCorreo: Joi.string().required()
+    }
+}), function (req, res) {
+    functions.fnGetRegistro(req.params)
+            .then(function (result) {
+                res.json(result);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+});
+
+app.post('/api/general/pRegistro', Celebrate({
+    body: {
+        strNombre: Joi.string().required(),
+        strApellido: Joi.string().required(),
+        strCorreo: Joi.string().required(),
+        strContraseña: Joi.string().required(),
+        nmbPuntos: Joi.number().required()
+    }
+}), function (req, res) {
+    functions.fnPostRegistro(req.body)
+            .then(function (result) {
+                res.json(result);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+});
+
 app.get('/api/general/login/:correo/:contrasenia', Celebrate({
     params: {
         correo: Joi.string().required(),
@@ -165,82 +241,6 @@ app.put('/api/general/dispoEvento', Celebrate({
     }
 }), function (req, res) {
     functions.fnPutDisponibilidadEvento(req.body)
-            .then(function (result) {
-                res.json(result);
-            })
-            .catch(function (err) {
-                res.json(err);
-            });
-});
-
-app.post('/api/general/qrCode', Celebrate({
-    body: {
-        _id: Joi.string().required(),
-        qrModelo: modeloQr
-    }
-}), function (req, res) {
-    functions.fnPostQrCode(req.body)
-            .then(function (result) {
-                res.json(result);
-            })
-            .catch(function (err) {
-                res.json(err);
-            });
-});
-
-app.post('/api/general/changePass', Celebrate({
-    body: {
-        _id: Joi.string().required(),
-        strContraseña: Joi.string().required()
-    }
-}), function (req, res) {
-    functions.fnPostChangePass(req.body)
-            .then(function (result) {
-                res.json(result);
-            })
-            .catch(function (err) {
-                res.json(err);
-            });
-});
-
-app.get('/api/general/qrExistente/:_id', Celebrate({
-    params: {
-        _id: Joi.string().required()
-    }
-}), function (req, res) {
-    functions.fnGetQrExistente(req.params)
-            .then(function (result) {
-                res.json(result);
-            })
-            .catch(function (err) {
-                res.json(err);
-            });
-});
-
-app.get('/api/general/gRegistro/:strCorreo', Celebrate({
-    params: {
-        strCorreo: Joi.string().required()
-    }
-}), function (req, res) {
-    functions.fnGetRegistro(req.params)
-            .then(function (result) {
-                res.json(result);
-            })
-            .catch(function (err) {
-                res.json(err);
-            });
-});
-
-app.post('/api/general/pRegistro', Celebrate({
-    body: {
-        strNombre: Joi.string().required(),
-        strApellido: Joi.string().required(),
-        strCorreo: Joi.string().required(),
-        strContraseña: Joi.string().required(),
-        nmbPuntos: Joi.number().required()
-    }
-}), function (req, res) {
-    functions.fnPostRegistro(req.body)
             .then(function (result) {
                 res.json(result);
             })

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapaPage } from './../mapa/mapa';
 
 import { NavController, LoadingController, Platform, ActionSheetController, MenuController, Nav, NavParams } from 'ionic-angular';
-import { GaleriaPage } from '../galeria/galeria';
 import { MenuGalPage } from '../menu-gal/menu-gal';
 import { ItinerariosPage } from '../itinerarios/itinerarios';
 import { TextToSpeech } from '@ionic-native/text-to-speech';

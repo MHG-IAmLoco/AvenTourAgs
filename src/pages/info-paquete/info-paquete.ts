@@ -4,7 +4,6 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { ViewChild } from '@angular/core';
 import { ItinerarioModelo } from '../../modelos/itinerario.model';
 import { EventoModelo } from '../../modelos/evento.model';
-import { InfoEventoPage } from '../info-evento/info-evento';
 import { ForoModelo } from '../../modelos/foro.model';
 import { ApiService } from '../../general/conexionesApi';
 import { ConfigGeneral } from '../../general/configGeneral';
@@ -22,7 +21,6 @@ export class InfoPaquetePage {
   arrayEvento: Array <EventoModelo> = new Array<EventoModelo>();
   intTipoPaquete:string;
   constructor(public navCtrl: NavController, public navParams: NavParams,private tts:TextToSpeech,
-    private conexionesApi: ApiService,
     public configGeneral:ConfigGeneral) {
     if(this.navParams.get('TipoPaquete')){
       this.intTipoPaquete = this.navParams.get('TipoPaquete');

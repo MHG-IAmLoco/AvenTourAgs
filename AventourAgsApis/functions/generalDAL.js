@@ -17,6 +17,189 @@ var request = require('request');
 
 var strUrl = 'mongodb://localhost:27017/aventurags';
 
+///Route:('/api/general/qrCode')
+exports.fnPostQrCode = function (jsnParameters) {
+    return new Promise(function (resolve, reject) {
+        MongoClient.connect(strUrl, function (err, db) {
+            if (err) {
+                console.error(err);
+                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
+            } else {
+                var query = {
+                    _id: ObjectId(jsnParameters._id),
+                    "arrayQr._id": ObjectId(jsnParameters.qrModelo._id)
+                };
+                db.collection('usuarios').find(query).toArray(function (err, result) {
+                    if (err) {
+                        console.error(err + '\n');
+                        db.close();
+                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                    }
+                    if (result[0]) {
+                        reject({
+                            strAnswer: 'Codigo QR ya existente', intStatus: 3
+                        });
+                    } else {
+                        var queryUpdate = {
+                            _id: ObjectId(jsnParameters._id)
+                        };
+                        jsnParameters.qrModelo._id = ObjectId(jsnParameters.qrModelo._id);
+                        var update = {
+                            $push: {
+                                arrayQr: jsnParameters.qrModelo
+                            },
+                            $inc: {
+                                nmbPuntos: jsnParameters.qrModelo.nmbPuntos
+                            }
+                        };
+                        db.collection('usuarios').updateOne(queryUpdate, update, function (err, result) {
+                            if (err) {
+                                console.error(err + '\n');
+                                db.close();
+                                reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                            } else {
+                                db.close();
+                                resolve({strAnswer: 'Codigo Qr registrado', intStatus: 1});
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+};
+
+//Route:('/api/general/qrExistente/:_id')
+exports.fnGetQrExistente = function (jsnParameters) {
+    return new Promise(function (resolve, reject) {
+        MongoClient.connect(strUrl, function (err, db) {
+            if (err) {
+                console.error(err);
+                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
+            } else {
+                var query = {_id: ObjectId(jsnParameters._id)};
+                db.collection('qr').find(query).toArray(function (err, result) {
+                    if (err) {
+                        console.error(err + '\n');
+                        db.close();
+                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                    }
+                    db.close();
+                    console.log("Llamada a la APIs");
+                    if (result[0]) {
+                        resolve({jsnAnswer: result[0], intStatus: 1});
+                    } else {
+                        reject({strAnswer: 'Codigo Qr no valido', intStatus: 3});
+                    }
+                });
+            }
+        });
+    });
+};
+
+///Route:('/api/general/changePass')
+exports.fnPostChangePass = function (jsnParameters) {
+    return new Promise(function (resolve, reject) {
+        MongoClient.connect(strUrl, function (err, db) {
+            if (err) {
+                console.error(err);
+                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
+            } else {
+                var query = {
+                    _id: ObjectId(jsnParameters._id)
+                };
+                db.collection('usuarios').find(query).toArray(function (err, result) {
+                    if (err) {
+                        console.error(err + '\n');
+                        db.close();
+                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                    }
+                    if (result[0]) {
+                        var queryUpdate = {
+                            _id: ObjectId(jsnParameters._id)
+                        };
+                        var update = {
+                            $set: {
+                                strContraseña: jsnParameters.strContraseña
+                            }
+                        };
+                        db.collection('usuarios').updateOne(queryUpdate, update, function (err, result) {
+                            if (err) {
+                                console.error(err + '\n');
+                                db.close();
+                                reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                            } else {
+                                db.close();
+                                resolve({strAnswer: 'La contraseña ha sido cambiada correctamente', intStatus: 1});
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+};
+
+//Route:('/api/general/gRegistro/:correo')
+exports.fnGetRegistro = function (jsnParameters) {
+    return new Promise(function (resolve, reject) {
+        MongoClient.connect(strUrl, function (err, db) {
+            if (err) {
+                console.error(err);
+                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
+            } else {
+                var query = {
+                    strCorreo: jsnParameters.correo
+                };
+                db.collection('usuarios').find(query).toArray(function (err, result) {
+                    if (err) {
+                        console.error(err + '\n');
+                        db.close();
+                        reject({strAnswer: 'Error en la info', intStatus: 2});
+                    }
+                    db.close();
+                    console.log("Llamada a la APIs");
+                    if (result[0]) {
+                        resolve({jsnAnswer: result[0], intStatus: 3});
+                    } else {
+                        resolve({strAnswer: 'Se puede agregar el usuario', intStatus: 1});
+                    }
+                });
+            }
+        });
+    });
+};
+
+///Route:('/api/general/changePass')
+exports.fnPostRegistro = function (jsnParameters) {
+    return new Promise(function (resolve, reject) {
+        MongoClient.connect(strUrl, function (err, db) {
+            if (err) {
+                console.error("Entro aqui?" + err);
+                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
+            } else {
+                var query = {
+                    strNombre: jsnParameters.strNombre,
+                    strApellido: jsnParameters.strApellido,
+                    strCorreo: jsnParameters.strCorreo,
+                    strContraseña: jsnParameters.strContraseña,
+                    nmbPuntos: jsnParameters.nmbPuntos
+                };
+                db.collection('usuarios').insertOne(query, function (err, result) {
+                    if (err) {
+                        console.error(err + '\n');
+                        db.close();
+                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                    } else {
+                        db.close();
+                        resolve({strAnswer: 'Usuario agregado a la BD', intStatus: 1});
+                    }
+                });
+            }
+        });
+    });
+};
+
 ///Route:('/api/general/categoriasGaleria/_id')
 exports.fnGetCategoriasGaleria = function () {
     return new Promise(function (resolve, reject) {
@@ -505,190 +688,6 @@ exports.fnGetDisponibilidadEvento = function (jsnParameters) {
                                 resolve({"intStatus": 1, "jsnAnswer": arrayDisponibles});
                             }
                         });
-                    }
-                });
-            }
-        });
-    });
-};
-
-///Route:('/api/general/qrCode')
-exports.fnPostQrCode = function (jsnParameters) {
-    return new Promise(function (resolve, reject) {
-        MongoClient.connect(strUrl, function (err, db) {
-            if (err) {
-                console.error(err);
-                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
-            } else {
-                var query = {
-                    _id: ObjectId(jsnParameters._id),
-                    "arrayQr._id": ObjectId(jsnParameters.qrModelo._id)
-                };
-                db.collection('usuarios').find(query).toArray(function (err, result) {
-                    if (err) {
-                        console.error(err + '\n');
-                        db.close();
-                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
-                    }
-                    if (result[0]) {
-                        reject({
-                            strAnswer: 'Codigo QR ya existente', intStatus: 3
-                        });
-                    } else {
-                        var queryUpdate = {
-                            _id: ObjectId(jsnParameters._id)
-                        }
-                        jsnParameters.qrModelo._id = ObjectId(jsnParameters.qrModelo._id);
-                        var update = {
-                            $push: {
-                                arrayQr: jsnParameters.qrModelo
-                            },
-                            $inc: {
-                                nmbPuntos: jsnParameters.qrModelo.nmbPuntos
-                            }
-
-                        }
-                        db.collection('usuarios').updateOne(queryUpdate, update, function (err, result) {
-                            if (err) {
-                                console.error(err + '\n');
-                                db.close();
-                                reject({strAnswer: 'Data retrieval error', intStatus: 2});
-                            } else {
-                                db.close();
-                                resolve({strAnswer: 'Codigo Qr registrado', intStatus: 1});
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    });
-};
-
-//Route:('/api/general/qrExistente/:_id')
-exports.fnGetQrExistente = function (jsnParameters) {
-    return new Promise(function (resolve, reject) {
-        MongoClient.connect(strUrl, function (err, db) {
-            if (err) {
-                console.error(err);
-                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
-            } else {
-                var query = {_id: ObjectId(jsnParameters._id)};
-                db.collection('qr').find(query).toArray(function (err, result) {
-                    if (err) {
-                        console.error(err + '\n');
-                        db.close();
-                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
-                    }
-                    db.close();
-                    console.log("Llamada a la APIs");
-                    if (result[0]) {
-                        resolve({jsnAnswer: result[0], intStatus: 1});
-                    } else {
-                        reject({strAnswer: 'Codigo Qr no valido', intStatus: 3});
-                    }
-                });
-            }
-        });
-    });
-};
-
-///Route:('/api/general/changePass')
-exports.fnPostChangePass = function (jsnParameters) {
-    return new Promise(function (resolve, reject) {
-        MongoClient.connect(strUrl, function (err, db) {
-            if (err) {
-                console.error(err);
-                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
-            } else {
-                var query = {
-                    _id: ObjectId(jsnParameters._id)
-                };
-                db.collection('usuarios').find(query).toArray(function (err, result) {
-                    if (err) {
-                        console.error(err + '\n');
-                        db.close();
-                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
-                    }
-                    if (result[0]) {
-                        var queryUpdate = {
-                            _id: ObjectId(jsnParameters._id)
-                        };
-                        var update = {
-                            $set: {
-                                strContraseña: jsnParameters.strContraseña
-                            }
-                        };
-                        db.collection('usuarios').updateOne(queryUpdate, update, function (err, result) {
-                            if (err) {
-                                console.error(err + '\n');
-                                db.close();
-                                reject({strAnswer: 'Data retrieval error', intStatus: 2});
-                            } else {
-                                db.close();
-                                resolve({strAnswer: 'La contraseña ha sido cambiada correctamente', intStatus: 1});
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    });
-};
-
-//Route:('/api/general/gRegistro/:correo')
-exports.fnGetRegistro = function (jsnParameters) {
-    return new Promise(function (resolve, reject) {
-        MongoClient.connect(strUrl, function (err, db) {
-            if (err) {
-                console.error(err);
-                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
-            } else {
-                var query = {
-                    strCorreo: jsnParameters.correo
-                };
-                db.collection('usuarios').find(query).toArray(function (err, result) {
-                    if (err) {
-                        console.error(err + '\n');
-                        db.close();
-                        reject({strAnswer: 'Error en la info', intStatus: 2});
-                    }
-                    db.close();
-                    console.log("Llamada a la APIs");
-                    if (result[0]) {
-                        resolve({jsnAnswer: result[0], intStatus: 3});
-                    } else {
-                        resolve({strAnswer: 'Se puede agregar el usuario', intStatus: 1});
-                    }
-                });
-            }
-        });
-    });
-};
-
-///Route:('/api/general/changePass')
-exports.fnPostRegistro = function (jsnParameters) {
-    return new Promise(function (resolve, reject) {
-        MongoClient.connect(strUrl, function (err, db) {
-            if (err) {
-                console.error("Entro aqui?" + err);
-                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
-            } else {
-                var query = {
-                    strNombre: jsnParameters.strNombre,
-                    strApellido: jsnParameters.strApellido,
-                    strCorreo: jsnParameters.strCorreo,
-                    strContraseña: jsnParameters.strContraseña,
-                    nmbPuntos: jsnParameters.nmbPuntos
-                };
-                db.collection('usuarios').insertOne(query, function (err, result) {
-                    if (err) {
-                        console.error(err + '\n');
-                        db.close();
-                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
-                    } else {
-                        db.close();
-                        resolve({strAnswer: 'Usuario agregado a la BD', intStatus: 1});
                     }
                 });
             }

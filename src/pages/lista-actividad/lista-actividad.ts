@@ -1,12 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
-import { InfoEventoPage } from '../info-evento/info-evento';
 import { EventoModelo } from '../../modelos/evento.model';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { ApiService } from '../../general/conexionesApi';
 import { ConfigGeneral } from '../../general/configGeneral';
-import { ForoModelo } from '../../modelos/foro.model';
-import { InstanciaModelo } from '../../modelos/instancia.model';
 import { InfoActividadPage } from '../info-actividad/info-actividad';
 
 /**

@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { ConfigGeneral } from './configGeneral';
-import { Observable } from 'rxjs/observable';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { GaleriaModelo } from '../modelos/galeria.model';
 import { QrModelo } from '../modelos/qr.model';
 import { UsuarioModelo } from '../modelos/usuario.model';
 

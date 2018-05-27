@@ -4,6 +4,7 @@ import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal
 import { EventoModelo } from '../../modelos/evento.model';
 import { ApiService } from '../../general/conexionesApi';
 import { ConfigGeneral } from '../../general/configGeneral';
+import { ComprobarPage } from '../comprobar/comprobar';
 
 /**
  * Generated class for the PagarPage page.
@@ -59,27 +60,6 @@ export class PagarPage {
 			this.strHora = this.navParams.get('strHora');
 		}
 		this.getDetalle(this.idEvento,this.strTipo);
-    /*this.evento=new EventoModelo({
-			_id:"1",
-			strTipo:"CONCIERTOS",
-			strTitulo:"PEPE AGUILAR • JARIPEO SIN FRONTERAS",
-			strDescripcion:"Pepe Aguilar cantando junto a sus hijos.",
-			strResenia:"Pepe Aguilar y Familia junto con Christian Nodal recuperan la tradición del Jaripeo "+
-			"La historia continúa y se reinventa. Tras una exitosa carrera, acreedor de nueve premios Grammy, "+
-			"los reconocimientos más importantes en la industria musical y sin duda una de las mejores voces de "+
-			"habla hispana Pepe Aguilar toma la iniciativa acompañado de la 3ra generación de los Aguilar y regresa a los ruedos.",
-			strImagenPrincipal:"../../assets/img/pepe.jpg",
-			dteFecha: new Date(2018,4,28),
-			strMunicipio:"Aguascalientes",
-			strUbicacion:"Plaza de Toros Monumental",
-			dteHoraInicio: new Date(),
-			dteHoraFin: new Date(),
-			nmbCostoAdulto:700.0,
-			nmbCostoMenor:700.0
-		});*/
-		//this.cntAdultos= this.cntMenores =1;
-		
-	
   }
 
   ionViewDidLoad() {
@@ -94,20 +74,20 @@ export class PagarPage {
 		}).then(() => {
 			this.payPal.prepareToRender(this.payPalEnvironment, new PayPalConfiguration({})).then(() => {
 				this.payPal.renderSinglePaymentUI(this.payment).then((response) => {
-					alert(`Successfully paid. Status = ${response.response.state}`);
-					console.log("Se esta pagando un: "+this.evento.strTipo);
-					if(this.evento.strTipo=="CONCIERTOS"){
-						this.putAsientosForo(this.evento._id,this.arraySeleccion,'#e78867');
-					}else if(this.evento.strTipo=="DEPORTES"){
-						this.putAsientosForo(this.evento._id,this.arraySeleccion,'#e78867');
-					}else if(this.evento.strTipo=="MUSEO"){
-						this.putDisponibilidadEvento(this.evento._id,this.strFecha,this.strHora,(this.cntAdultos+this.cntMenores));
-					}else if(this.evento.strTipo=="TEATRO"){
-						this.putAsientosForo(this.evento._id,this.arraySeleccion,'#e78867');
-					}else if(this.evento.strTipo=="TOURS"){
-						this.putDisponibilidadEvento(this.evento._id,this.strFecha,this.strHora,(this.cntAdultos+this.cntMenores));
-					}
+					//alert(`Successfully paid. Status = ${response.response.state}`);
 					
+					if(response.response.state == "approved"){
+						console.log("Se esta pagando un: "+this.evento.strTipo);
+						if(this.evento.strTipo=="CONCIERTOS" || this.evento.strTipo=="TEATRO"){
+							this.putAsientosForo(this.evento._id,this.arraySeleccion,'#e78867');
+						}else if(this.evento.strTipo=="MUSEO" || this.evento.strTipo=="TOURS"){
+							this.putDisponibilidadEvento(this.evento._id,this.strFecha,this.strHora,(this.cntAdultos+this.cntMenores));
+						}else if(this.evento.strTipo=="DEPORTES"){
+							this.putDisponibilidadDeportes(this.evento._id,(this.cntAdultos+this.cntMenores));
+						}
+					}else{
+						this.navCtrl.push(ComprobarPage,{Estatus:"rechazado"});
+					}
 				}, () => {
 					console.log('Error or render dialog closed without being successful');
 				});
@@ -136,17 +116,7 @@ export class PagarPage {
 				this.subTotal=(this.totalAdultos+this.totalMenores);
 				this.comision=this.subTotal*0.10;
 				this.total=this.subTotal+this.comision;
-        if(this.evento.strTipo=="CONCIERTOS"){
-          
-        }else if(this.evento.strTipo=="DEPORTES"){
-          
-        }else if(this.evento.strTipo=="MUSEO"){
-          
-        }else if(this.evento.strTipo=="TEATRO"){
-          
-        }else if(this.evento.strTipo=="TOURS"){
-          
-        }
+        
       });
     }
 	}
@@ -155,7 +125,19 @@ export class PagarPage {
     if(idEvento!=undefined){
       this.conexionesApi.putAsientosForo(idEvento,arrayNumAsientos,strColor)
       .then((data) => {
-        console.log(data);
+				console.log(data);
+				if(data["intStatus"]){
+					if(data["intStatus"]==1){
+						this.navCtrl.setRoot(ComprobarPage,{Estatus:"Aprobado"});
+					}else{
+						let alert = this.alertCtrl.create({
+							title: '¡Algo salio mal!',
+							subTitle: 'Por favor intentalo de nuevo.',
+							buttons: ['Entendido']
+						});
+						alert.present();
+					}
+				}
       });
     }
 	}
@@ -164,7 +146,40 @@ export class PagarPage {
     if(idEvento!=undefined){
       this.conexionesApi.putDisponibilidadEvento(idEvento,strFecha,strHora,nmbAsientos)
       .then((data) => {
-        console.log(data);
+				console.log(data);
+				if(data["intStatus"]){
+					if(data["intStatus"]==1){
+						this.navCtrl.setRoot(ComprobarPage,{Estatus:"Aprobado"});
+					}else{
+						let alert = this.alertCtrl.create({
+							title: '¡Algo salio mal!',
+							subTitle: 'Por favor intentalo de nuevo.',
+							buttons: ['Entendido']
+						});
+						alert.present();
+					}
+				}
+      });
+    }
+	}
+	
+	putDisponibilidadDeportes(idEvento,nmbAsientos){
+    if(idEvento!=undefined){
+      this.conexionesApi.putDisponibilidadDeportes(idEvento,nmbAsientos)
+      .then((data) => {
+				console.log(data);
+				if(data["intStatus"]){
+					if(data["intStatus"]==1){
+						this.navCtrl.setRoot(ComprobarPage,{Estatus:"Aprobado"});
+					}else{
+						let alert = this.alertCtrl.create({
+							title: '¡Algo salio mal!',
+							subTitle: 'Por favor intentalo de nuevo.',
+							buttons: ['Entendido']
+						});
+						alert.present();
+					}
+				}
       });
     }
   }

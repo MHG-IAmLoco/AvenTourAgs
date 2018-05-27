@@ -162,16 +162,19 @@ export class InfoActividadPage {
   }
 
   obtenerArrayHoras(date:Date){
-    var strDate = ""+date.getFullYear +"-"+date.getMonth+"-"+date.getDate;
+    this.strHora = "";
+    this.arrayHorarios = [];
+    var strDate = ""+date.getFullYear() +"-"+(date.getMonth()+1)+"-"+date.getDate();
     this.strFecha = strDate;
-    this.getArrayHorarios(this.evento._id,strDate);
+    console.log(this.strFecha);
+    this.getArrayHorarios(this.evento._id,this.strFecha);
   }
 
   showVal(i){
     let alert = this.alertCtrl.create({
-      title: 'Bien!',
-      subTitle: 'Elegiste el indice '+i,
-      buttons: ['Entendido']
+      title: '¡Bien!',
+      subTitle: 'Horario elegido '+i+' hrs',
+      buttons: ['CORRECTO']
     });
     this.strHora = i;
     alert.present();
@@ -211,21 +214,22 @@ export class InfoActividadPage {
   irSeleccion(){
     if((this.cntAdultos+this.cntMenores)==0){
       let alert = this.alertCtrl.create({
-        title: 'Queremos que asistas!',
-        subTitle: 'Debes comprar al menos un ticket para poder seleccionar asientos.',
+        title: '¡Queremos que asistas!',
+        subTitle: 'Debes seleccionar al menos un tipo de boleto para continuar con la compra.',
+        buttons: ['Entendido']
+      });
+      alert.present();
+    }else if(this.strHora==""){
+      let alert = this.alertCtrl.create({
+        title: '¡Queremos que asistas!',
+        subTitle: 'Debes seleccionar un horario para continuar con la compra.',
         buttons: ['Entendido']
       });
       alert.present();
     }else{
-      if(this.evento.strTipo=="CONCIERTOS"){
+      if(this.evento.strTipo=="CONCIERTOS" || this.evento.strTipo=="TEATRO"){
         this.navCtrl.push(SeleccionPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,Evento:this.evento,strFecha:this.strFecha,strHora:this.strHora});
-      }else if(this.evento.strTipo=="DEPORTES"){
-        this.navCtrl.push(PagarPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,strFecha:this.strFecha,strHora:this.strHora});
-      }else if(this.evento.strTipo=="MUSEO"){
-        this.navCtrl.push(PagarPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,strFecha:this.strFecha,strHora:this.strHora});
-      }else if(this.evento.strTipo=="TEATRO"){
-        this.navCtrl.push(SeleccionPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,Evento:this.evento,strFecha:this.strFecha,strHora:this.strHora});
-      }else if(this.evento.strTipo=="TOURS"){
+      }else if(this.evento.strTipo=="DEPORTES" || this.evento.strTipo=="MUSEO" || this.evento.strTipo=="TOURS"){
         this.navCtrl.push(PagarPage,{IdEvento:this.evento._id,CantAdultos:this.cntAdultos,CantMenores:this.cntMenores,strFecha:this.strFecha,strHora:this.strHora});
       }
     }
@@ -256,7 +260,7 @@ export class InfoActividadPage {
     if(idEvento!=undefined && strFecha!=undefined){
       this.conexionesApi.getArrayHorarios(idEvento,strFecha)
       .then((data:InstanciaModelo[]) => {
-        this.evento.arrayInstancias = data;
+        this.arrayHorarios = data;
         this.mostrarHoras=true;
         console.log(JSON.stringify(this.evento.arrayInstancias,null,2));
       });

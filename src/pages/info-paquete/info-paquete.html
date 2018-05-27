@@ -15,7 +15,7 @@
 
 <ion-content padding>
     <ion-card>
-        <img src="{{itinerario.strImagenPrincipal}}"/>
+        <img src="{{configGeneral.strUrlImages}}{{itinerario.strImagenPrincipal}}"/>
         <ion-card-content>
           <ion-card-title text-center style="font-weight: bold; color: rgb(218, 169, 11);">
             {{itinerario.strTitulo}}
@@ -42,6 +42,7 @@
           </ion-list>
         </ion-card-content>
       </ion-card>
+      <h5 style="font-weight: bold; color: #1a7c83;" text-center>TE SUGERIMOS ADQUIRIR TUS BOLETOS:</h5>
       <ion-list>
         <ion-item *ngFor="let evt of arrayEvento" (click)=verDetalles(evt._id)>
           <ion-thumbnail item-start>

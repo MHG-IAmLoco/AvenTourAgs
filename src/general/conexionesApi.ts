@@ -97,8 +97,9 @@ putAsientosForo(idEvento,arrayNumAsientos,strColor){
     arrayNumAsientos:arrayNumAsientos,
     strColor:strColor
   }
+  console.log(JSON.stringify(ObjectData));
   return new Promise((resolve, reject) => {
-    this.httpClient.put(this.configGeneral.strUrlApis+'detalleForo', JSON.stringify(ObjectData))
+    this.httpClient.post(this.configGeneral.strUrlApis+'detalleForo', ObjectData)
       .subscribe(data => {
         console.log("respuesta put" + data);
         resolve(data);
@@ -115,8 +116,9 @@ putDisponibilidadEvento(idEvento,strFecha,strHora,nmbAsientos){
     strHora:strHora,
     nmbAsientos:nmbAsientos
   }
+  console.log("Data put dispo->"+JSON.stringify(ObjectData,null,2));
   return new Promise((resolve, reject) => {
-    this.httpClient.put(this.configGeneral.strUrlApis+'dispoEvento', JSON.stringify(ObjectData))
+    this.httpClient.post(this.configGeneral.strUrlApis+'dispoEvento', ObjectData)
       .subscribe(data => {
         console.log("respuesta put" + data);
         resolve(data);
@@ -136,6 +138,34 @@ getArrayHorarios(idEvento,strFecha){
       });
     });
   }
+
+  putDisponibilidadDeportes(idEvento,nmbAsientos){
+    var ObjectData = {
+      _id:idEvento,
+      nmbAsientos:nmbAsientos
+    }
+    console.log("Data put dispo->"+JSON.stringify(ObjectData,null,2));
+    return new Promise((resolve, reject) => {
+      this.httpClient.post(this.configGeneral.strUrlApis+'dispoDeportes', ObjectData)
+        .subscribe(data => {
+          console.log("respuesta put" + data);
+          resolve(data);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  public getDetallesPaquete(_id){
+    return new Promise(resolve => {
+        this.httpClient.get(this.configGeneral.strUrlApis+'detalleItinerario'+"/"+_id)
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
+      });
+}
 
 
 }

@@ -46,6 +46,7 @@ export class ComprobarPage {
         this.band=2;
       }else if(this.Estatus=='Aprobado' && this.band==2){
         this.navCtrl.setRoot(HomePage);
+        this.band = 3;
       }
     }, 6000);
   }

@@ -70,9 +70,9 @@ export class ItinerariosPage {
           }
   }
 
-  fnBindConocerPaquete(intTipoPaquete){
+  fnBindConocerPaquete(idPaquete){
     
-    this.navCtrl.push(InfoPaquetePage,{TipoPaquete:intTipoPaquete});
+    this.navCtrl.push(InfoPaquetePage,{idPaquete:idPaquete});
     this.tts.stop();
   }
 

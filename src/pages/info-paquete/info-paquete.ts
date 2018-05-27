@@ -18,18 +18,18 @@ import { ActividadModelo } from '../../modelos/actividad.model';
 })
 export class InfoPaquetePage {
   @ViewChild(Navbar) navBar: Navbar;
-  itinerario:ItinerarioModelo;
+  itinerario:ItinerarioModelo = new ItinerarioModelo();
   arrayEvento: Array <EventoModelo> = new Array<EventoModelo>();
-  intTipoPaquete:string;
+  idPaquete:string;
   constructor(public navCtrl: NavController, public navParams: NavParams,private tts:TextToSpeech,
-    private conexionesApi: ApiService,
+    private conexionesApis: ApiService,
     public configGeneral:ConfigGeneral) {
-    if(this.navParams.get('TipoPaquete')){
-      this.intTipoPaquete = this.navParams.get('TipoPaquete');
+    if(this.navParams.get('idPaquete')){
+      this.idPaquete = this.navParams.get('idPaquete');
     }
-      console.log(this.intTipoPaquete);
-
-        this.arrayEvento.push(new EventoModelo({
+      console.log(this.idPaquete);
+      this.getInfoItinerario(this.idPaquete);
+        /*this.arrayEvento.push(new EventoModelo({
           _id:"1",
           strTipo:"MUSEO",
           strTitulo:"MUSEO AGUASCALIENTES",
@@ -70,7 +70,7 @@ export class InfoPaquetePage {
           strDescripcion:"Lanzarse en la tirolesa de la sierra brava",
           nmbDuracion:1,
           strClave:''
-        }));
+        }));*/
     }
 
      
@@ -99,8 +99,26 @@ export class InfoPaquetePage {
   }
 
   verDetalles(id){
-    console.log("Evento "+id);
+    console.log("Actividad seleccionada "+id);
     this.navCtrl.push(InfoActividadPage,{_id:id});
+  }
+
+  getInfoItinerario(idPaquete){
+    if(idPaquete!=undefined){
+      this.conexionesApis.getDetallesPaquete(idPaquete)
+        .then((data) => {
+          if(data["intStatus"]){
+            if(data["intStatus"]==1){
+              console.log("Data itinerario->"+JSON.stringify(data,null,2));
+              this.itinerario = data["jsnAnswer"]["modeloItinerario"];
+              if(data["jsnAnswer"]["arrayActividades"]){
+                this.arrayEvento = data["jsnAnswer"]["arrayActividades"];
+              }
+            }
+          }
+        });
+    }
+    
   }
 
 }

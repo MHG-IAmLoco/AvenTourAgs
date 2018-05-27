@@ -85,10 +85,11 @@ export class SeleccionPage {
   }
 
   ionViewDidLoad() {
-    console.log("Esto "+this.verSwipe);
-    console.log('ionViewDidLoad SeleccionPage');
+    //console.log("Esto "+this.verSwipe);
+    //console.log('ionViewDidLoad SeleccionPage');
     setInterval(()=>{this.verSwipe=false;
-    console.log(""+this.verSwipe)}, 3000);
+      //console.log(""+this.verSwipe)
+    }, 3000);
   }
 
   cambioColor(asientoAux){

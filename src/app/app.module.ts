@@ -64,7 +64,8 @@ import { PerfilPageModule } from '../pages/perfil/perfil.module';
     PagarPageModule,
     ListaActividadPageModule,
     InfoActividadPageModule, 
-    PerfilPageModule
+    PerfilPageModule,
+    ComprobarPageModule
   ],
   bootstrap: [IonicApp],
 

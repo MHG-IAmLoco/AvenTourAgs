@@ -177,8 +177,14 @@ export class InfoEventoPage {
       case 2:
         console.log("Agregar adulto");
         //console.log(this.evento);
-        if((this.cntAdultos+this.cntMenores<5)&&(this.cntAdultos+this.cntMenores<this.evento.modeloForo.dispAsientos)){
-        this.cntAdultos++;
+        if(this.evento.strTipo=="DEPORTES"){
+          if((this.cntAdultos+this.cntMenores<5)&&(this.cntAdultos+this.cntMenores<this.evento.nmbCupo)){
+            this.cntAdultos++;
+          }
+        }else{
+          if((this.cntAdultos+this.cntMenores<5)&&(this.cntAdultos+this.cntMenores<this.evento.modeloForo.dispAsientos)){
+            this.cntAdultos++;
+          }
         }
         break;
       case 3:
@@ -189,8 +195,14 @@ export class InfoEventoPage {
         break;
       case 4:
         console.log("Agregar menor");
-        if((this.cntAdultos+this.cntMenores<5)&&(this.cntAdultos+this.cntMenores<this.evento.modeloForo.dispAsientos)){
-        this.cntMenores++;
+        if(this.evento.strTipo=="DEPORTES"){
+          if((this.cntAdultos+this.cntMenores<5)&&(this.cntAdultos+this.cntMenores<this.evento.nmbCupo)){
+            this.cntMenores++;
+          }
+        }else{
+          if((this.cntAdultos+this.cntMenores<5)&&(this.cntAdultos+this.cntMenores<this.evento.modeloForo.dispAsientos)){
+            this.cntMenores++;
+          }
         }
         break;
     }

@@ -14,12 +14,12 @@
 
 
 <body style="text-align: center">
-  <img *ngIf="verCheck" class="imagenes" src="../../assets/img/check.gif">
-  <img *ngIf="verAvion" class="imagenes" src="../../assets/img/envio.gif">
-  <img *ngIf="verTriste" class="imagenes2" src="../../assets/img/triste.jpg">
+  <img *ngIf="verCheck" class="imagenes" src="assets/img/check.gif">
+  <img *ngIf="verAvion" class="imagenes" src="assets/img/envio.gif">
+  <img *ngIf="verTriste" class="imagenes2" src="assets/img/triste.jpg">
 
-  <h1 class="exito" *ngIf="verCheck">PAGO REALIZADO EXITOSAMENTE</h1>
-  <h1 class="envio" *ngIf="verAvion">ENVIANDO COMPROBANTE AL E-MAIL</h1>
-  <h1 class="rechazo" *ngIf="verTriste">SU PAGO HA SIDO RECHAZADO, FAVOR DE INTENTAR NUEVAMENTE</h1>
+  <h1 class="exito" align="center" *ngIf="verCheck">PAGO REALIZADO <br> EXITOSAMENTE</h1>
+  <h1 class="envio" align="center" *ngIf="verAvion">ENVIANDO COMPROBANTE <br> AL E-MAIL</h1>
+  <h1 class="rechazo" align="center" *ngIf="verTriste">SU PAGO HA SIDO RECHAZADO,<br> FAVOR DE INTENTAR NUEVAMENTE</h1>
 
 </body>

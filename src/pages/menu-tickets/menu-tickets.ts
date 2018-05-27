@@ -58,7 +58,7 @@ export class MenuTicketsPage {
       _id:"5",
       strTitulo:"assets/img/toursIcono.png",
       strDescripcion:"TOURS",
-      strImagenPrincipal:"../../assets/img/tours.jpg",
+      strImagenPrincipal:"assets/img/tours.jpg",
       arrayImagenes:[]
     }));
   }

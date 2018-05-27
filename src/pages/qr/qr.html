@@ -17,14 +17,11 @@
   
   <ion-card *ngIf="createdCode">
     <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
-    <!--<ion-card-content>
-      <p>Value: {{ createdCode }}</p>
-    </ion-card-content> -->
   </ion-card>
 
-  <ion-card *ngIf="scannedCode">
+  <ion-card *ngIf="scannedCode" [style.backgroundColor]="color">
     <ion-card-content>
-      <p align="center">{{ scannedCode }}</p>
+      <p align="center" style="color:white;">{{ scannedCode }}</p>
     </ion-card-content>
   </ion-card>
 

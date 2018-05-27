@@ -5,6 +5,7 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { RegistroPage } from '../registro/registro';
 import { ApiService } from '../../general/conexionesApi';
 import { UsuarioModelo } from '../../modelos/usuario.model';
+import { ConfigGeneral } from '../../general/configGeneral';
 
 
 @IonicPage()
@@ -25,7 +26,9 @@ export class LoginPage implements OnInit{
     private tts: TextToSpeech,
     private alertCtrl: AlertController,
     private conexionesApi: ApiService,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public configGeneral: ConfigGeneral
+    ) {
   }
 
 
@@ -38,7 +41,7 @@ export class LoginPage implements OnInit{
   irHome(){
     this.tts.stop();
     this.navCtrl.push(HomePage, {
-      type: this.state = 1,
+      type: this.state = 0,
     });
   }
 
@@ -69,6 +72,7 @@ export class LoginPage implements OnInit{
         console.log(JSON.stringify(data,null,2));
         if(data["intStatus"]==1){
           this.modeloUsuario = new UsuarioModelo(data["jsnAnswer"]);
+          this.configGeneral.modeloUsuario = this.modeloUsuario; 
           let alert = this.alertCtrl.create({
             title: 'BIENVENIDO '+ this.modeloUsuario.strNombre.toUpperCase(),
             subTitle: 'Que disfrutes de la experiencia AvenTourAgs!',

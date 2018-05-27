@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { GaleriaModelo } from '../modelos/galeria.model';
+import { QrModelo } from '../modelos/qr.model';
 
 @Injectable()
 export class ApiService{
@@ -137,5 +138,32 @@ getArrayHorarios(idEvento,strFecha){
     });
   }
 
+  putQrCode(_id, qrModelo:QrModelo){
+    var ObjectData = {
+      _id: _id,
+      qrModelo: qrModelo
+    }
+    return new Promise((resolve, reject) => {
+      console.log(JSON.stringify(ObjectData));
+      this.httpClient.post(this.configGeneral.strUrlApis+'qrCode', ObjectData)
+        .subscribe(data => {
+          console.log("respuesta put" + data);
+          resolve(data);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }  
+
+  getInfQr(_id){
+    return new Promise(resolve => {
+        this.httpClient.get(this.configGeneral.strUrlApis+"qrExistente"+"/"+_id)
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
+      });
+    }
 
 }

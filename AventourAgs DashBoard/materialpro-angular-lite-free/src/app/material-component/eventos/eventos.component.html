@@ -1,0 +1,129 @@
+<!-- ============================================================== -->
+<!-- Fixed height Card Grid-->
+<!-- ============================================================== --> 
+<!-- ============================================================== -->
+<!-- Basic Card Grid-->
+<!-- ============================================================== -->
+<mat-card ng-app="app">
+<mat-card-content>    
+    <mat-card-title>CREAR NUEVO EVENTO</mat-card-title><br><br>
+        <mat-card-subtitle>CATEGORIA</mat-card-subtitle>
+        <section class="example-section">
+
+          <mat-radio-group [(ngModel)]="categoria" ng-change="categorias()">
+            <mat-radio-button class="example-margin" color="primary" value="EVENTO" (change)="categorias($event)">
+              Evento
+            </mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-radio-button class="example-margin" color="primary" value="ACTIVIDAD" (change)="categorias($event)">
+              Actividad
+            </mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-radio-button class="example-margin" color="primary" value="DEPORTES" (change)="categorias($event)">
+              Deporte
+            </mat-radio-button>
+          </mat-radio-group>
+        </section><br>
+        <mat-card-subtitle *ngIf="verEvento || verActividad">TIPO</mat-card-subtitle>
+        <section class="example-section" *ngIf="verEvento">
+          <mat-radio-group [(ngModel)]="tipo">
+            <mat-radio-button class="example-margin" color="primary" value="TEATRO" >
+              Teatro
+            </mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-radio-button class="example-margin" color="primary" value="CONCIERTO" >
+              Concierto
+            </mat-radio-button>
+          </mat-radio-group>
+        </section>
+        <section class="example-section" *ngIf="verActividad">
+          <mat-radio-group [(ngModel)]="tipo2">
+            <mat-radio-button class="example-margin" color="primary" value="MUSEO" >
+              Museo
+            </mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-radio-button class="example-margin" color="primary" value="TOURS" >
+              Tour
+            </mat-radio-button>
+          </mat-radio-group>
+        </section>
+
+        <br><br>
+        <mat-card-subtitle>TITULO DEL EVENTO</mat-card-subtitle>
+        <input (keyup)="obtenerTitulo($event)">
+        <br><br>
+        <mat-card-subtitle>DESCRIPCION DEL EVENTO</mat-card-subtitle>
+        <input (keyup)="obtenerDesc($event)">
+        <br><br>
+        <mat-card-subtitle>RESEÑA DEL EVENTO</mat-card-subtitle>
+        <textarea rows="10" cols="100" (keyup)="obtenerResenia($event)"></textarea>
+        <br><br>
+        <mat-card-subtitle>SUBIR IMAGEN</mat-card-subtitle>
+        <input name="file-input" id="file-input" type="file" (change)="addImage($event)" />
+        <br />
+        <img id="imgSalida" width="50%" height="50%" src="" />
+        <p id="b64eventos" hidden></p>
+        <br><br>
+        <mat-card-subtitle>UBICACION DEL EVENTO</mat-card-subtitle>
+        <input (keyup)="obtenerUbicacion($event)">
+        <br><br>
+        <mat-card-subtitle *ngIf="verEvento || verDeporte">FECHA DEL EVENTO</mat-card-subtitle>
+        <mat-form-field style="width: 30%" *ngIf="verEvento || verDeporte">
+            <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Elige una fecha" [(ngModel)]="fecha">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker [(ngModel)]="fecha" ngDefaultControl (selectedChanged)="onDate($event)"></mat-datepicker>
+          </mat-form-field>
+        <br><br>
+        <mat-card-subtitle *ngIf="verEvento || verDeporte">HORA DE INICIO</mat-card-subtitle>
+        <input type="time" atp-time-picker *ngIf="verEvento || verDeporte" value="{{tiempo}}" id="reloj" (click)="open()"/>
+        <br><br>
+        <mat-card-subtitle *ngIf="verEvento || verDeporte">HORA DE FIN</mat-card-subtitle>
+        <input type="time" atp-time-picker *ngIf="verEvento || verDeporte" value="{{tiempoF}}" id="reloj" (click)="open2()"/>
+        <br><br>
+        <mat-card-subtitle>COSTO ADULTOS</mat-card-subtitle>
+        $<input type="number" min="0"/>
+        <br><br>
+        <mat-card-subtitle>COSTO MENORES</mat-card-subtitle>
+        $<input type="number" min="0"/>
+        <br><br>
+        <mat-card-subtitle>LUGARES DISPONIBLES PARA EL EVENTO</mat-card-subtitle>
+        <section class="example-section" *ngIf="verEvento">
+            <mat-radio-group  [(ngModel)]="cupoEvento">
+              <mat-radio-button class="example-margin" color="primary" value="45">
+                45
+              </mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <mat-radio-button class="example-margin" color="primary" value="63">
+                63
+              </mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <mat-radio-button class="example-margin" color="primary" value="81">
+                81
+              </mat-radio-button>
+            </mat-radio-group>
+        </section>
+        <section class="example-section" *ngIf="verDeporte">
+            <mat-radio-group [(ngModel)]="cupoDeporte">
+              <mat-radio-button class="example-margin" color="primary" value="14000">
+                14 000
+              </mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <mat-radio-button class="example-margin" color="primary" value="17000">
+                17 000
+              </mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;
+              <mat-radio-button class="example-margin" color="primary" value="20000">
+                20 000
+              </mat-radio-button>
+            </mat-radio-group>
+        </section>
+        <input type="number" min="30" max="70" value="30" *ngIf="verActividad" id="num1" ng-model="value"/>
+
+        <br><br>
+        <mat-card-subtitle *ngIf="verActividad">HORARIOS</mat-card-subtitle>
+        <section class="example-section" *ngIf="verActividad">
+            <mat-checkbox class="example-margin" color="primary" [(ngModel)]="doce">12:00 pm</mat-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-checkbox class="example-margin" color="primary" [(ngModel)]="una">1:00 pm</mat-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-checkbox class="example-margin" color="primary" [(ngModel)]="dos">2:00 pm</mat-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-checkbox class="example-margin" color="primary" [(ngModel)]="tres">3:00 pm</mat-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-checkbox class="example-margin" color="primary" [(ngModel)]="cuatro">4:00 pm</mat-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-checkbox class="example-margin" color="primary" [(ngModel)]="cinco">5:00 pm</mat-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;
+        </section>
+        <br><br>
+        <mat-card-subtitle *ngIf="verActividad">CLAVE DE LA ACTIVIDAD</mat-card-subtitle>
+        <input (keyup)="obtenerClave($event)" *ngIf="verActividad">
+        <button mat-raised-button color="warn" (click)="guardar()">GUARDAR</button>
+        </mat-card-content>
+    </mat-card>

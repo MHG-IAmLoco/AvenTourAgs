@@ -1,0 +1,26 @@
+
+  <mat-card>
+    <mat-card-content>  
+    <mat-card-title>CREAR CUPON</mat-card-title>
+      <mat-card-subtitle>TITULO DEL CUPON</mat-card-subtitle>
+      <input (keyup)="obtenerTitulo($event)">
+      <br><br>
+      <mat-card-subtitle>DESCRIPCIÓN DE LA PROMOCIÓN</mat-card-subtitle>
+      <input (keyup)="obtenerDesc($event)">
+      <br><br>
+      <mat-card-subtitle>UBICACIÓN DE LA PROMOCIÓN</mat-card-subtitle>
+      <input (keyup)="obtenerUbicacion($event)">
+      <br><br>
+      <mat-card-subtitle>SUBIR IMAGEN</mat-card-subtitle>
+      <input name="file-input" id="file-input" type="file" (change)="addImage($event)" />
+      <br />
+      <img id="imgSalida" width="50%" height="50%" src="" />
+      <p id="b64" hidden></p>
+      <br><br>
+      <mat-card-subtitle>PUNTOS REQUERIDOS</mat-card-subtitle>
+      <input type="number" min="0"/>&nbsp;&nbsp;PUNTOS
+      <br><br>
+      <button mat-raised-button color="warn" (click)="guardar()">GUARDAR</button>
+    </mat-card-content>
+  </mat-card>
+

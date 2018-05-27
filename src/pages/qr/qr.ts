@@ -23,7 +23,7 @@ export class QrPage {
   scannedCode = null;
   color = "white";
 
-  constructor(public configGeneral: ConfigGeneral,public conexionesApi: ApiService, public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner) {
+  constructor(public configGeneral: ConfigGeneral, public conexionesApi: ApiService, public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner) {
     this.scanCode();
   }
 
@@ -54,8 +54,6 @@ export class QrPage {
           .then((data) => {
             if (data["intStatus"]) {
               if (data["intStatus"] == 1) {
-                console.log("Modelo"+ JSON.stringify(this.configGeneral.modeloUsuario));
-                console.log("user" + this.configGeneral.modeloUsuario._id);
                 this.postQr(this.configGeneral.modeloUsuario._id, modelo);
               } else {
                 this.color = "#f53d3d";
@@ -74,11 +72,9 @@ export class QrPage {
   }
 
   postQr(strId, modeloQr: QrModelo) {
-    console.log("Identificador "+ strId);
     if (strId != undefined) {
-      this.conexionesApi.putQrCode(strId, modeloQr)
+      this.conexionesApi.postQrCode(strId, modeloQr)
         .then((data) => {
-          console.log("Respuesta postQR" + JSON.stringify(data));
           if (data["intStatus"]) {
             if (data["intStatus"] == 1) {
               this.color = "#32db64";

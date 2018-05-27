@@ -1,0 +1,56 @@
+<!-- ============================================================== -->
+<!-- Fixed height Card Grid-->
+<!-- ============================================================== -->
+<mat-card>
+    <mat-card-content>
+      <mat-card-title>CREAR ITINERARIO</mat-card-title>
+      <mat-card-subtitle>TITULO DE LA IMAGEN</mat-card-subtitle>
+      <input (keyup)="obtenerTitulo($event)">
+      <br><br>
+      <mat-card-subtitle>DESCRIPCION DE LA IMAGEN</mat-card-subtitle>
+      <input (keyup)="obtenerDesc($event)">
+      <br><br>
+      <mat-card-subtitle>SUBIR IMAGEN</mat-card-subtitle>
+      <input name="file-input" id="file-input" type="file" (change)="addImage($event)" />
+      <br />
+      <img id="imgSalida" width="50%" height="50%" src="" />
+      <p id="b64" hidden></p>
+      <br><br>
+      <mat-card-subtitle>COSTO APROXIMADO</mat-card-subtitle>
+        $<input type="number"/>
+        <br><br>
+        <mat-card-subtitle>TIEMPO APROXIMADO</mat-card-subtitle>
+        <input type="number"/>&nbsp;HORAS
+        <br><br>
+        
+      
+    </mat-card-content>    
+</mat-card>
+<mat-card  >
+    <mat-card-content>
+        <mat-card-title>ACTIVIDADES</mat-card-title>
+        <button mat-raised-button color="primary" (click)="addActividad()" style="float: right;">
+            AGREGAR ACTIVIDAD
+        </button>
+  </mat-card-content>
+  </mat-card>
+<mat-card *ngFor="let act of actividades; let i=index" >
+  <mat-card-content>
+    <mat-card-subtitle>ACTIVIDAD {{i+1}}</mat-card-subtitle>
+    <mat-card-subtitle>DESCRIPCION DE LA ACTIVIDAD</mat-card-subtitle>
+    <input (keyup)="obtenerDescAct($event,i)">
+    <mat-card-subtitle>DURACIÓN DE ACTIVIDAD</mat-card-subtitle>
+    <input type="number"/>&nbsp;HORAS &nbsp;&nbsp;&nbsp;<button mat-button color="primary" (click)="elimActividad(i)">
+      ELIMINAR ACTIVIDAD
+  </button><br>
+  <mat-card-subtitle>CLAVE DE LA ACTIVIDAD</mat-card-subtitle>
+  <select ng-model="actividades[i].strClave" (change)="cambio(i,$event)">
+      <option *ngFor="let cve of claves">{{cve}}</option>
+  </select>
+</mat-card-content>
+</mat-card>
+<mat-card  >
+    <mat-card-content>
+        <button mat-raised-button color="warn" (click)="guardar()">GUARDAR</button>  
+  </mat-card-content>
+  </mat-card>

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule, NavController } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
@@ -26,18 +26,16 @@ import { SeleccionPageModule } from '../pages/seleccion/seleccion.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { DatePicker } from '@ionic-native/date-picker'
+import {ComprobarPageModule} from '../pages/comprobar/comprobar.module';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { PagarPage } from '../pages/pagar/pagar';
 import { PagarPageModule } from '../pages/pagar/pagar.module';
 import { PayPal } from '@ionic-native/paypal';
 import { ListaActividadPageModule } from '../pages/lista-actividad/lista-actividad.module';
 import { InfoActividadPageModule } from '../pages/info-actividad/info-actividad.module';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { ComprobarPageModule } from '../pages/comprobar/comprobar.module';
-import { PerfilPageModule } from '../pages/perfil/perfil.module';
 @NgModule({
   declarations: [
     MyApp,
@@ -64,7 +62,6 @@ import { PerfilPageModule } from '../pages/perfil/perfil.module';
     PagarPageModule,
     ListaActividadPageModule,
     InfoActividadPageModule, 
-    PerfilPageModule,
     ComprobarPageModule
   ],
   bootstrap: [IonicApp],

@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { GaleriaModelo } from '../modelos/galeria.model';
+import { QrModelo } from '../modelos/qr.model';
+import { UsuarioModelo } from '../modelos/usuario.model';
 
 @Injectable()
 export class ApiService{
@@ -156,6 +158,22 @@ getArrayHorarios(idEvento,strFecha){
     });
   }
 
+  postQrCode(_id, qrModelo:QrModelo){
+    var ObjectData = {
+      _id: _id,
+      qrModelo: qrModelo
+    }
+    return new Promise((resolve, reject) => {
+      this.httpClient.post(this.configGeneral.strUrlApis+'qrCode', ObjectData)
+        .subscribe(data => {
+          console.log("respuesta post " + data);
+          resolve(data);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
   public getDetallesPaquete(_id){
     return new Promise(resolve => {
         this.httpClient.get(this.configGeneral.strUrlApis+'detalleItinerario'+"/"+_id)
@@ -165,7 +183,64 @@ getArrayHorarios(idEvento,strFecha){
           console.log(err);
         });
       });
-}
+  }  
 
+  getInfQr(_id){
+    return new Promise(resolve => {
+        this.httpClient.get(this.configGeneral.strUrlApis+"qrExistente"+"/"+_id)
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
+      });
+    }
+
+    postChangePass(_id, pass){
+      var ObjectData = {
+        _id: _id,
+        strContraseña: pass
+      }
+      console.log(JSON.stringify(ObjectData));
+      return new Promise((resolve, reject) => {
+        this.httpClient.post(this.configGeneral.strUrlApis+'changePass', ObjectData)
+          .subscribe(data => {
+            console.log("respuesta post " + data);
+            resolve(data);
+          }, (err) => {
+            reject(err);
+          });
+      });
+    }
+
+    postRegistro(usuarioModelo:UsuarioModelo){
+      var ObjectData = {
+        strNombre: usuarioModelo.strNombre,
+        strApellido: usuarioModelo.strApellido,
+        strCorreo: usuarioModelo.strCorreo,
+        strContraseña: usuarioModelo.strContraseña,
+        nmbPuntos: usuarioModelo.nmbPuntos
+      }
+      return new Promise((resolve, reject) => {
+        this.httpClient.post(this.configGeneral.strUrlApis+'pRegistro', ObjectData)
+          .subscribe(data => {
+            console.log("respuesta post " + data);
+            resolve(data);
+          }, (err) => {
+            reject(err);
+          });
+      });
+    }
+    
+    getUsers(strCorreo){
+      return new Promise(resolve => {
+          this.httpClient.get(this.configGeneral.strUrlApis+"gRegistro"+"/"+ strCorreo)
+          .subscribe(data => {
+            resolve(data);
+          }, err => {
+            console.log(err);
+          });
+        });
+      }
 
 }

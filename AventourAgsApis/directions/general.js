@@ -62,6 +62,33 @@ var modeloQr = Joi.object().keys({
     nmbPuntos: Joi.number().required()
 });
 
+app.post('/api/general/canjear', Celebrate({
+    body: {
+        _id: Joi.string().required(),
+        nmbPuntos: Joi.number().required()
+    }
+}), function (req, res) {
+    functions.fnPostCanjear(req.body)
+            .then(function (result) {
+                res.json(result);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+});
+
+app.get('/api/general/promociones/', Celebrate({
+    params: {    }
+}), function (req, res) {
+    functions.fnGetPromociones(req.params)
+            .then(function (result) {
+                res.json(result);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+});
+
 app.post('/api/general/qrCode', Celebrate({
     body: {
         _id: Joi.string().required(),

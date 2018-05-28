@@ -19,6 +19,75 @@ var strUrl = 'mongodb://localhost:27017/aventurags';
 var strImageURL = 'http://192.168.17.129:5005/api/server/';
 //var strImageURL = 'http://localhost:5005/api/server/';
 
+///Route:('/api/general/canjear')
+exports.fnPostCanjear = function (jsnParameters) {
+    return new Promise(function (resolve, reject) {
+        MongoClient.connect(strUrl, function (err, db) {
+            if (err) {
+                console.error(err);
+                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
+            } else {
+                console.log("Entro al result");
+                var puntos = -jsnParameters.nmbPuntos;
+                console.log(puntos);
+                var queryUpdate = {
+                    _id: ObjectId(jsnParameters._id)
+                };
+                var update = {
+                    $inc: {
+                        nmbPuntos: puntos
+                    }
+                };
+                db.collection('usuarios').updateOne(queryUpdate, update, function (err, result) {
+                    if (err) {
+                        console.error(err + '\n');
+                        db.close();
+                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                    } else {
+                        db.close();
+                        resolve({strAnswer: 'Cupon canjeado', intStatus: 1});
+                    }
+                });
+            }
+        });
+    }
+    );
+};
+
+///Route:('/api/general/promociones/')
+exports.fnGetPromociones = function (jsnParameters) {
+    return new Promise(function (resolve, reject) {
+        MongoClient.connect(strUrl, function (err, db) {
+            if (err) {
+                console.error(err);
+                reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
+            } else {
+                var query;
+                var fields =
+                        {
+                            _id: 1,
+                            strNombre: 1,
+                            strUbicacion: 1,
+                            strDescripcion: 1,
+                            strImagen: 1,
+                            nmbPuntos: 1
+                        };
+
+                db.collection('promociones').find(query, fields).toArray(function (err, result) {
+                    if (err) {
+                        console.error(err + '\n');
+                        db.close();
+                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                    }
+                    db.close();
+                    console.log("jsnAnswer: regresa el resultado");
+                    resolve({jsnAnswer: result, intStatus: 1});
+                });
+            }
+        });
+    });
+};
+
 ///Route:('/api/general/qrCode')
 exports.fnPostQrCode = function (jsnParameters) {
     return new Promise(function (resolve, reject) {
@@ -705,53 +774,53 @@ exports.fnGetDetallesItinerario = function (jsnParameters) {
                 console.error(err);
                 reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
             } else {
-                var query = {_id:ObjectId(jsnParameters._id)};
+                var query = {_id: ObjectId(jsnParameters._id)};
                 db.collection('itinerarios').find(query).toArray(function (err, result) {
                     if (err) {
                         console.error(err + '\n');
                         db.close();
                         reject({strAnswer: 'Data retrieval error', intStatus: 2});
                     }
-                    if(result[0]){
-                    	var modeloItinerario = result[0];
-                    	var arrayActividades = [];
+                    if (result[0]) {
+                        var modeloItinerario = result[0];
+                        var arrayActividades = [];
                         var arrayClaves = [];
-                    	modeloItinerario.arrayActividades.forEach(function(actividad){
-                    		if(actividad.strClave){
+                        modeloItinerario.arrayActividades.forEach(function (actividad) {
+                            if (actividad.strClave) {
                                 arrayClaves.push(actividad.strClave);
                             }
                         });
-            			var queryActividad = {
-            				strClave:{$in:arrayClaves}
-            			}
-            			var fields = {
-            				"_id" :1,
-							"strTipo" : 1,
-							"strTitulo" : 1,
-							"strDescripcion" : 1,
-							"strResenia" :1,
-							"strImagenPrincipal" :1,
-							"strUbicacion" :1,
-							"nmbCostoAdulto" :1,
-							"nmbCostoMenor" :1,
-							"nmbCupo" :1,
-							"strClave" : 1
-            			};
-            			db.collection('evento').find(queryActividad,fields).toArray(function (err, resultActividad) {
-		                    if (err) {
-		                        console.error(err + '\n');
-		                        db.close();
-		                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
-		                    }
-		                    if(resultActividad[0]){
-		                    	//console.log(JSON.stringify(resultActividad[0],null,2));
+                        var queryActividad = {
+                            strClave: {$in: arrayClaves}
+                        }
+                        var fields = {
+                            "_id": 1,
+                            "strTipo": 1,
+                            "strTitulo": 1,
+                            "strDescripcion": 1,
+                            "strResenia": 1,
+                            "strImagenPrincipal": 1,
+                            "strUbicacion": 1,
+                            "nmbCostoAdulto": 1,
+                            "nmbCostoMenor": 1,
+                            "nmbCupo": 1,
+                            "strClave": 1
+                        };
+                        db.collection('evento').find(queryActividad, fields).toArray(function (err, resultActividad) {
+                            if (err) {
+                                console.error(err + '\n');
+                                db.close();
+                                reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                            }
+                            if (resultActividad[0]) {
+                                //console.log(JSON.stringify(resultActividad[0],null,2));
                                 db.close();
                                 arrayActividades = resultActividad;
-		                    	resolve({jsnAnswer: {modeloItinerario,arrayActividades}, intStatus: 1});
-		                    }
-		                });
+                                resolve({jsnAnswer: {modeloItinerario, arrayActividades}, intStatus: 1});
+                            }
+                        });
                     }
-                    
+
                 });
             }
         });
@@ -768,15 +837,15 @@ exports.fnGetClaves = function (jsnParameters) {
             } else {
                 var aggregateQuery = [
                     {
-                        $project:{
-                            "id":"clave",
-                            "strClave":"$strClave"
+                        $project: {
+                            "id": "clave",
+                            "strClave": "$strClave"
                         }
                     },
                     {
-                        $group:{
-                            _id:"$id",
-                            arrayClaves: {$push:"$strClave"}
+                        $group: {
+                            _id: "$id",
+                            arrayClaves: {$push: "$strClave"}
                         }
                     }
                 ];
@@ -788,13 +857,13 @@ exports.fnGetClaves = function (jsnParameters) {
                     }
                     db.close();
                     var arrayClaves = [];
-                    if(result[0]){
+                    if (result[0]) {
                         arrayClaves = result[0].arrayClaves;
                         resolve({jsnAnswer: arrayClaves, intStatus: 1});
-                    }else{
+                    } else {
                         resolve({jsnAnswer: arrayClaves, intStatus: 1});
                     }
-                    
+
                 });
             }
         });
@@ -809,40 +878,40 @@ exports.fnPostImagenGaleria = function (jsnParameters) {
                 console.error(err);
                 reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
             } else {
-                    delete jsnParameters.modeloGaleria._id;
-                    var strImageB64 = jsnParameters.modeloGaleria.strImagenPrincipal;
-                    jsnParameters.modeloGaleria.strImagenPrincipal = (jsnParameters.modeloGaleria.strTitulo.replace(/ /g,"_"))+".jpg"
-                    var query = {
-                        _id:ObjectId(jsnParameters._id)
-                    };
-                    var update = {
-                        $push:{
-                            "arrayImagenes":jsnParameters.modeloGaleria
+                delete jsnParameters.modeloGaleria._id;
+                var strImageB64 = jsnParameters.modeloGaleria.strImagenPrincipal;
+                jsnParameters.modeloGaleria.strImagenPrincipal = (jsnParameters.modeloGaleria.strTitulo.replace(/ /g, "_")) + ".jpg"
+                var query = {
+                    _id: ObjectId(jsnParameters._id)
+                };
+                var update = {
+                    $push: {
+                        "arrayImagenes": jsnParameters.modeloGaleria
+                    }
+                };
+                db.collection('galeria').update(query, update, function (err, result) {
+                    if (err) {
+                        console.error(err + '\n');
+                        db.close();
+                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                    }
+                    request.post({
+                        "headers": {"content-type": "application/json"},
+                        "url": strImageURL + "imagen",
+                        "body": JSON.stringify({
+                            "strNombre": jsnParameters.modeloGaleria.strImagenPrincipal,
+                            "strBase64": strImageB64
+                        })
+                    }, (error, response, body) => {
+                        if (error) {
+                            reject({strAnswer: 'La imagen no se pudo subir al servidor', intStatus: 3})
                         }
-                    };
-                    db.collection('galeria').update(query,update,function (err, result) {
-                        if (err) {
-                            console.error(err + '\n');
-                            db.close();
-                            reject({strAnswer: 'Data retrieval error', intStatus: 2});
-                        }
-                        request.post({
-                            "headers": { "content-type": "application/json" },
-                            "url": strImageURL+"imagen",
-                            "body": JSON.stringify({
-                                "strNombre": jsnParameters.modeloGaleria.strImagenPrincipal,
-                                "strBase64": strImageB64
-                            })
-                        }, (error, response, body) => {
-                            if(error) {
-                                reject({strAnswer: 'La imagen no se pudo subir al servidor', intStatus: 3})
-                            }
-                            console.log("Response post->"+JSON.stringify(response,null,2));
-                            console.log("Body post->"+JSON.stringify(body,null,2));
-                            resolve({jsnAnswer:result, intStatus: 1})
-                        });
-                        
+                        console.log("Response post->" + JSON.stringify(response, null, 2));
+                        console.log("Body post->" + JSON.stringify(body, null, 2));
+                        resolve({jsnAnswer: result, intStatus: 1})
                     });
+
+                });
             }
         });
     });
@@ -856,32 +925,32 @@ exports.fnPostItinerario = function (jsnParameters) {
                 console.error(err);
                 reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
             } else {
-                    var strImageB64 = jsnParameters.strImagenPrincipal;
-                    jsnParameters.strImagenPrincipal = jsnParameters.strTitulo.replace(' ','')+".jpg";
-                    db.collection('itinerarios').insert(jsnParameters,function (err, result) {
-                        if (err) {
-                            console.error(err + '\n');
-                            db.close();
-                            reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                var strImageB64 = jsnParameters.strImagenPrincipal;
+                jsnParameters.strImagenPrincipal = jsnParameters.strTitulo.replace(' ', '') + ".jpg";
+                db.collection('itinerarios').insert(jsnParameters, function (err, result) {
+                    if (err) {
+                        console.error(err + '\n');
+                        db.close();
+                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                    }
+                    request.post({
+                        "headers": {"content-type": "application/json"},
+                        "url": strImageURL + "imagen",
+                        "body": JSON.stringify({
+                            "strNombre": jsnParameters.strImagenPrincipal,
+                            "strBase64": strImageB64
+                        })
+                    }, (error, response, body) => {
+                        if (error) {
+                            reject({strAnswer: 'La imagen no se pudo subir al servidor', intStatus: 3})
                         }
-                        request.post({
-                            "headers": { "content-type": "application/json" },
-                            "url": strImageURL+"imagen",
-                            "body": JSON.stringify({
-                                "strNombre": jsnParameters.strImagenPrincipal,
-                                "strBase64": strImageB64
-                            })
-                        }, (error, response, body) => {
-                            if(error) {
-                                reject({strAnswer: 'La imagen no se pudo subir al servidor', intStatus: 3})
-                            }
-                            console.log("Response post->"+JSON.stringify(response,null,2));
-                            console.log("Body post->"+JSON.stringify(body,null,2));
-                            console.log("Result insert->"+JSON.stringify(result,null,2))
-                            resolve({jsnAnswer:result, intStatus: 1})
-                        });
-                        
+                        console.log("Response post->" + JSON.stringify(response, null, 2));
+                        console.log("Body post->" + JSON.stringify(body, null, 2));
+                        console.log("Result insert->" + JSON.stringify(result, null, 2))
+                        resolve({jsnAnswer: result, intStatus: 1})
                     });
+
+                });
             }
         });
     });
@@ -896,48 +965,48 @@ exports.fnPostEvento = function (jsnParameters) {
                 console.error(err);
                 reject({intStatus: 2, strAnswer: 'Cannot connect to the DB'});
             } else {
-                    var strImageB64 = jsnParameters.strImagenPrincipal;
-                    jsnParameters.strImagenPrincipal = jsnParameters.strTitulo.replace(' ','')+".jpg";
-                    if(jsnParameters.strTipo == "CONCIERTOS" || jsnParameters.strTipo == "CONCIERTOS"){
-                        delete jsnParameters.arrayHorarios;
-                        delete jsnParameters.arrayInstancias;
-                        delete jsnParameters.strClave;
+                var strImageB64 = jsnParameters.strImagenPrincipal;
+                jsnParameters.strImagenPrincipal = jsnParameters.strTitulo.replace(' ', '') + ".jpg";
+                if (jsnParameters.strTipo == "CONCIERTOS" || jsnParameters.strTipo == "CONCIERTOS") {
+                    delete jsnParameters.arrayHorarios;
+                    delete jsnParameters.arrayInstancias;
+                    delete jsnParameters.strClave;
+                }
+                if (jsnParameters.strTipo == "MUSEO" || jsnParameters.strTipo == "TOURS") {
+                    delete jsnParameters.modeloForo;
+                    delete jsnParameters.dteFecha;
+                    delete jsnParameters.dteHoraInicio;
+                    delete jsnParameters.dteHoraFin;
+                }
+                if (jsnParameters.strTipo == "DEPORTES") {
+                    delete jsnParameters.arrayHorarios;
+                    delete jsnParameters.arrayInstancias;
+                    delete jsnParameters.modeloForo;
+                }
+                db.collection('evento').insert(jsnParameters, function (err, result) {
+                    if (err) {
+                        console.error(err + '\n');
+                        db.close();
+                        reject({strAnswer: 'Data retrieval error', intStatus: 2});
                     }
-                    if(jsnParameters.strTipo == "MUSEO" || jsnParameters.strTipo == "TOURS"){
-                        delete jsnParameters.modeloForo;
-                        delete jsnParameters.dteFecha;
-                        delete jsnParameters.dteHoraInicio;
-                        delete jsnParameters.dteHoraFin;
-                    }
-                    if(jsnParameters.strTipo == "DEPORTES"){
-                        delete jsnParameters.arrayHorarios;
-                        delete jsnParameters.arrayInstancias;
-                        delete jsnParameters.modeloForo;
-                    }
-                    db.collection('evento').insert(jsnParameters,function (err, result) {
-                        if (err) {
-                            console.error(err + '\n');
-                            db.close();
-                            reject({strAnswer: 'Data retrieval error', intStatus: 2});
+                    request.post({
+                        "headers": {"content-type": "application/json"},
+                        "url": strImageURL + "imagen",
+                        "body": JSON.stringify({
+                            "strNombre": jsnParameters.strImagenPrincipal,
+                            "strBase64": strImageB64
+                        })
+                    }, (error, response, body) => {
+                        if (error) {
+                            reject({strAnswer: 'La imagen no se pudo subir al servidor', intStatus: 3})
                         }
-                        request.post({
-                            "headers": { "content-type": "application/json" },
-                            "url": strImageURL+"imagen",
-                            "body": JSON.stringify({
-                                "strNombre": jsnParameters.strImagenPrincipal,
-                                "strBase64": strImageB64
-                            })
-                        }, (error, response, body) => {
-                            if(error) {
-                                reject({strAnswer: 'La imagen no se pudo subir al servidor', intStatus: 3})
-                            }
-                            console.log("Response post->"+JSON.stringify(response,null,2));
-                            console.log("Body post->"+JSON.stringify(body,null,2));
-                            console.log("Result insert->"+JSON.stringify(result,null,2))
-                            resolve({jsnAnswer:result, intStatus: 1})
-                        });
-                        
+                        console.log("Response post->" + JSON.stringify(response, null, 2));
+                        console.log("Body post->" + JSON.stringify(body, null, 2));
+                        console.log("Result insert->" + JSON.stringify(result, null, 2))
+                        resolve({jsnAnswer: result, intStatus: 1})
                     });
+
+                });
             }
         });
     });

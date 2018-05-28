@@ -6,13 +6,34 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>promociones</ion-title>
+  <ion-navbar color="qr">
+    <ion-title>PROMOCIONES</ion-title>
+   
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+    <h3 style="font-weight: bold; color: #126786; text-align: center;">Puntos: {{configGeneral.modeloUsuario.nmbPuntos}}</h3>
+    <ion-card *ngFor="let promo of arrayPromocion">
+        <img src={{configGeneral.strUrlImages}}{{promo.strImagen}}/>
+        <ion-card-content>
+          <ion-card-title text-center style="font-weight: bold; color: #126786;">
+            {{promo.strNombre}}
+            </ion-card-title>
+          <h3 text-center>
+            {{promo.strDescripcion}}
+          </h3>
+            <h2 text-center style="font-weight: bold; color: #FCA31F;">
+              Puntos: {{promo.nmbPuntos}}
+            </h2>
+            <h2 text-center style="font-weight: bold; color: #009256;">
+              Ubicación: {{promo.strUbicacion}}
+            </h2>
+            <button ion-button color="secondary" full (click)="fnCanjear(promo.nmbPuntos)">Canjear</button>
+           
+        </ion-card-content>
+      </ion-card>
 
 </ion-content>

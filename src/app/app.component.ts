@@ -8,10 +8,13 @@ import { RegistroPage } from '../pages/registro/registro';
 import { QrPage } from '../pages/qr/qr';
 import { ApiService } from '../general/conexionesApi';
 import { ConfigGeneral } from '../general/configGeneral';
+import { PromocionesPage } from '../pages/promociones/promociones';
+import { UsuarioModelo } from '../modelos/usuario.model';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+  modeloUsuario: UsuarioModelo;
   rootPage: any = LoginPage;
   @ViewChild(Nav) navCtrl;
 
@@ -144,7 +147,8 @@ export class MyApp {
   }
 
   fnBindPromocionesPage() {
-    this.navCtrl.push();
+    this.comprobarCredenciales();
+    this.navCtrl.push(PromocionesPage);
     this.menuCtrl.close();
   }
 
@@ -155,6 +159,18 @@ export class MyApp {
 
   closeMenu() {
     this.menuCtrl.close();
+  }
+
+  comprobarCredenciales() {
+    this.conexionesApi.getLogIn(this.configGeneral.modeloUsuario.strCorreo, this.configGeneral.modeloUsuario.strContraseña)
+      .then((data) => {
+        console.log(JSON.stringify(data, null, 2));
+        if (data["intStatus"] == 1) {
+          this.modeloUsuario = new UsuarioModelo(data["jsnAnswer"]);
+          this.configGeneral.modeloUsuario = this.modeloUsuario;
+
+        }
+      });
   }
 
 }

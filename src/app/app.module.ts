@@ -36,6 +36,7 @@ import { ListaActividadPageModule } from '../pages/lista-actividad/lista-activid
 import { InfoActividadPageModule } from '../pages/info-actividad/info-actividad.module';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { PromocionesPageModule } from '../pages/promociones/promociones.module';
 @NgModule({
   declarations: [
     MyApp,
@@ -62,7 +63,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
     PagarPageModule,
     ListaActividadPageModule,
     InfoActividadPageModule, 
-    ComprobarPageModule
+    ComprobarPageModule,
+    PromocionesPageModule
   ],
   bootstrap: [IonicApp],
 

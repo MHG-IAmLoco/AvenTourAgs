@@ -12,7 +12,7 @@ export class ConfigGeneral{
     //Locales
     //public strUrlApis:string="http://192.168.1.66:5000/api/general/";
     //public strUrlImages:string="http://192.168.1.66:80/media/";
-   // public strUrlApis:string="http://localhost:5000/api/general/";
+    //public strUrlApis:string="http://localhost:5000/api/general/";
     //public strUrlImages:string="http://localhost:80/media/";
 
     public modeloUsuario: UsuarioModelo;

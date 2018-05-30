@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { ApiService } from '../../general/conexionesApi';
 import { ConfigGeneral } from '../../general/configGeneral';
 import { PromocionModelo } from '../../modelos/promocion.model';
-import { HomePage } from '../home/home';
 import { UsuarioModelo } from '../../modelos/usuario.model';
 import { ComprobarPage } from '../comprobar/comprobar';
 

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapaPage } from './../mapa/mapa';
 
 import { NavController, LoadingController, Platform, ActionSheetController, MenuController, Nav, NavParams } from 'ionic-angular';
-import { GaleriaPage } from '../galeria/galeria';
 import { MenuGalPage } from '../menu-gal/menu-gal';
 import { ItinerariosPage } from '../itinerarios/itinerarios';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
@@ -17,7 +16,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 export class HomePage implements OnInit {
 
   rootPage: any = HomePage;
-  pages: Array<{ title: string, component: any }>;
   state = this.navParams.get("type");
   activeMenu: string;
 
@@ -25,18 +23,12 @@ export class HomePage implements OnInit {
 
   constructor(public navParams: NavParams, public statusBar: StatusBar, public splashScreen: SplashScreen, public menuCtrl: MenuController, private tts: TextToSpeech, public navCtrl: NavController, public platform: Platform, public actionsheetCtrl: ActionSheetController, public loadingCtrl: LoadingController) {
     this.initializeApp();
-
-    this.pages = [
-      { title: 'Home', component: HomePage }
-    ];
-
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      console.log(this.state);
       this.menuActive();
     });
   }
@@ -52,10 +44,6 @@ export class HomePage implements OnInit {
       this.menuCtrl.enable(true, 'MenuSesion');
       this.menuCtrl.enable(false, 'MenuNoSesion');
     }
-  }
-
-  openPage(page) {
-    this.nav.setRoot(page.component);
   }
 
   ngOnInit() {

@@ -1,10 +1,9 @@
 import { Component,OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
 import { GaleriaPage } from '../galeria/galeria';
 import { GaleriaModelo } from '../../modelos/galeria.model';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
-import {ConfigGeneral} from '../../general/configGeneral'
-import { Observable } from 'rxjs/Observable';
+import {ConfigGeneral} from '../../general/configGeneral';
 import { ApiService } from '../../general/conexionesApi';
 import { ViewChild } from '@angular/core';
 

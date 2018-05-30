@@ -4,12 +4,9 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { ViewChild } from '@angular/core';
 import { ItinerarioModelo } from '../../modelos/itinerario.model';
 import { EventoModelo } from '../../modelos/evento.model';
-import { InfoEventoPage } from '../info-evento/info-evento';
-import { ForoModelo } from '../../modelos/foro.model';
 import { ApiService } from '../../general/conexionesApi';
 import { ConfigGeneral } from '../../general/configGeneral';
 import { InfoActividadPage } from '../info-actividad/info-actividad';
-import { ActividadModelo } from '../../modelos/actividad.model';
 
 @IonicPage()
 @Component({

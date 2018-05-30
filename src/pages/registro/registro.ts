@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../../general/conexionesApi';
 import { UsuarioModelo } from '../../modelos/usuario.model';
-import { QrModelo } from '../../modelos/qr.model';
 import { LoginPage } from '../login/login';
 
 /**

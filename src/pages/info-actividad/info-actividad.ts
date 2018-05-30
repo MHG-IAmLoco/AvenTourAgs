@@ -7,7 +7,6 @@ import { ApiService } from '../../general/conexionesApi';
 import { ConfigGeneral } from '../../general/configGeneral';
 import { SeleccionPage } from '../seleccion/seleccion';
 import { PagarPage } from '../pagar/pagar';
-import { ForoModelo } from '../../modelos/foro.model';
 import { DatePicker } from '@ionic-native/date-picker';
 import { InstanciaModelo } from '../../modelos/instancia.model';
 

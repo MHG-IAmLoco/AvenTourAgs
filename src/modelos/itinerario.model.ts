@@ -1,4 +1,3 @@
-import {EventoModelo} from '../modelos/evento.model';
 import { ActividadModelo } from './actividad.model';
 export class ItinerarioModelo{
     _id:string="";

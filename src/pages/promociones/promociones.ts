@@ -5,6 +5,7 @@ import { ConfigGeneral } from '../../general/configGeneral';
 import { PromocionModelo } from '../../modelos/promocion.model';
 import { HomePage } from '../home/home';
 import { UsuarioModelo } from '../../modelos/usuario.model';
+import { ComprobarPage } from '../comprobar/comprobar';
 
 /**
  * Generated class for the PromocionesPage page.
@@ -43,8 +44,9 @@ export class PromocionesPage {
           .then((data) => {
             if (data["intStatus"]) {
               if (data["intStatus"] == 1) {
-                this.showCanjeado();
+                //this.showCanjeado();
                 this.comprobarCredenciales();
+                this.navCtrl.setRoot(ComprobarPage,{Estatus:'Promocion'})
               } else {
 
               }

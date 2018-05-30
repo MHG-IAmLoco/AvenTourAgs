@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ActionSheetController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { TextToSpeech } from '@ionic-native/text-to-speech';
 
 @IonicPage()
 @Component({
@@ -15,12 +16,16 @@ export class MapaPage {
   public zoom: number = 16;
   public dir = undefined;
 
-  constructor(private androidPermissions: AndroidPermissions, public navCtrl: NavController, public navParams: NavParams, private _geoLoc: Geolocation,
+  constructor(private tts: TextToSpeech,private androidPermissions: AndroidPermissions, public navCtrl: NavController, public navParams: NavParams, private _geoLoc: Geolocation,
     public platform: Platform, public actionsheetCtrl: ActionSheetController) {
     this.platform.ready().then(() => {
       this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.GEOLOCATION]);
       this.getLoc();
     });
+  }
+
+  ngOnInit() {
+    this.Speack();
   }
 
   async getLoc(): Promise<any> {
@@ -197,6 +202,18 @@ export class MapaPage {
       ]
     });
     actionSheet.present();
+  }
+
+  async Speack(): Promise<any> {
+    try {
+      await this.tts.speak({
+        text:
+          "Presiona el botón verde para elegir un destino"
+        , locale: "es-MX"
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }

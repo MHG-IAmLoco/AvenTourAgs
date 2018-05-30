@@ -30,6 +30,17 @@ page-seleccion {
         margin-bottom: 40px;
         //margin-left: 25%;
     }
+
+    .telon2{
+        width: 200%;
+        height: 90px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        padding: 0;
+        //margin-left: 25%;
+    }
     .fila{
         width: 200%;
         display: flex;

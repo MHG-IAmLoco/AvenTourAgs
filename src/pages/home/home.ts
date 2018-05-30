@@ -86,10 +86,7 @@ export class HomePage implements OnInit {
     try {
       await this.tts.speak({
         text:
-          "Presiona la opción, mapa, para visualizar la ubicación de los lugares más emblemáticos en Aguascalientes." +
-          "Presiona la opción, tickets, para conocer los museos, tours,obras de teatro y próximos eventos en Aguascalientes y poder adquirir tus entradas." +
-          "Presiona la opción, galería, para conocer y aventurarte virtualmente en los paisajes que tiene Aguascalientes para ofrecer." +
-          "Presiona la opción, itinerarios, para ver y planificar las actividades de tu próxima visita a Aguascalientes."
+          "Presiona una de las cuatro actividades para ver el contenido o presiona el botón de la esquina superior izquierda para ver el menú."
         , locale: "es-MX"
       });
     } catch (error) {

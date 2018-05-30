@@ -88,9 +88,7 @@ export class InfoPaquetePage {
   }
   async Speack(): Promise<any> {
     try {
-      await this.tts.speak({text:"Bienvenido a la experiencia aventourags, si ya estas registrado, por favor, ingresa,"+
-      "de lo contrario, si deseas obtener una cuenta, presiona la opción de registro. Para ver el contenido de la aplicación"+
-      "sin registrarte, puedes omitir este paso en el botón color marrón."
+      await this.tts.speak({text:"En la parte inferior encontraras los eventos relacionados al itinerario"
       ,locale:"es-MX"});
       console.log("Se reprodujo exitosamente");
     } catch (error) {

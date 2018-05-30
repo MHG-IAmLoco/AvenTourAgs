@@ -24,10 +24,14 @@ export class ComprobarPage {
     if(this.navParams.get('Estatus')){
       this.Estatus = this.navParams.get('Estatus');
     }
-    this.Estatus='Aprobado';
+    //this.Estatus='Aprobado';
     if(this.Estatus=='Aprobado'){
       this.verCheck=true;
       this.verAvion=false;
+      this.verTriste=false;
+    }else if(this.Estatus=='Promocion'){
+      this.verCheck=false;
+      this.verAvion=true;
       this.verTriste=false;
     }else{
       this.verCheck=false;
@@ -45,6 +49,9 @@ export class ComprobarPage {
       }else if(this.Estatus=='Aprobado' && this.band==1){
         this.band=2;
       }else if(this.Estatus=='Aprobado' && this.band==2){
+        this.navCtrl.setRoot(HomePage);
+        this.band = 3;
+      }else if(this.Estatus=='Promocion' && this.band==0){
         this.navCtrl.setRoot(HomePage);
         this.band = 3;
       }

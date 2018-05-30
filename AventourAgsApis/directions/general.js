@@ -9,13 +9,20 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 
 app.use(cors());
-app.use(bodyParser.urlencoded({limit: '100mb', extended: true, parameterLimit: 500000}));
-app.use(bodyParser.json({limit: '100mb'}));
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: true, parameterLimit: 500000 }));
+app.use(bodyParser.json({ limit: '100mb' }));
 const functions = require('../functions/generalDAL');
 const Joi = require('joi');
 var atob = require('atob');
 const Celebrate = require('celebrate');
 const ObjectID = require('mongodb').ObjectID;
+
+var modeloQr = Joi.object().keys({
+    _id: Joi.string().required(),
+    strNombre: Joi.string().required(),
+    strUbicacion: Joi.string().required(),
+    nmbPuntos: Joi.number().required()
+});
 
 var modeloAsiento = Joi.object().keys({
     numAsiento:Joi.number().required(),
@@ -53,13 +60,6 @@ var modeloGaleria = Joi.object().keys({
     strDescripcion:Joi.string().required(),
     strImagenPrincipal:Joi.string().required().allow(""),
     arrayImagenes:Joi.array().items(modeloGaleriaInterior).allow(null)
-});
-
-var modeloQr = Joi.object().keys({
-    _id: Joi.string().required(),
-    strNombre: Joi.string().required(),
-    strUbicacion: Joi.string().required(),
-    nmbPuntos: Joi.number().required()
 });
 
 app.post('/api/general/canjear', Celebrate({
@@ -165,12 +165,13 @@ app.post('/api/general/pRegistro', Celebrate({
             });
 });
 
-app.get('/api/general/login/:correo/:contrasenia', Celebrate({
-    params: {
+
+app.get('/api/general/login/:correo/:contrasenia',Celebrate({
+    params:{
         correo: Joi.string().required(),
         contrasenia: Joi.string().required()
     }
-}), function (req, res) {
+}),function (req, res) {
     functions.fnGetLogIn(req.params)
             .then(function (result) {
                 res.json(result);
@@ -180,7 +181,7 @@ app.get('/api/general/login/:correo/:contrasenia', Celebrate({
             });
 });
 
-app.get('/api/general/categoriasGaleria', function (req, res) {
+app.get('/api/general/categoriasGaleria',function (req, res) {
     functions.fnGetCategoriasGaleria()
             .then(function (result) {
                 res.json(result);
@@ -190,11 +191,11 @@ app.get('/api/general/categoriasGaleria', function (req, res) {
             });
 });
 
-app.get('/api/general/detalleGaleria/:_id', Celebrate({
-    params: {
-        _id: Joi.string().required()
+app.get('/api/general/detalleGaleria/:_id',Celebrate({
+    params:{
+        _id:Joi.string().required()
     }
-}), function (req, res) {
+}),function (req, res) {
     functions.fnGetGaleria(req.params)
             .then(function (result) {
                 res.json(result);
@@ -204,11 +205,11 @@ app.get('/api/general/detalleGaleria/:_id', Celebrate({
             });
 });
 
-app.get('/api/general/itinerarios/:intPresupuesto', Celebrate({
-    params: {
-        intPresupuesto: Joi.number().required()
+app.get('/api/general/itinerarios/:intPresupuesto',Celebrate({
+    params:{
+        intPresupuesto:Joi.number().required()
     }
-}), function (req, res) {
+}),function (req, res) {
     functions.fnGetItinerarios(req.params)
             .then(function (result) {
                 res.json(result);
@@ -218,11 +219,11 @@ app.get('/api/general/itinerarios/:intPresupuesto', Celebrate({
             });
 });
 
-app.get('/api/general/listaEvento/:strTipo', Celebrate({
-    params: {
-        strTipo: Joi.string().required()
+app.get('/api/general/listaEvento/:strTipo',Celebrate({
+    params:{
+        strTipo:Joi.string().required()
     }
-}), function (req, res) {
+}),function (req, res) {
     functions.fnGetEventos(req.params)
             .then(function (result) {
                 res.json(result);
@@ -232,12 +233,12 @@ app.get('/api/general/listaEvento/:strTipo', Celebrate({
             });
 });
 
-app.get('/api/general/detalleEvento/:_id/:strTipo', Celebrate({
-    params: {
-        _id: Joi.string().required(),
+app.get('/api/general/detalleEvento/:_id/:strTipo',Celebrate({
+    params:{
+        _id:Joi.string().required(),
         strTipo: Joi.string().required()
     }
-}), function (req, res) {
+}),function (req, res) {
     functions.fnGetDetalleEvento(req.params)
             .then(function (result) {
                 res.json(result);
@@ -247,11 +248,11 @@ app.get('/api/general/detalleEvento/:_id/:strTipo', Celebrate({
             });
 });
 
-app.get('/api/general/detalleForo/:idEvento', Celebrate({
-    params: {
+app.get('/api/general/detalleForo/:idEvento',Celebrate({
+    params:{
         idEvento: Joi.string().required()
     }
-}), function (req, res) {
+}),function (req, res) {
     functions.fnGetForo(req.params)
             .then(function (result) {
                 res.json(result);
@@ -261,12 +262,12 @@ app.get('/api/general/detalleForo/:idEvento', Celebrate({
             });
 });
 
-app.get('/api/general/detalleDisponibilidad/:idEvento/:strFecha', Celebrate({
-    params: {
+app.get('/api/general/detalleDisponibilidad/:idEvento/:strFecha',Celebrate({
+    params:{
         idEvento: Joi.string().required(),
         strFecha: Joi.string().required()
     }
-}), function (req, res) {
+}),function (req, res) {
     functions.fnGetDisponibilidadEvento(req.params)
             .then(function (result) {
                 res.json(result);
@@ -276,14 +277,14 @@ app.get('/api/general/detalleDisponibilidad/:idEvento/:strFecha', Celebrate({
             });
 });
 
-app.put('/api/general/detalleForo', Celebrate({
+app.post('/api/general/detalleForo', Celebrate({
     body: {
         _id: Joi.string().required(),
         arrayNumAsientos: Joi.array().items(Joi.number().required()),
         strColor: Joi.string().required()
     }
 }), function (req, res) {
-    functions.fnPutAsientosForo(req.body)
+    functions.fnPostAsientosForo(req.body)
             .then(function (result) {
                 res.json(result);
             })
@@ -365,7 +366,7 @@ app.post('/api/general/imgGaleria', Celebrate({
 
 app.post('/api/general/itinerario', Celebrate({
     body: {
-        _id:Joi.string().required().allow(""),
+        _id:Joi.string().allow(""),
         strTitulo:Joi.string().required(),
         strDescripcion:Joi.string().required(),
         strImagenPrincipal:Joi.string().required(),
@@ -386,10 +387,11 @@ app.post('/api/general/itinerario', Celebrate({
 
 app.post('/api/general/evento', Celebrate({
     body: {
-        _id:Joi.string().required().allow(""),
+        _id:Joi.string().allow(""),
         strTipo:Joi.string().required(),
         strTitulo:Joi.string().required(),
         strDescripcion:Joi.string().required(),
+        strMunicipio:Joi.string(),
         strResenia:Joi.string().required(),
         strImagenPrincipal:Joi.string().required(),
         dteFecha:Joi.date(),
@@ -415,12 +417,32 @@ app.post('/api/general/evento', Celebrate({
             });
 });
 
+app.post('/api/general/promocion', Celebrate({
+    body: {
+        _id:Joi.string(),
+    	strNombre:Joi.string().required(),
+    	strUbicacion:Joi.string().required(),
+    	strDescripcion:Joi.string().required(),
+    	strImagen:Joi.string().required(),
+    	nmbPuntos:Joi.number().required(),
+    }
+}), function (req, res) {
+    delete req.body._id;
+    functions.fnPostPromocion(req.body)
+            .then(function (result) {
+                res.json(result);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+});
+
 //----------------------------error messages------------------------------------
 app.use((err, req, res, next) => {
     res.status(400).json({intStatus: 6, strAnswer: 'Error to attend the petition' + err});
 });
 
 //-------------------API MANAGER RESPONDS TO PORT 5000 ------------------------
-app.listen(5000, "0.0.0.0", function () {
+app.listen(5000,"0.0.0.0", function () {
     console.log('Listen general on 0.0.0.0:5000');
 });

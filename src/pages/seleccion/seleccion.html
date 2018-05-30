@@ -9,11 +9,6 @@
   <ion-navbar color="seleccion">
     <ion-title>SELECCION</ion-title>
 
-    <ion-buttons end>
-      <button ion-button color="light" outline (click)="pagar()">
-        HECHO
-      </button>
-    </ion-buttons>
 
   </ion-navbar>
 
@@ -21,9 +16,13 @@
 
 
 <ion-content style="background: url('assets/img/fondoSel.jpg') no-repeat center center fixed">
+  <img class="telon2 " src="{{configGeneral.strUrlImages}}indicador.png">
   <img  class="telon "src="assets/img/telon2.jpg">
-  
+  <button ion-button full color="danger" (click)="pagar()">
+      CONTINUAR CON LA COMPRA
+    </button>
   <div class="contenedor"> 
+
     <ion-scroll scrollX="true" scrollY="true">
     <img *ngIf="verSwipe" class="swipe" src="assets/img/swipe.gif">
     <!--<div class="telon">
@@ -39,5 +38,8 @@
       </ng-container>
     </ul>
     </ion-scroll>
+    
   </div>
+  
+
 </ion-content>

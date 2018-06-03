@@ -6,7 +6,7 @@
 
 <ion-content>
     <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
-    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    <!--<agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>-->
     <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
   </agm-map>
   <ion-fab bottom center>

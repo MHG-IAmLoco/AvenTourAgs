@@ -1,8 +1,9 @@
-export class QrModelo {
+export class MapaModelo {
     _id: string = "";
+    strPueblo: string = "";
     strNombre: string = "";
-    strUbicacion: string = "";
-    nmbPuntos: number;
+    nmbLatitud: number;
+    nmbLongitud: number;
     constructor(values: Object = {}) {
         Object.assign(this, values);
     }

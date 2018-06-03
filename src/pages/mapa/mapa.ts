@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform, ActionSheetController } 
 import { Geolocation } from '@ionic-native/geolocation';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
+import { MapaModelo } from '../../modelos/qr.model';
 
 @IonicPage()
 @Component({
@@ -11,10 +12,11 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
 })
 export class MapaPage {
 
-  public lat: number = 21.911185;
-  public lng: number = -102.31538999999998;
+  public lat: number;// = 21.911185;
+  public lng: number;// = -102.31538999999998;
   public zoom: number = 16;
   public dir = undefined;
+  arrayLugares:Array<MapaModelo>= new Array<MapaModelo>();
 
   constructor(private tts: TextToSpeech,private androidPermissions: AndroidPermissions, public navCtrl: NavController, public navParams: NavParams, private _geoLoc: Geolocation,
     public platform: Platform, public actionsheetCtrl: ActionSheetController) {
@@ -69,7 +71,7 @@ export class MapaPage {
                 },
                 {
                   text: 'Cancelar',
-                  role: 'cancel', // will always sort to be on the bottom
+                  role: 'cancel', 
                   icon: !this.platform.is('ios') ? 'close' : null,
                   handler: () => {
                     console.log('Cancel clicked');
@@ -106,7 +108,7 @@ export class MapaPage {
                 },
                 {
                   text: 'Cancelar',
-                  role: 'cancel', // will always sort to be on the bottom
+                  role: 'cancel', 
                   icon: !this.platform.is('ios') ? 'close' : null,
                   handler: () => {
                     console.log('Cancel clicked');
@@ -143,7 +145,7 @@ export class MapaPage {
                 },
                 {
                   text: 'Cancelar',
-                  role: 'cancel', // will always sort to be on the bottom
+                  role: 'cancel', 
                   icon: !this.platform.is('ios') ? 'close' : null,
                   handler: () => {
                     console.log('Cancel clicked');
@@ -180,7 +182,7 @@ export class MapaPage {
                 },
                 {
                   text: 'Cancelar',
-                  role: 'cancel', // will always sort to be on the bottom
+                  role: 'cancel', 
                   icon: !this.platform.is('ios') ? 'close' : null,
                   handler: () => {
                     console.log('Cancel clicked');
@@ -193,7 +195,7 @@ export class MapaPage {
         },
         {
           text: 'Cancelar',
-          role: 'cancel', // will always sort to be on the bottom
+          role: 'cancel', 
           icon: !this.platform.is('ios') ? 'close' : null,
           handler: () => {
             console.log('Cancel clicked');
